@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { StudioContent } from '@/lib/supabase';
 
 const STORAGE_KEY = 'babyStudioContentV2';
@@ -33,7 +33,7 @@ export function useStudioContent() {
             setContent(data);
             return;
           }
-        } catch (apiErr) {
+        } catch {
           console.log('API not available, using localStorage fallback');
         }
 
@@ -44,7 +44,6 @@ export function useStudioContent() {
             setContent(JSON.parse(stored));
           }
         }
-        setUseDatabase(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
         console.error('Error fetching content:', err);
@@ -57,7 +56,7 @@ export function useStudioContent() {
   }, []);
 
   // Save content to API and/or localStorage
-  const saveContent = async (newContent: StudioContent) => {
+  const saveContent = useCallback(async (newContent: StudioContent) => {
     try {
       setContent(newContent);
 
@@ -88,7 +87,7 @@ export function useStudioContent() {
       console.error('Error saving content:', err);
       throw err;
     }
-  };
+  }, []);
 
   return { content, loading, error, saveContent, setContent };
 }

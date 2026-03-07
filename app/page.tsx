@@ -3,52 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useStudioContent } from "@/hooks/useStudioContent";
 
-type GalleryItem = {
-  id: string;
-  title: string;
-  caption: string;
-  imageUrl: string;
-};
-
-type AlbumItem = {
-  id: string;
-  title: string;
-  description: string;
-  photos: string[];
-};
-
-type SiteContent = {
-  gallery: GalleryItem[];
-  albums: AlbumItem[];
-  photographerPhotos: string[];
-};
-
-const defaultContent: SiteContent = {
-  gallery: [
-    { id: "gallery-0", title: "Nou-născut", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-1", title: "Somn liniștit", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-2", title: "Portret de familie", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-3", title: "Detalii mici", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-4", title: "Primul zâmbet", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-5", title: "Set aniversar", caption: "Cadru de prezentare", imageUrl: "" },
-  ],
-  albums: [
-    {
-      id: "album-1",
-      title: "Album Nou-născut",
-      description: "Primele 14 zile, imagini delicate și cadre naturale.",
-      photos: [],
-    },
-    {
-      id: "album-2",
-      title: "Album Familie",
-      description: "Portrete emoționale cu părinți și frați.",
-      photos: [],
-    },
-  ],
-  photographerPhotos: ["", ""],
-};
-
 const reviews = [
   {
     name: "Ana M.",
@@ -71,77 +25,8 @@ const policies = [
   "Datele personale și imaginile sunt tratate confidențial.",
 ];
 
-function normalizeContent(value: unknown): SiteContent {
-  if (typeof value !== "object" || value === null) {
-    return defaultContent;
-  }
-
-  const raw = value as Partial<SiteContent>;
-
-  const gallery = Array.isArray(raw.gallery)
-    ? raw.gallery.map((item, index) => {
-      const fallback = defaultContent.gallery[index] ?? defaultContent.gallery[0];
-      if (typeof item !== "object" || item === null) {
-        return fallback;
-      }
-
-      const casted = item as Partial<GalleryItem>;
-      return {
-        id: typeof casted.id === "string" ? casted.id : fallback.id,
-        title: typeof casted.title === "string" ? casted.title : fallback.title,
-        caption:
-          typeof casted.caption === "string" ? casted.caption : fallback.caption,
-        imageUrl: typeof casted.imageUrl === "string" ? casted.imageUrl : "",
-      };
-    })
-    : defaultContent.gallery;
-
-  const albums = Array.isArray(raw.albums)
-    ? raw.albums.map((item, index) => {
-      const fallback = defaultContent.albums[index] ?? {
-        id: `album-${index + 1}`,
-        title: "Album nou",
-        description: "Descriere album",
-        photos: [],
-      };
-
-      if (typeof item !== "object" || item === null) {
-        return fallback;
-      }
-
-      const casted = item as Partial<AlbumItem>;
-      const photos = Array.isArray(casted.photos)
-        ? casted.photos.filter((p) => typeof p === "string")
-        : [];
-
-      return {
-        id:
-          typeof casted.id === "string" && casted.id.length > 0
-            ? casted.id
-            : fallback.id,
-        title: typeof casted.title === "string" ? casted.title : fallback.title,
-        description:
-          typeof casted.description === "string"
-            ? casted.description
-            : fallback.description,
-        photos,
-      };
-    })
-    : defaultContent.albums;
-
-  const photographerPhotos = Array.isArray(raw.photographerPhotos)
-    ? raw.photographerPhotos.map((item) => (typeof item === "string" ? item : "")).slice(0, 2)
-    : defaultContent.photographerPhotos;
-
-  if (photographerPhotos.length < 2) {
-    photographerPhotos.push(...Array.from({ length: 2 - photographerPhotos.length }, () => ""));
-  }
-
-  return { gallery, albums, photographerPhotos };
-}
-
 export default function Home() {
-  const { content, loading } = useStudioContent();
+  const { content } = useStudioContent();
   const [activeSection, setActiveSection] = useState("acasa");
   const [isManualClick, setIsManualClick] = useState(false);
   const [lightbox, setLightbox] = useState<{
@@ -385,6 +270,7 @@ export default function Home() {
                           }}
                         >
                           {photo && (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
                               src={photo}
                               alt={`${album.title} - Poză ${index + 1}`}
@@ -414,7 +300,7 @@ export default function Home() {
                 key={review.name}
                 className="rounded-2xl border border-gray-200/80 bg-white p-6 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900"
               >
-                <p className="text-sm text-gray-600 dark:text-gray-300">"{review.text}"</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">&quot;{review.text}&quot;</p>
                 <p className="mt-4 text-sm font-semibold">{review.name}</p>
               </article>
             ))}
@@ -528,6 +414,7 @@ export default function Home() {
             onClick={(e) => e.stopPropagation()}
           >
             {lightbox.images[lightbox.currentIndex] && (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={lightbox.currentIndex}
                 src={lightbox.images[lightbox.currentIndex]}

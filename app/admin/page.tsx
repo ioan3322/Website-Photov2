@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useStudioContent } from "@/hooks/useStudioContent";
 
 type GalleryItem = {
@@ -17,85 +18,13 @@ type AlbumItem = {
   photos: string[];
 };
 
-type SiteContent = {
-  gallery: GalleryItem[];
-  albums: AlbumItem[];
-  photographerPhotos: string[];
-};
 
-const defaultContent: SiteContent = {
-  gallery: [
-    { id: "gallery-0", title: "Nou-născut", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-1", title: "Somn liniștit", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-2", title: "Portret de familie", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-3", title: "Detalii mici", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-4", title: "Primul zâmbet", caption: "Cadru de prezentare", imageUrl: "" },
-    { id: "gallery-5", title: "Set aniversar", caption: "Cadru de prezentare", imageUrl: "" },
-  ],
-  albums: [
-    {
-      id: "album-1",
-      title: "Album Nou-născut",
-      description: "Primele 14 zile, imagini delicate și cadre naturale.",
-      photos: [],
-    },
-    {
-      id: "album-2",
-      title: "Album Familie",
-      description: "Portrete emoționale cu părinți și frați.",
-      photos: [],
-    },
-  ],
-  photographerPhotos: ["", ""],
-};
 
-function normalizeContent(value: unknown): SiteContent {
-  if (typeof value !== "object" || value === null) {
-    return defaultContent;
-  }
 
-  const raw = value as Partial<SiteContent>;
 
-  const gallery = Array.isArray(raw.gallery)
-    ? raw.gallery.map((item, index) => {
-      const fallback = defaultContent.gallery[index] ?? defaultContent.gallery[0];
-      if (typeof item !== "object" || item === null) {
-        return fallback;
-      }
-      const casted = item as Partial<GalleryItem>;
-      return {
-        id: typeof casted.id === "string" ? casted.id : fallback.id,
-        title: typeof casted.title === "string" ? casted.title : fallback.title,
-        caption: typeof casted.caption === "string" ? casted.caption : fallback.caption,
-        imageUrl: typeof casted.imageUrl === "string" ? casted.imageUrl : "",
-      };
-    })
-    : defaultContent.gallery;
 
-  const albums = Array.isArray(raw.albums)
-    ? raw.albums.map((item) => {
-      if (typeof item !== "object" || item === null) {
-        return { id: `album-${Date.now()}`, title: "", description: "", photos: [] };
-      }
-      const casted = item as Partial<AlbumItem>;
-      const photos = Array.isArray(casted.photos)
-        ? casted.photos.filter((p) => typeof p === "string")
-        : [];
-      return {
-        id: typeof casted.id === "string" ? casted.id : `album-${Date.now()}`,
-        title: typeof casted.title === "string" ? casted.title : "",
-        description: typeof casted.description === "string" ? casted.description : "",
-        photos,
-      };
-    })
-    : defaultContent.albums;
 
-  const photographerPhotos = Array.isArray(raw.photographerPhotos)
-    ? raw.photographerPhotos.map((url) => (typeof url === "string" ? url : ""))
-    : defaultContent.photographerPhotos;
 
-  return { gallery, albums, photographerPhotos };
-}
 
 export default function AdminPage() {
   const { content, setContent, saveContent } = useStudioContent();
@@ -284,7 +213,7 @@ export default function AdminPage() {
 
     const timer = setTimeout(save, 800); // Save with 800ms debounce
     return () => clearTimeout(timer);
-  }, [content]);
+  }, [content, saveContent]);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-gray-50 via-gray-100 to-white text-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 dark:text-gray-100">
@@ -317,12 +246,12 @@ export default function AdminPage() {
               >
                 Editează albume
               </a>
-              <a
+              <Link
                 href="/"
                 className="inline-flex items-center justify-center rounded-full border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
               >
                 Vezi pagina publică
-              </a>
+              </Link>
             </div>
             <div className="space-y-2 text-sm">
               {isUploading && (
@@ -351,7 +280,7 @@ export default function AdminPage() {
           <div className="rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100/80 p-6 dark:from-gray-900/70 dark:to-gray-800/60">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl bg-white p-4 dark:bg-gray-900">
-                <p className="text-3xl">�</p>
+                <p className="text-3xl">📷</p>
                 <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
                   6 fotografii editabile în galerie
                 </p>
@@ -510,6 +439,7 @@ export default function AdminPage() {
                           className="group relative aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100/80 dark:from-gray-900/70 dark:to-gray-800/60"
                         >
                           {photo && (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
                               src={photo}
                               alt={`${album.title} - ${photoIndex + 1}`}
