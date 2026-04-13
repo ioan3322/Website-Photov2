@@ -30,6 +30,7 @@ export function useStudioContent() {
           const response = await fetch('/api/content');
           if (response.ok) {
             const data = await response.json();
+            setError(null);
             setContent(data);
             return;
           }
@@ -41,9 +42,13 @@ export function useStudioContent() {
         if (typeof window !== 'undefined') {
           const stored = localStorage.getItem(STORAGE_KEY);
           if (stored) {
+            setError(null);
             setContent(JSON.parse(stored));
+            return;
           }
         }
+
+        setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
         console.error('Error fetching content:', err);

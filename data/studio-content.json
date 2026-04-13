@@ -1,0 +1,57 @@
+{
+  "gallery": [
+    {
+      "id": "gallery-0",
+      "title": "Fotografie 1",
+      "caption": "Cadru de prezentare 1",
+      "imageUrl": ""
+    },
+    {
+      "id": "gallery-1",
+      "title": "Fotografie 2",
+      "caption": "Cadru de prezentare 2",
+      "imageUrl": ""
+    },
+    {
+      "id": "gallery-2",
+      "title": "Fotografie 3",
+      "caption": "Cadru de prezentare 3",
+      "imageUrl": ""
+    },
+    {
+      "id": "gallery-3",
+      "title": "Fotografie 4",
+      "caption": "Cadru de prezentare 4",
+      "imageUrl": ""
+    },
+    {
+      "id": "gallery-4",
+      "title": "Fotografie 5",
+      "caption": "Cadru de prezentare 5",
+      "imageUrl": ""
+    },
+    {
+      "id": "gallery-5",
+      "title": "Fotografie 6",
+      "caption": "Cadru de prezentare 6",
+      "imageUrl": ""
+    }
+  ],
+  "albums": [
+    {
+      "id": "album-1776068670226",
+      "title": "album 1 de test",
+      "description": "fotografii",
+      "photos": [
+        "/uploads/albums/1776068691117-5e70ce42-98c0-4acc-a1b2-c14ad4d67ce6.jpeg",
+        "/uploads/albums/1776068693955-e81ed5f3-fcc1-4faf-94f9-bebf4482f588.jpeg",
+        "/uploads/albums/1776068696881-5c7cfcd8-30dc-4c06-9834-2de8c74f3a75.jpeg",
+        "/uploads/albums/1776068699988-b93d9484-5511-48a9-bc10-b51f11f26436.jpeg"
+      ]
+    }
+  ],
+  "photographerPhotos": [
+    "/uploads/photographer/1776068708242-5f67d4b7-1ce4-4448-ac2e-f6e780f83a8b.jpeg",
+    "/uploads/photographer/1776068712219-14c646ac-0320-4b21-93b0-fb0b6bf2f6bb.jpeg"
+  ]
+}

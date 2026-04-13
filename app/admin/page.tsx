@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
 
 type GalleryItem = {
@@ -45,18 +46,27 @@ export default function AdminPage() {
     formData.append("file", file);
     formData.append("folder", folder);
 
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    if (!response.ok) {
-      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-      throw new Error(payload?.error || "Upload failed");
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(payload?.error || `Upload failed (${response.status})`);
+      }
+
+      const payload = (await response.json()) as { url: string };
+      return payload.url;
+    } catch (error) {
+      if (error instanceof TypeError) {
+        throw new Error(
+          "Nu s-a putut contacta endpoint-ul de upload. Verifica serverul Next.js si configurarea Supabase.",
+        );
+      }
+      throw error;
     }
-
-    const payload = (await response.json()) as { url: string };
-    return payload.url;
   };
 
   // Gallery handlers
@@ -216,169 +226,134 @@ export default function AdminPage() {
   }, [content, saveContent]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-gray-50 via-gray-100 to-white text-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 dark:text-gray-100">
-      <div className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-gray-200/40 blur-3xl dark:bg-gray-400/10" />
-      <div className="pointer-events-none absolute -right-20 top-1/3 h-80 w-80 rounded-full bg-gray-300/40 blur-3xl dark:bg-gray-300/10" />
-      <div className="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-gray-200/30 blur-3xl dark:bg-gray-300/10" />
+    <div className={`${siteConfig.theme.pageBackground} relative overflow-hidden`}>
+      <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-rose-100/60 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 top-1/3 h-80 w-80 rounded-full bg-amber-100/50 blur-3xl" />
 
-      <main className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-14 px-6 py-12 sm:px-10 lg:px-16">
-        <header className="grid gap-8 rounded-3xl border border-gray-200 bg-white p-8 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900 md:grid-cols-2 md:p-10">
-          <div className="space-y-6">
-            <p className="inline-flex rounded-full bg-gray-100 px-4 py-1 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-              Admin studio foto
-            </p>
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-              Momente mici, amintiri pentru o viață
+      <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-12">
+        <header className="grid gap-8 rounded-3xl border border-rose-100 bg-white/95 p-8 shadow-sm md:grid-cols-[1.3fr_1fr] md:p-10">
+          <div className="space-y-5">
+            <p className={siteConfig.theme.badge}>Panou admin</p>
+            <h1 className="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
+              Editezi continutul. Site-ul se actualizeaza imediat.
             </h1>
-            <p className="max-w-xl text-lg text-gray-600 dark:text-gray-300">
-              Panou admin complet sincronizat cu pagina principală. Editează galeria, albumele și pozele fotografului.
+            <p className={`max-w-2xl text-lg ${siteConfig.theme.mutedText}`}>
+              Actualizeaza galeria, albumele si sectiunea fotograf direct din acest panou.
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-wrap gap-3">
               <a
                 href="#galerie-admin"
-                className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                className="inline-flex items-center justify-center rounded-full bg-rose-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-rose-700"
               >
-                Editează galeria
+                Galerie
               </a>
               <a
                 href="#albume-admin"
-                className="inline-flex items-center justify-center rounded-full border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                className="inline-flex items-center justify-center rounded-full border border-rose-200 px-6 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
               >
-                Editează albume
+                Albume
+              </a>
+              <a
+                href="#fotograf-admin"
+                className="inline-flex items-center justify-center rounded-full border border-rose-200 px-6 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+              >
+                Fotograf
               </a>
               <Link
-                href="/"
-                className="inline-flex items-center justify-center rounded-full border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                href="/acasa"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >
-                Vezi pagina publică
+                Vezi pagina publica
               </Link>
-            </div>
-            <div className="space-y-2 text-sm">
-              {isUploading && (
-                <p className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-blue-800 dark:border-blue-900/70 dark:bg-blue-950/40 dark:text-blue-300">
-                  Se incarca imaginea, te rog asteapta...
-                </p>
-              )}
-              {isSaving && (
-                <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-amber-800 dark:border-amber-900/70 dark:bg-amber-950/40 dark:text-amber-300">
-                  Se sincronizeaza continutul in baza de date...
-                </p>
-              )}
-              {uploadSuccess && (
-                <p className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-emerald-800 dark:border-emerald-900/70 dark:bg-emerald-950/40 dark:text-emerald-300">
-                  {uploadSuccess}
-                </p>
-              )}
-              {uploadError && (
-                <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-red-800 dark:border-red-900/70 dark:bg-red-950/40 dark:text-red-300">
-                  Upload esuat: {uploadError}
-                </p>
-              )}
             </div>
           </div>
 
-          <div className="rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100/80 p-6 dark:from-gray-900/70 dark:to-gray-800/60">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl bg-white p-4 dark:bg-gray-900">
-                <p className="text-3xl">📷</p>
-                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
-                  6 fotografii editabile în galerie
-                </p>
-              </div>
-              <div className="rounded-xl bg-white p-4 dark:bg-gray-900">
-                <p className="text-3xl">📚</p>
-                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
-                  Adaugă și șterge albume la cerere
-                </p>
-              </div>
-              <div className="rounded-xl bg-white p-4 dark:bg-gray-900">
-                <p className="text-3xl">👤</p>
-                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
-                  2 poze cu fotograful editable
-                </p>
-              </div>
-              <div className="rounded-xl bg-white p-4 dark:bg-gray-900">
-                <p className="text-3xl">🔄</p>
-                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
-                  Sincronizare instant cu pagina publică
-                </p>
-              </div>
+          <div className="grid content-start gap-3 rounded-2xl border border-rose-100 bg-gradient-to-br from-rose-50 via-white to-amber-50 p-5">
+            <div className="rounded-xl border border-rose-100 bg-white p-4 text-sm text-slate-600">
+              Galerie editabila: <span className="font-semibold text-slate-900">{content.gallery.length}</span> imagini
+            </div>
+            <div className="rounded-xl border border-rose-100 bg-white p-4 text-sm text-slate-600">
+              Albume active: <span className="font-semibold text-slate-900">{content.albums.length}</span>
+            </div>
+            <div className="rounded-xl border border-rose-100 bg-white p-4 text-sm text-slate-600">
+              Poze fotograf: <span className="font-semibold text-slate-900">{content.photographerPhotos.length}</span>
             </div>
           </div>
         </header>
 
+        <section className="space-y-2 text-sm">
+          {isUploading ? (
+            <p className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-blue-800">
+              Se incarca o imagine. Te rog asteapta.
+            </p>
+          ) : null}
+          {isSaving ? (
+            <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-amber-800">
+              Se sincronizeaza continutul in baza de date.
+            </p>
+          ) : null}
+          {uploadSuccess ? (
+            <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-800">
+              {uploadSuccess}
+            </p>
+          ) : null}
+          {uploadError ? (
+            <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-800">
+              Upload esuat: {uploadError}
+            </p>
+          ) : null}
+        </section>
+
         <section id="galerie-admin" className="space-y-5">
           <div>
-            <h2 className="text-2xl font-semibold tracking-tight">Galerie (Admin)</h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Editează fiecare poză în parte: titlu, descriere și URL imagine.
-            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Galerie</h2>
+            <p className={siteConfig.theme.mutedText}>Editeaza titlu, descriere, URL sau incarca imagine noua.</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {content.gallery.map((item, index) => (
-              <article
-                key={`${item.title}-${index}`}
-                className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900"
-              >
-                <div
-                  className="aspect-[4/5] bg-gradient-to-br from-gray-50 to-gray-100/80 dark:from-gray-900/70 dark:to-gray-800/60"
-                  style={
-                    item.imageUrl
-                      ? {
-                        backgroundImage: `linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), url(${item.imageUrl})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }
-                      : undefined
-                  }
-                />
+              <article key={`${item.title}-${index}`} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+                <div className="aspect-[4/5] border-b border-rose-100 bg-slate-50">
+                  {item.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={item.imageUrl} alt={item.title || `Imagine galerie ${index + 1}`} className="h-full w-full object-cover" />
+                  ) : (
+                    <div className={`h-full w-full ${siteConfig.theme.softSurface}`} />
+                  )}
+                </div>
+
                 <div className="space-y-3 p-4">
                   <input
                     value={item.title}
-                    onChange={(event) =>
-                      handleGalleryChange(index, "title", event.target.value)
-                    }
-                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm outline-none ring-0 placeholder:text-gray-400 focus:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:placeholder:text-gray-500"
+                    onChange={(event) => handleGalleryChange(index, "title", event.target.value)}
+                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
                     placeholder="Titlu"
                   />
                   <input
                     value={item.caption}
-                    onChange={(event) =>
-                      handleGalleryChange(index, "caption", event.target.value)
-                    }
-                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm outline-none ring-0 placeholder:text-gray-400 focus:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:placeholder:text-gray-500"
+                    onChange={(event) => handleGalleryChange(index, "caption", event.target.value)}
+                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
                     placeholder="Descriere"
                   />
                   <input
                     value={item.imageUrl}
-                    onChange={(event) =>
-                      handleGalleryChange(index, "imageUrl", event.target.value)
-                    }
-                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm outline-none ring-0 placeholder:text-gray-400 focus:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:placeholder:text-gray-500"
+                    onChange={(event) => handleGalleryChange(index, "imageUrl", event.target.value)}
+                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
                     placeholder="URL imagine"
                   />
-                  <label className="block w-full cursor-pointer rounded-lg border border-dashed border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                    Alege poză din calculator (JPG, PNG, WEBP)
+                  <label className="block w-full cursor-pointer rounded-lg border border-dashed border-rose-200 bg-rose-50/40 px-3 py-2 text-sm text-rose-700 transition hover:bg-rose-50">
+                    Alege poza din calculator
                     <input
                       type="file"
                       accept="image/*,.jpg,.jpeg,.png,.webp"
                       className="hidden"
                       disabled={isUploading}
-                      onChange={(event) =>
-                        handleGalleryImageUpload(index, event.target.files?.[0])
-                      }
+                      onChange={(event) => handleGalleryImageUpload(index, event.target.files?.[0])}
                     />
                   </label>
-                  {uploadingTarget === `gallery-${index}` && (
-                    <p className="text-xs text-blue-700 dark:text-blue-300">Se incarca aceasta imagine...</p>
-                  )}
-                  <div>
-                    <h3 className="font-medium">{item.title || "Titlu"}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {item.caption || "Cadru de prezentare"}
-                    </p>
-                  </div>
+                  {uploadingTarget === `gallery-${index}` ? (
+                    <p className="text-xs text-blue-700">Se incarca aceasta imagine...</p>
+                  ) : null}
                 </div>
               </article>
             ))}
@@ -386,99 +361,79 @@ export default function AdminPage() {
         </section>
 
         <section id="albume-admin" className="space-y-5">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-2xl font-semibold tracking-tight">Albume (Admin)</h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Adaugă, editează sau șterge albume și fotografiile din fiecare album.
-              </p>
+              <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Albume</h2>
+              <p className={siteConfig.theme.mutedText}>Adauga, editeaza sau sterge albume si fotografiile lor.</p>
             </div>
             <button
               onClick={handleAddAlbum}
-              className="rounded-full bg-black px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              className="rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-rose-700"
             >
-              ➕ Adaugă album
+              Adauga album
             </button>
           </div>
 
           <div className="space-y-6">
             {content.albums.map((album) => (
-              <article
-                key={album.id}
-                className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900"
-              >
+              <article key={album.id} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
                 <div className="space-y-4 p-6">
                   <div className="space-y-3">
                     <input
                       value={album.title}
-                      onChange={(event) =>
-                        handleAlbumChange(album.id, "title", event.target.value)
-                      }
-                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm font-semibold outline-none ring-0 placeholder:text-gray-400 focus:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:placeholder:text-gray-500"
+                      onChange={(event) => handleAlbumChange(album.id, "title", event.target.value)}
+                      className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-rose-300"
                       placeholder="Titlu album"
                     />
                     <input
                       value={album.description}
-                      onChange={(event) =>
-                        handleAlbumChange(album.id, "description", event.target.value)
-                      }
-                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm outline-none ring-0 placeholder:text-gray-400 focus:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:placeholder:text-gray-500"
+                      onChange={(event) => handleAlbumChange(album.id, "description", event.target.value)}
+                      className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
                       placeholder="Descriere album"
                     />
                   </div>
 
-                  <div className="border-t border-gray-300/50 pt-4 dark:border-gray-700/50">
-                    <h4 className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                      📸 Fotografii album ({album.photos.length})
-                    </h4>
+                  <div className="border-t border-rose-100 pt-4">
+                    <h4 className="mb-3 text-sm font-semibold text-slate-700">Fotografii album ({album.photos.length})</h4>
 
-                    <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-3">
+                    <div className="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                       {album.photos.map((photo, photoIndex) => (
-                        <div
-                          key={`${album.id}-photo-${photoIndex}`}
-                          className="group relative aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100/80 dark:from-gray-900/70 dark:to-gray-800/60"
-                        >
-                          {photo && (
+                        <div key={`${album.id}-photo-${photoIndex}`} className="group relative aspect-square overflow-hidden rounded-lg bg-slate-100">
+                          {photo ? (
                             // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={photo}
-                              alt={`${album.title} - ${photoIndex + 1}`}
-                              className="h-full w-full object-cover"
-                            />
-                          )}
+                            <img src={photo} alt={`${album.title} - ${photoIndex + 1}`} className="h-full w-full object-cover" />
+                          ) : null}
                           <button
                             onClick={() => handleDeletePhotoFromAlbum(album.id, photoIndex)}
-                            className="absolute top-1 right-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500/90 text-white opacity-0 transition-opacity hover:bg-red-600 group-hover:opacity-100"
-                            title="Șterge fotografie"
+                            className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-white opacity-0 transition group-hover:opacity-100"
+                            title="Sterge fotografie"
                           >
-                            ✕
+                            x
                           </button>
                         </div>
                       ))}
                     </div>
 
-                    <label className="block w-full cursor-pointer rounded-lg border border-dashed border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                      ➕ Adaugă fotografie în album
+                    <label className="block w-full cursor-pointer rounded-lg border border-dashed border-rose-200 bg-rose-50/40 px-3 py-2 text-sm text-rose-700 transition hover:bg-rose-50">
+                      Adauga fotografie in album
                       <input
                         type="file"
                         accept="image/*,.jpg,.jpeg,.png,.webp"
                         className="hidden"
                         disabled={isUploading}
-                        onChange={(event) =>
-                          handlePhotoUploadToAlbum(album.id, event.target.files?.[0])
-                        }
+                        onChange={(event) => handlePhotoUploadToAlbum(album.id, event.target.files?.[0])}
                       />
                     </label>
-                    {uploadingTarget === `album-${album.id}` && (
-                      <p className="text-xs text-blue-700 dark:text-blue-300">Se incarca fotografia in acest album...</p>
-                    )}
+                    {uploadingTarget === `album-${album.id}` ? (
+                      <p className="text-xs text-blue-700">Se incarca fotografia in acest album...</p>
+                    ) : null}
                   </div>
 
                   <button
                     onClick={() => handleDeleteAlbum(album.id)}
-                    className="w-full rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-100 dark:border-red-800 dark:bg-red-950 dark:text-red-300 dark:hover:bg-red-900"
+                    className="w-full rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
                   >
-                    🗑️ Șterge întregul album
+                    Sterge album
                   </button>
                 </div>
               </article>
@@ -488,103 +443,45 @@ export default function AdminPage() {
 
         <section id="fotograf-admin" className="space-y-5">
           <div>
-            <h2 className="text-2xl font-semibold tracking-tight">Fotograful (Admin)</h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Adaugă pozele fotografului care apar în partea de jos a paginii principale.
-            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Fotograf</h2>
+            <p className={siteConfig.theme.mutedText}>Actualizeaza imaginile folosite in sectiunea Fotograf.</p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
             {content.photographerPhotos.map((photo, index) => (
-              <article
-                key={`photographer-${index}`}
-                className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900"
-              >
-                <div
-                  className="aspect-[4/5] bg-gradient-to-br from-gray-50 to-gray-100/80 dark:from-gray-900/70 dark:to-gray-800/60"
-                  style={
-                    photo
-                      ? {
-                        backgroundImage: `url(${photo})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }
-                      : undefined
-                  }
-                />
+              <article key={`photographer-${index}`} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+                <div className="aspect-[4/5] border-b border-rose-100 bg-slate-50">
+                  {photo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={photo} alt={`Fotograf ${index + 1}`} className="h-full w-full object-cover" />
+                  ) : (
+                    <div className={`h-full w-full ${siteConfig.theme.softSurface}`} />
+                  )}
+                </div>
                 <div className="space-y-3 p-4">
                   <input
                     value={photo}
-                    onChange={(event) =>
-                      handlePhotographerPhotoChange(index, event.target.value)
-                    }
-                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm outline-none ring-0 placeholder:text-gray-400 focus:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:placeholder:text-gray-500"
-                    placeholder="URL poză fotograf"
+                    onChange={(event) => handlePhotographerPhotoChange(index, event.target.value)}
+                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
+                    placeholder="URL poza fotograf"
                   />
-                  <label className="block w-full cursor-pointer rounded-lg border border-dashed border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                    Alege poză din calculator
+                  <label className="block w-full cursor-pointer rounded-lg border border-dashed border-rose-200 bg-rose-50/40 px-3 py-2 text-sm text-rose-700 transition hover:bg-rose-50">
+                    Alege poza din calculator
                     <input
                       type="file"
                       accept="image/*,.jpg,.jpeg,.png,.webp"
                       className="hidden"
                       disabled={isUploading}
-                      onChange={(event) =>
-                        handlePhotographerPhotoUpload(index, event.target.files?.[0])
-                      }
+                      onChange={(event) => handlePhotographerPhotoUpload(index, event.target.files?.[0])}
                     />
                   </label>
-                  {uploadingTarget === `photographer-${index}` && (
-                    <p className="text-xs text-blue-700 dark:text-blue-300">Se incarca poza fotografului...</p>
-                  )}
-                  <div className="text-xs text-gray-600/70 dark:text-gray-400/70">
-                    Poză fotograf #{index + 1}
-                  </div>
+                  {uploadingTarget === `photographer-${index}` ? (
+                    <p className="text-xs text-blue-700">Se incarca poza fotografului...</p>
+                  ) : null}
                 </div>
               </article>
             ))}
           </div>
-        </section>
-
-        <section className="space-y-5">
-          <h2 className="text-2xl font-semibold tracking-tight">Pachete</h2>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              {
-                title: "Mini",
-                details: "30 min • 10 fotografii editate",
-              },
-              {
-                title: "Classic",
-                details: "60 min • 25 fotografii editate",
-              },
-              {
-                title: "Premium",
-                details: "90 min • 40 fotografii + album",
-              },
-            ].map((plan) => (
-              <article
-                key={plan.title}
-                className="rounded-2xl border border-gray-200 bg-white p-6 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900"
-              >
-                <h3 className="text-lg font-semibold">{plan.title}</h3>
-                <p className="mt-2 text-gray-600 dark:text-gray-300">
-                  {plan.details}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section
-          id="contact"
-          className="rounded-3xl border border-gray-200 bg-white p-8 text-center backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900"
-        >
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Hai să planificăm ședința foto
-          </h2>
-          <p className="mt-3 text-gray-600 dark:text-gray-300">
-            Scrie-ne la contact@littlelights.ro sau sună la 07xx xxx xxx.
-          </p>
         </section>
       </main>
     </div>
