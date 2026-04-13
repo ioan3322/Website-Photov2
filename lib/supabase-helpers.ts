@@ -175,6 +175,7 @@ export function createNoopSupabaseClient(label: string) {
   const query = createNoopQuery(label);
   const storageBucket = createNoopStorageBucket(label);
   const auth = createNoopAuth(label);
+  let proxyClient: Record<string, unknown>;
 
   const baseClient = {
     auth,
@@ -216,7 +217,7 @@ export function createNoopSupabaseClient(label: string) {
     getChannels: () => [],
   };
 
-  return new Proxy(baseClient as Record<string, unknown>, {
+  proxyClient = new Proxy(baseClient as Record<string, unknown>, {
     get(target, prop) {
       if (prop in target) {
         return target[prop as keyof typeof target];
@@ -226,7 +227,9 @@ export function createNoopSupabaseClient(label: string) {
         return undefined;
       }
 
-      return (..._args: unknown[]) => proxy;
+      return (..._args: unknown[]) => proxyClient;
     },
   });
+
+  return proxyClient;
 }
