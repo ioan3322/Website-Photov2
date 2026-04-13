@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/middleware";
 
-function shouldSkipMiddleware(pathname: string) {
+function shouldSkipProxy(pathname: string) {
   if (!pathname || typeof pathname !== "string") {
     return true;
   }
@@ -17,16 +17,16 @@ function shouldSkipMiddleware(pathname: string) {
   return /\.[a-z0-9]+$/i.test(pathname);
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   try {
     if (!request || !request.nextUrl) {
-      console.error("[middleware] Invalid request object");
+      console.error("[proxy] Invalid request object");
       return NextResponse.next();
     }
 
     const pathname = request.nextUrl.pathname ?? "";
 
-    if (shouldSkipMiddleware(pathname) || pathname === "/favicon.ico") {
+    if (shouldSkipProxy(pathname) || pathname === "/favicon.ico") {
       return NextResponse.next();
     }
 
@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
         const { error } = await authClient.auth.getUser();
 
         if (error) {
-          console.error("[middleware] supabase.auth.getUser returned error", {
+          console.error("[proxy] supabase.auth.getUser returned error", {
             message: error.message,
             name: error.name,
             status: (error as { status?: number }).status,
@@ -53,12 +53,12 @@ export async function middleware(request: NextRequest) {
         }
       }
     } catch (error) {
-      console.error("[middleware] supabase.auth.getUser threw", error);
+      console.error("[proxy] supabase.auth.getUser threw", error);
     }
 
     return supabaseResponse ?? NextResponse.next();
   } catch (error) {
-    console.error("[middleware] Unhandled middleware failure", error);
+    console.error("[proxy] Unhandled proxy failure", error);
     return NextResponse.next();
   }
 }
