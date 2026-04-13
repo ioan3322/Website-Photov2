@@ -3,7 +3,7 @@ export const siteConfig = {
   theme: {
     pageBackground: "min-h-screen bg-white text-slate-800",
     nav:
-      "sticky top-0 z-40 border-b border-black-600 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85",
+      "sticky bottom-0 z-40 border-b border-black-600 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85",
     navWrap: "mx-auto w-full max-w-4xl px-4 py-3 sm:px-8",
     card: "rounded-2xl border border-rose-100 bg-white shadow-sm",
     navItem:

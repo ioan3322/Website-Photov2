@@ -1,23 +1,41 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { createNoopSupabaseClient, readSupabaseEnv, resolveSupabaseKey } from '@/lib/supabase-helpers';
 
 let cachedClient: SupabaseClient | null = null;
 
 export function getSupabaseServerClient() {
-  if (cachedClient) return cachedClient;
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serverKey =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL');
+  if (cachedClient) {
+    return cachedClient;
   }
 
-  if (!serverKey) {
-    throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY or NEXT_PUBLIC_SUPABASE_ANON_KEY');
-  }
+  try {
+    const env = readSupabaseEnv();
+    const supabaseUrl = env.hasValidUrl ? env.url : '';
+    const serverKey = resolveSupabaseKey({ preferServiceRole: true, env });
 
-  cachedClient = createClient(supabaseUrl, serverKey);
-  return cachedClient;
+    if (!supabaseUrl || !serverKey) {
+      console.error('[supabase-server] Missing or invalid environment variables', {
+        hasUrl: env.hasValidUrl,
+        hasServiceRoleKey: env.hasValidServiceRoleKey,
+        hasAnonKey: env.hasValidAnonKey,
+      });
+
+      cachedClient = createNoopSupabaseClient('[supabase-server]') as unknown as SupabaseClient;
+      return cachedClient;
+    }
+
+    cachedClient = createClient(supabaseUrl, serverKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+        detectSessionInUrl: false,
+      },
+    });
+
+    return cachedClient;
+  } catch (error) {
+    console.error('[supabase-server] Failed to initialize server client', error);
+    cachedClient = createNoopSupabaseClient('[supabase-server]') as unknown as SupabaseClient;
+    return cachedClient;
+  }
 }

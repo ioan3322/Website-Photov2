@@ -1,81 +1,53 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useMemo } from "react";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
 
-type HomeSlide = {
+type HomeCard = {
   id: string;
   imageUrl: string;
   title: string;
   caption: string;
+  kind: "photo" | "album";
+  href?: string;
 };
 
 export default function AcasaPage() {
   const { content } = useStudioContent();
-  const [activeSlide, setActiveSlide] = useState(0);
 
-  const slides = useMemo<HomeSlide[]>(() => {
-    const gallerySlides = content.gallery
-      .filter((item) => item.imageUrl.trim().length > 0)
-      .map((item, index) => ({
-        id: `gallery-${item.id}-${index}`,
+  const cards = useMemo<HomeCard[]>(() => {
+    const galleryCards = content.gallery
+      .filter((item) => (item.showOnHome ?? true) && item.imageUrl.trim().length > 0)
+      .map((item) => ({
+        id: `gallery-${item.id}`,
         imageUrl: item.imageUrl,
-        title: item.title || `Galerie ${index + 1}`,
+        title: item.title || "Fotografie",
         caption: item.caption || "Fotografie selectata din galerie",
+        kind: "photo" as const,
       }));
 
-    const albumSlides = content.albums.flatMap((album) =>
-      album.photos
-        .filter((photo) => photo.trim().length > 0)
-        .map((photo, photoIndex) => ({
-          id: `album-${album.id}-${photoIndex}`,
-          imageUrl: photo,
-          title: album.title || `Album ${photoIndex + 1}`,
-          caption: album.description || "Fotografie selectata din album",
-        }))
-    );
+    const albumCards = content.albums
+      .filter((album) => (album.showOnHome ?? true) && album.photos.some((photo) => photo.trim().length > 0))
+      .map((album) => ({
+        id: `album-${album.id}`,
+        imageUrl: album.photos.find((photo) => photo.trim().length > 0) || "",
+        title: album.title || "Album",
+        caption: album.description || "Album selectat pentru pagina Home",
+        kind: "album" as const,
+        href: "/albume",
+      }));
 
-    return [...gallerySlides, ...albumSlides];
+    return [...galleryCards, ...albumCards];
   }, [content]);
-
-  useEffect(() => {
-    if (slides.length === 0) {
-      setActiveSlide(0);
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 3500);
-
-    return () => clearInterval(timer);
-  }, [slides.length]);
-
-  useEffect(() => {
-    if (activeSlide > slides.length - 1) {
-      setActiveSlide(0);
-    }
-  }, [activeSlide, slides.length]);
-
-  const goToPrev = () => {
-    if (slides.length === 0) return;
-    setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
-  const goToNext = () => {
-    if (slides.length === 0) return;
-    setActiveSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const currentSlide = slides[activeSlide];
 
   return (
     <SiteShell
       title="Acasa"
       description="Studio foto pentru bebelusi, cu sedinte in siguranta si cadre naturale."
-      containerClassName="mx-auto grid w-full max-w-6xl gap-8 px-6 py-12 md:grid-cols-2"
+      containerClassName="mx-auto w-full max-w-6xl px-6 py-12"
     >
       <section className="space-y-5">
         <p className={siteConfig.theme.badge}>
@@ -89,55 +61,43 @@ export default function AcasaPage() {
         </p>
       </section>
 
-      <section className="relative overflow-hidden rounded-3xl border border-rose-100 bg-white p-3 shadow-sm">
-        {currentSlide ? (
-          <div className="space-y-4">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-slate-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={currentSlide.imageUrl}
-                alt={currentSlide.title}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-4 text-white">
-                <p className="text-sm font-semibold">{currentSlide.title}</p>
-                <p className="text-xs text-white/90">{currentSlide.caption}</p>
-              </div>
-            </div>
+      <section className="mt-8">
+        {cards.length > 0 ? (
+          <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
+            {cards.map((card) => {
+              const CardBody = (
+                <article className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+                  <div className="relative overflow-hidden bg-slate-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={card.imageUrl} alt={card.title} className="h-auto w-full object-cover" loading="lazy" />
+                    {card.kind === "album" ? (
+                      <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2 py-1 text-xs font-semibold text-rose-700">
+                        Album
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="space-y-1 p-4">
+                    <h2 className="text-lg font-semibold text-slate-900">{card.title}</h2>
+                    <p className={`text-sm ${siteConfig.theme.mutedText}`}>{card.caption}</p>
+                  </div>
+                </article>
+              );
 
-            <div className="flex items-center justify-between gap-2">
-              <button
-                type="button"
-                onClick={goToPrev}
-                className="rounded-full border border-rose-200 px-3 py-1 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
-              >
-                Inapoi
-              </button>
+              if (card.href) {
+                return (
+                  <Link key={card.id} href={card.href} className="block">
+                    {CardBody}
+                  </Link>
+                );
+              }
 
-              <div className="flex items-center gap-1">
-                {slides.slice(0, 8).map((slide, index) => (
-                  <button
-                    key={slide.id}
-                    type="button"
-                    onClick={() => setActiveSlide(index)}
-                    className={`h-2.5 w-2.5 rounded-full transition ${activeSlide === index ? "bg-rose-600" : "bg-rose-200 hover:bg-rose-300"
-                      }`}
-                    aria-label={`Slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-
-              <button
-                type="button"
-                onClick={goToNext}
-                className="rounded-full border border-rose-200 px-3 py-1 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
-              >
-                Inainte
-              </button>
-            </div>
+              return <div key={card.id}>{CardBody}</div>;
+            })}
           </div>
         ) : (
-          <div className={`aspect-[4/5] w-full rounded-2xl ${siteConfig.theme.softSurface}`} />
+          <p className={`rounded-xl ${siteConfig.theme.softSurface} p-4 text-sm ${siteConfig.theme.mutedText}`}>
+            Nu exista inca elemente bifate pentru Home. Selecteaza fotografii sau albume din panoul Admin.
+          </p>
         )}
       </section>
     </SiteShell>

@@ -1,41 +1,56 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/middleware";
 
+function shouldSkipMiddleware(pathname: string) {
+  if (!pathname || typeof pathname !== "string") {
+    return true;
+  }
+
+  if (pathname.startsWith("/_next/")) {
+    return true;
+  }
+
+  if (pathname.startsWith("/api/")) {
+    return true;
+  }
+
+  return /\.[a-z0-9]+$/i.test(pathname);
+}
+
 export async function middleware(request: NextRequest) {
-  // Middleware must never crash in Edge runtime.
   try {
     if (!request || !request.nextUrl) {
       console.error("[middleware] Invalid request object");
       return NextResponse.next();
     }
 
-    const { pathname } = request.nextUrl;
+    const pathname = request.nextUrl.pathname ?? "";
 
-    // Defensive skip: avoid touching static/internal routes and prevent accidental loops.
-    if (
-      pathname.startsWith("/_next") ||
-      pathname === "/favicon.ico" ||
-      /\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|map|txt)$/i.test(pathname)
-    ) {
+    if (shouldSkipMiddleware(pathname) || pathname === "/favicon.ico") {
       return NextResponse.next();
     }
 
     const { supabase, supabaseResponse } = createClient(request);
 
-    if (!supabase) {
-      // Env vars missing or client init failed; continue safely.
-      return supabaseResponse ?? NextResponse.next();
-    }
-
     try {
-      // Refresh auth session cookie if present; do not fail request if auth check errors.
-      const { error } = await supabase.auth.getUser();
-      if (error) {
-        console.error("[middleware] supabase.auth.getUser returned error", {
-          message: error.message,
-          name: error.name,
-          status: (error as { status?: number }).status,
-        });
+      const authClient = supabase as {
+        auth?: {
+          getUser?: () => Promise<{
+            error: { message: string; name?: string; status?: number } | null;
+          }>;
+        };
+      };
+
+      if (authClient.auth?.getUser) {
+        const { error } = await authClient.auth.getUser();
+
+        if (error) {
+          console.error("[middleware] supabase.auth.getUser returned error", {
+            message: error.message,
+            name: error.name,
+            status: (error as { status?: number }).status,
+          });
+        }
       }
     } catch (error) {
       console.error("[middleware] supabase.auth.getUser threw", error);
@@ -44,11 +59,10 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse ?? NextResponse.next();
   } catch (error) {
     console.error("[middleware] Unhandled middleware failure", error);
-    // Last-resort fallback to guarantee response in production.
     return NextResponse.next();
   }
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+  matcher: ["/((?!api/|_next/|.*\\.[^/]+$).*)"],
 };

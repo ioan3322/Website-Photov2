@@ -1,15 +1,20 @@
-import { createClient } from '@supabase/supabase-js';
+import { createBrowserClient } from '@supabase/ssr';
+import { createNoopSupabaseClient, readSupabaseEnv, resolveSupabaseKey } from '@/lib/supabase-helpers';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const env = readSupabaseEnv();
+const supabaseUrl = env.hasValidUrl ? env.url : '';
+const supabaseKey = resolveSupabaseKey({ env });
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = supabaseUrl && supabaseKey
+  ? createBrowserClient(supabaseUrl, supabaseKey)
+  : createNoopSupabaseClient('[lib/supabase]');
 
 export type GalleryItem = {
   id: string;
   title: string;
   caption: string;
   imageUrl: string;
+  showOnHome?: boolean;
 };
 
 export type AlbumItem = {
@@ -17,6 +22,7 @@ export type AlbumItem = {
   title: string;
   description: string;
   photos: string[];
+  showOnHome?: boolean;
 };
 
 export type StudioContent = {

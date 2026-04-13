@@ -19,7 +19,7 @@ export default function SiteShell({
     <div className={siteConfig.theme.pageBackground}>
       <SiteNav />
       <main className={containerClassName || siteConfig.theme.contentWrap}>
-        <header className="mb-8">
+        <header className="mb-8 text-center">
           <h1 className="text-3xl font-semibold tracking-tight text-slate-900">{title}</h1>
           {description ? (
             <p className={`mt-2 ${siteConfig.theme.mutedText}`}>{description}</p>

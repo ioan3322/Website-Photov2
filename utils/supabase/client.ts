@@ -1,6 +1,24 @@
 import { createBrowserClient } from "@supabase/ssr";
+import { createNoopSupabaseClient, readSupabaseEnv, resolveSupabaseKey } from "@/lib/supabase-helpers";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+export const createClient = () => {
+  try {
+    const env = readSupabaseEnv();
+    const supabaseUrl = env.hasValidUrl ? env.url : "";
+    const supabaseKey = resolveSupabaseKey({ env });
 
-export const createClient = () => createBrowserClient(supabaseUrl!, supabaseKey!);
+    if (!supabaseUrl || !supabaseKey) {
+      console.error("[supabase][client] Missing or invalid environment variables", {
+        hasUrl: env.hasValidUrl,
+        hasAnonKey: env.hasValidAnonKey,
+      });
+
+      return createNoopSupabaseClient("[supabase][client]");
+    }
+
+    return createBrowserClient(supabaseUrl, supabaseKey);
+  } catch (error) {
+    console.error("[supabase][client] Failed to initialize browser client", error);
+    return createNoopSupabaseClient("[supabase][client]");
+  }
+};

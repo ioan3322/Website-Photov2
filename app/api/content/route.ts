@@ -6,14 +6,9 @@ import { dirname, join } from 'path';
 const CONTENT_FILE = join(process.cwd(), 'data', 'studio-content.json');
 
 const defaultContent = {
-  gallery: Array(6).fill(null).map((_, i) => ({
-    id: `gallery-${i}`,
-    title: `Fotografie ${i + 1}`,
-    caption: `Cadru de prezentare ${i + 1}`,
-    imageUrl: '',
-  })),
+  gallery: [],
   albums: [],
-  photographerPhotos: Array(2).fill(''),
+  photographerPhotos: [],
 };
 
 async function readLocalContent() {

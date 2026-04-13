@@ -4,14 +4,9 @@ import type { StudioContent } from '@/lib/supabase';
 const STORAGE_KEY = 'babyStudioContentV2';
 
 const defaultContent: StudioContent = {
-  gallery: Array(6).fill(null).map((_, i) => ({
-    id: `gallery-${i}`,
-    title: `Fotografie ${i + 1}`,
-    caption: `Cadru de prezentare ${i + 1}`,
-    imageUrl: '',
-  })),
+  gallery: [],
   albums: [],
-  photographerPhotos: Array(2).fill(''),
+  photographerPhotos: [],
 };
 
 export function useStudioContent() {

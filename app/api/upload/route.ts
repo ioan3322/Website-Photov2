@@ -5,9 +5,28 @@ import { dirname, join } from 'path';
 
 const DEFAULT_BUCKET = 'studio-images';
 
+function slugifyFileName(input: string) {
+  return input
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80);
+}
+
 function getFileExtension(filename: string) {
   const parts = filename.split('.');
   return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : 'jpg';
+}
+
+function getBaseName(filename: string) {
+  const dotIndex = filename.lastIndexOf('.');
+  if (dotIndex <= 0) {
+    return filename;
+  }
+
+  return filename.slice(0, dotIndex);
 }
 
 async function saveFileLocally(fileValue: File, objectPath: string) {
@@ -24,6 +43,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const fileValue = formData.get('file');
     const folderValue = formData.get('folder');
+    const fileNameValue = formData.get('fileName');
 
     if (!(fileValue instanceof File)) {
       return NextResponse.json({ error: 'Missing file.' }, { status: 400 });
@@ -37,8 +57,13 @@ export async function POST(request: NextRequest) {
       ? folderValue.trim()
       : 'general';
 
+    const preferredName = typeof fileNameValue === 'string' && fileNameValue.trim().length > 0
+      ? fileNameValue.trim()
+      : getBaseName(fileValue.name);
+
     const ext = getFileExtension(fileValue.name);
-    const objectPath = `${folder}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+    const safeName = slugifyFileName(preferredName) || 'image';
+    const objectPath = `${folder}/${safeName}-${Date.now()}-${crypto.randomUUID()}.${ext}`;
     const bucket =
       process.env.SUPABASE_STORAGE_BUCKET ||
       process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET ||
@@ -103,13 +128,19 @@ export async function POST(request: NextRequest) {
         const formData = await request.clone().formData();
         const fileValue = formData.get('file');
         const folderValue = formData.get('folder');
+        const fileNameValue = formData.get('fileName');
 
         if (fileValue instanceof File) {
           const folder = typeof folderValue === 'string' && folderValue.trim().length > 0
             ? folderValue.trim()
             : 'general';
+
+          const preferredName = typeof fileNameValue === 'string' && fileNameValue.trim().length > 0
+            ? fileNameValue.trim()
+            : getBaseName(fileValue.name);
           const ext = getFileExtension(fileValue.name);
-          const objectPath = `${folder}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+          const safeName = slugifyFileName(preferredName) || 'image';
+          const objectPath = `${folder}/${safeName}-${Date.now()}-${crypto.randomUUID()}.${ext}`;
           const localUrl = await saveFileLocally(fileValue, objectPath);
 
           return NextResponse.json(

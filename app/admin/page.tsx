@@ -10,6 +10,7 @@ type GalleryItem = {
   title: string;
   caption: string;
   imageUrl: string;
+  showOnHome?: boolean;
 };
 
 type AlbumItem = {
@@ -17,6 +18,7 @@ type AlbumItem = {
   title: string;
   description: string;
   photos: string[];
+  showOnHome?: boolean;
 };
 
 
@@ -41,10 +43,13 @@ export default function AdminPage() {
       ? error.message
       : "A aparut o eroare la incarcarea imaginii.";
 
-  const uploadImageToServer = async (file: File, folder: string) => {
+  const uploadImageToServer = async (file: File, folder: string, fileName?: string) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("folder", folder);
+    if (fileName && fileName.trim()) {
+      formData.append("fileName", fileName.trim());
+    }
 
     try {
       const response = await fetch("/api/upload", {
@@ -79,6 +84,38 @@ export default function AdminPage() {
     });
   };
 
+  const handleAddGalleryItem = () => {
+    setContent((prev) => ({
+      ...prev,
+      gallery: [
+        ...prev.gallery,
+        {
+          id: `gallery-${Date.now()}`,
+          title: `Fotografie ${prev.gallery.length + 1}`,
+          caption: "Descriere fotografie",
+          imageUrl: "",
+          showOnHome: true,
+        },
+      ],
+    }));
+  };
+
+  const handleGalleryHomeToggle = (index: number, checked: boolean) => {
+    setContent((prev) => {
+      const next = { ...prev };
+      next.gallery = [...prev.gallery];
+      next.gallery[index] = { ...next.gallery[index], showOnHome: checked };
+      return next;
+    });
+  };
+
+  const handleDeleteGalleryItem = (index: number) => {
+    setContent((prev) => ({
+      ...prev,
+      gallery: prev.gallery.filter((_, currentIndex) => currentIndex !== index),
+    }));
+  };
+
   const handleGalleryImageUpload = async (index: number, file?: File) => {
     if (!file || !file.type.startsWith("image/")) return;
     const target = `gallery-${index}`;
@@ -87,7 +124,8 @@ export default function AdminPage() {
     setUploadSuccess(null);
 
     try {
-      const url = await uploadImageToServer(file, "gallery");
+      const photoName = content.gallery[index]?.title || `fotografie-${index + 1}`;
+      const url = await uploadImageToServer(file, "gallery", photoName);
       handleGalleryChange(index, "imageUrl", url);
       setUploadSuccess("Imaginea din galerie a fost incarcata cu succes.");
     } catch (error) {
@@ -119,8 +157,18 @@ export default function AdminPage() {
           title: "Album nou",
           description: "Descriere album",
           photos: [],
+          showOnHome: true,
         },
       ],
+    }));
+  };
+
+  const handleAlbumHomeToggle = (id: string, checked: boolean) => {
+    setContent((prev) => ({
+      ...prev,
+      albums: prev.albums.map((album) =>
+        album.id === id ? { ...album, showOnHome: checked } : album
+      ),
     }));
   };
 
@@ -142,17 +190,48 @@ export default function AdminPage() {
     }));
   };
 
-  const handlePhotoUploadToAlbum = async (albumId: string, file?: File) => {
-    if (!file || !file.type.startsWith("image/")) return;
+  const handleAddPhotosToAlbum = (albumId: string, photoUrls: string[]) => {
+    if (photoUrls.length === 0) return;
+
+    setContent((prev) => ({
+      ...prev,
+      albums: prev.albums.map((album) =>
+        album.id === albumId
+          ? { ...album, photos: [...album.photos, ...photoUrls] }
+          : album
+      ),
+    }));
+  };
+
+  const handlePhotoUploadToAlbum = async (albumId: string, files?: FileList | File[]) => {
+    const selectedFiles = Array.from(files || []).filter((file) => file.type.startsWith("image/"));
+    if (selectedFiles.length === 0) return;
+
     const target = `album-${albumId}`;
     setUploadingTarget(target);
     setUploadError(null);
     setUploadSuccess(null);
 
     try {
-      const url = await uploadImageToServer(file, "albums");
-      handleAddPhotoToAlbum(albumId, url);
-      setUploadSuccess("Fotografia a fost adaugata in album.");
+      const album = content.albums.find((item) => item.id === albumId);
+      const baseIndex = album?.photos.length ?? 0;
+      const uploadedUrls: string[] = [];
+
+      for (const [index, file] of selectedFiles.entries()) {
+        const photoName = album?.title
+          ? `${album.title}-foto-${baseIndex + index + 1}`
+          : `album-${Date.now()}-${index + 1}`;
+
+        const url = await uploadImageToServer(file, "albums", photoName);
+        uploadedUrls.push(url);
+      }
+
+      handleAddPhotosToAlbum(albumId, uploadedUrls);
+      setUploadSuccess(
+        uploadedUrls.length === 1
+          ? "Fotografia a fost adaugata in album."
+          : `${uploadedUrls.length} fotografii au fost adaugate in album.`,
+      );
     } catch (error) {
       setUploadError(getErrorMessage(error));
       console.error("Album image upload failed:", error);
@@ -190,7 +269,7 @@ export default function AdminPage() {
     setUploadSuccess(null);
 
     try {
-      const url = await uploadImageToServer(file, "photographer");
+      const url = await uploadImageToServer(file, "photographer", `fotograf-${index + 1}`);
       handlePhotographerPhotoChange(index, url);
       setUploadSuccess("Poza fotografului a fost incarcata cu succes.");
     } catch (error) {
@@ -199,6 +278,20 @@ export default function AdminPage() {
     } finally {
       setUploadingTarget(null);
     }
+  };
+
+  const handleAddPhotographerPhoto = () => {
+    setContent((prev) => ({
+      ...prev,
+      photographerPhotos: [...prev.photographerPhotos, ""],
+    }));
+  };
+
+  const handleDeletePhotographerPhoto = (index: number) => {
+    setContent((prev) => ({
+      ...prev,
+      photographerPhotos: prev.photographerPhotos.filter((_, currentIndex) => currentIndex !== index),
+    }));
   };
 
   useEffect(() => {
@@ -305,14 +398,14 @@ export default function AdminPage() {
         </section>
 
         <section id="galerie-admin" className="space-y-5">
-          <div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Galerie</h2>
             <p className={siteConfig.theme.mutedText}>Editeaza titlu, descriere, URL sau incarca imagine noua.</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {content.gallery.map((item, index) => (
-              <article key={`${item.title}-${index}`} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+              <article key={item.id || `${item.title}-${index}`} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
                 <div className="aspect-[4/5] border-b border-rose-100 bg-slate-50">
                   {item.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -323,12 +416,24 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-3 p-4">
-                  <input
-                    value={item.title}
-                    onChange={(event) => handleGalleryChange(index, "title", event.target.value)}
-                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
-                    placeholder="Titlu"
-                  />
+                  <label className="flex items-center gap-2 rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={item.showOnHome ?? true}
+                      onChange={(event) => handleGalleryHomeToggle(index, event.target.checked)}
+                      className="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-300"
+                    />
+                    Afiseaza pe Home
+                  </label>
+                  <label className="space-y-1 text-xs font-medium uppercase tracking-wide text-slate-500">
+                    Nume fotografie
+                    <input
+                      value={item.title}
+                      onChange={(event) => handleGalleryChange(index, "title", event.target.value)}
+                      className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
+                      placeholder="Ex: Portret la lumina naturala"
+                    />
+                  </label>
                   <input
                     value={item.caption}
                     onChange={(event) => handleGalleryChange(index, "caption", event.target.value)}
@@ -354,9 +459,26 @@ export default function AdminPage() {
                   {uploadingTarget === `gallery-${index}` ? (
                     <p className="text-xs text-blue-700">Se incarca aceasta imagine...</p>
                   ) : null}
+                  <button
+                    onClick={() => handleDeleteGalleryItem(index)}
+                    className="w-full rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                  >
+                    Sterge fotografia
+                  </button>
                 </div>
               </article>
             ))}
+
+            <button
+              type="button"
+              onClick={handleAddGalleryItem}
+              className="flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-rose-200 bg-white text-rose-500 transition hover:border-rose-300 hover:bg-rose-50"
+              aria-label="Adauga fotografie"
+              title="Adauga fotografie"
+            >
+              <span className="text-5xl font-light leading-none">+</span>
+              <span className="text-sm font-semibold text-rose-700">Adauga fotografie</span>
+            </button>
           </div>
         </section>
 
@@ -366,18 +488,21 @@ export default function AdminPage() {
               <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Albume</h2>
               <p className={siteConfig.theme.mutedText}>Adauga, editeaza sau sterge albume si fotografiile lor.</p>
             </div>
-            <button
-              onClick={handleAddAlbum}
-              className="rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-rose-700"
-            >
-              Adauga album
-            </button>
           </div>
 
           <div className="space-y-6">
             {content.albums.map((album) => (
               <article key={album.id} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
                 <div className="space-y-4 p-6">
+                  <label className="flex items-center gap-2 rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={album.showOnHome ?? true}
+                      onChange={(event) => handleAlbumHomeToggle(album.id, event.target.checked)}
+                      className="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-300"
+                    />
+                    Afiseaza albumul pe Home
+                  </label>
                   <div className="space-y-3">
                     <input
                       value={album.title}
@@ -412,18 +537,20 @@ export default function AdminPage() {
                           </button>
                         </div>
                       ))}
-                    </div>
 
-                    <label className="block w-full cursor-pointer rounded-lg border border-dashed border-rose-200 bg-rose-50/40 px-3 py-2 text-sm text-rose-700 transition hover:bg-rose-50">
-                      Adauga fotografie in album
-                      <input
-                        type="file"
-                        accept="image/*,.jpg,.jpeg,.png,.webp"
-                        className="hidden"
-                        disabled={isUploading}
-                        onChange={(event) => handlePhotoUploadToAlbum(album.id, event.target.files?.[0])}
-                      />
-                    </label>
+                      <label className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed border-rose-200 bg-rose-50/40 text-rose-500 transition hover:border-rose-300 hover:bg-rose-100/50">
+                        <span className="text-4xl font-light leading-none">+</span>
+                        <span className="px-2 text-center text-xs font-semibold text-rose-700">Adauga fotografie</span>
+                        <input
+                          type="file"
+                          accept="image/*,.jpg,.jpeg,.png,.webp"
+                          multiple
+                          className="hidden"
+                          disabled={isUploading}
+                          onChange={(event) => handlePhotoUploadToAlbum(album.id, event.target.files || undefined)}
+                        />
+                      </label>
+                    </div>
                     {uploadingTarget === `album-${album.id}` ? (
                       <p className="text-xs text-blue-700">Se incarca fotografia in acest album...</p>
                     ) : null}
@@ -438,11 +565,22 @@ export default function AdminPage() {
                 </div>
               </article>
             ))}
+
+            <button
+              type="button"
+              onClick={handleAddAlbum}
+              className="flex min-h-[180px] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-rose-200 bg-white text-rose-500 transition hover:border-rose-300 hover:bg-rose-50"
+              aria-label="Adauga album"
+              title="Adauga album"
+            >
+              <span className="text-5xl font-light leading-none">+</span>
+              <span className="text-sm font-semibold text-rose-700">Adauga album</span>
+            </button>
           </div>
         </section>
 
         <section id="fotograf-admin" className="space-y-5">
-          <div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Fotograf</h2>
             <p className={siteConfig.theme.mutedText}>Actualizeaza imaginile folosite in sectiunea Fotograf.</p>
           </div>
@@ -478,9 +616,26 @@ export default function AdminPage() {
                   {uploadingTarget === `photographer-${index}` ? (
                     <p className="text-xs text-blue-700">Se incarca poza fotografului...</p>
                   ) : null}
+                  <button
+                    onClick={() => handleDeletePhotographerPhoto(index)}
+                    className="w-full rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                  >
+                    Sterge poza
+                  </button>
                 </div>
               </article>
             ))}
+
+            <button
+              type="button"
+              onClick={handleAddPhotographerPhoto}
+              className="flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-rose-200 bg-white text-rose-500 transition hover:border-rose-300 hover:bg-rose-50"
+              aria-label="Adauga poza"
+              title="Adauga poza"
+            >
+              <span className="text-5xl font-light leading-none">+</span>
+              <span className="text-sm font-semibold text-rose-700">Adauga fotografie</span>
+            </button>
           </div>
         </section>
       </main>
