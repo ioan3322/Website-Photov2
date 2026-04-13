@@ -22,7 +22,7 @@ export function useStudioContent() {
 
         // Try to fetch from API first
         try {
-          const response = await fetch('/api/content');
+          const response = await fetch('/api/content', { cache: 'no-store' });
           if (response.ok) {
             const data = await response.json();
             setError(null);
@@ -70,14 +70,24 @@ export function useStudioContent() {
         const response = await fetch('/api/content', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          cache: 'no-store',
           body: JSON.stringify(newContent),
         });
 
         if (!response.ok) {
-          console.warn('Failed to save to database, local backup kept');
+          const payload = await response.json().catch(() => null);
+          const message =
+            payload && typeof payload.error === 'string'
+              ? payload.error
+              : 'Failed to save content to server.';
+          setError(message);
+          throw new Error(message);
         }
       } catch (apiErr) {
+        const message = apiErr instanceof Error ? apiErr.message : 'API save failed';
+        setError(message);
         console.warn('API error while saving, local backup kept:', apiErr);
+        throw apiErr;
       }
 
       return newContent;

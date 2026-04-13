@@ -3,6 +3,9 @@ import { getSupabaseServerClient } from '@/lib/supabase-server';
 import { mkdir, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const DEFAULT_BUCKET = 'studio-images';
 
 function slugifyFileName(input: string) {
@@ -37,7 +40,13 @@ async function saveFileLocally(fileValue: File, objectPath: string) {
   return `/uploads/${objectPath.replace(/\\/g, '/')}`;
 }
 
+function isProd() {
+  return process.env.NODE_ENV === 'production';
+}
+
 export async function POST(request: NextRequest) {
+  console.info('[api/upload][POST] request received');
+
   try {
     const supabase = getSupabaseServerClient();
     const formData = await request.formData();
@@ -78,23 +87,23 @@ export async function POST(request: NextRequest) {
       });
 
     if (uploadError) {
-      const isMissingBucket = /bucket.*not\s*found/i.test(uploadError.message);
+      console.error('[api/upload][POST] Supabase upload failed', {
+        bucket,
+        message: uploadError.message,
+      });
 
-      const localUrl = await saveFileLocally(fileValue, objectPath);
-
-      if (isMissingBucket) {
+      if (isProd()) {
         return NextResponse.json(
           {
-            url: localUrl,
-            path: objectPath,
-            bucket: 'local-fallback',
-            warning:
-              `Bucket not found: "${bucket}". Imaginea a fost salvata local in /public/uploads. ` +
-              'Configureaza Supabase Storage pentru persistenta in productie.',
+            error:
+              `Upload failed in Supabase Storage (${uploadError.message}). ` +
+              'Configure SUPABASE_STORAGE_BUCKET and ensure the bucket exists and is public.',
           },
-          { status: 200 },
+          { status: 500 },
         );
       }
+
+      const localUrl = await saveFileLocally(fileValue, objectPath);
 
       return NextResponse.json(
         {
@@ -102,7 +111,7 @@ export async function POST(request: NextRequest) {
           path: objectPath,
           bucket: 'local-fallback',
           warning:
-            `Upload to Supabase failed (${uploadError.message}). Imaginea a fost salvata local in /public/uploads.`,
+            `Upload to Supabase failed (${uploadError.message}). Saved locally in /public/uploads (development only).`,
         },
         { status: 200 },
       );
@@ -121,54 +130,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    const isFetchFailure = /fetch failed/i.test(message);
-
-    if (request.method === 'POST') {
-      try {
-        const formData = await request.clone().formData();
-        const fileValue = formData.get('file');
-        const folderValue = formData.get('folder');
-        const fileNameValue = formData.get('fileName');
-
-        if (fileValue instanceof File) {
-          const folder = typeof folderValue === 'string' && folderValue.trim().length > 0
-            ? folderValue.trim()
-            : 'general';
-
-          const preferredName = typeof fileNameValue === 'string' && fileNameValue.trim().length > 0
-            ? fileNameValue.trim()
-            : getBaseName(fileValue.name);
-          const ext = getFileExtension(fileValue.name);
-          const safeName = slugifyFileName(preferredName) || 'image';
-          const objectPath = `${folder}/${safeName}-${Date.now()}-${crypto.randomUUID()}.${ext}`;
-          const localUrl = await saveFileLocally(fileValue, objectPath);
-
-          return NextResponse.json(
-            {
-              url: localUrl,
-              path: objectPath,
-              bucket: 'local-fallback',
-              warning: isFetchFailure
-                ? 'Conexiunea catre Supabase a esuat. Imaginea a fost salvata local in /public/uploads.'
-                : `Upload fallback local after error: ${message}`,
-            },
-            { status: 200 },
-          );
-        }
-      } catch {
-        // Fall through to the original error response.
-      }
-    }
-
-    if (isFetchFailure) {
-      return NextResponse.json(
-        {
-          error:
-            'Conexiunea catre Supabase a esuat (fetch failed). Imaginea a fost salvata local in /public/uploads.',
-        },
-        { status: 500 },
-      );
-    }
+    console.error('[api/upload][POST] Unhandled exception', error);
 
     return NextResponse.json({ error: message }, { status: 500 });
   }

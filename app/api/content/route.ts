@@ -3,6 +3,9 @@ import { getSupabaseServerClient } from '@/lib/supabase-server';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const CONTENT_FILE = join(process.cwd(), 'data', 'studio-content.json');
 
 const defaultContent = {
@@ -12,6 +15,10 @@ const defaultContent = {
 };
 
 async function readLocalContent() {
+  if (process.env.NODE_ENV === 'production') {
+    return defaultContent;
+  }
+
   try {
     const raw = await readFile(CONTENT_FILE, 'utf8');
     return JSON.parse(raw) as typeof defaultContent;
@@ -21,11 +28,17 @@ async function readLocalContent() {
 }
 
 async function writeLocalContent(content: typeof defaultContent) {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+
   await mkdir(dirname(CONTENT_FILE), { recursive: true });
   await writeFile(CONTENT_FILE, JSON.stringify(content, null, 2), 'utf8');
 }
 
 export async function GET() {
+  console.info('[api/content][GET] request received');
+
   try {
     const supabaseServer = getSupabaseServerClient();
 
@@ -35,8 +48,20 @@ export async function GET() {
       .single();
 
     if (error && error.code !== 'PGRST116') {
+      console.error('[api/content][GET] Supabase select failed', {
+        code: error.code,
+        message: error.message,
+      });
+
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json(
+          { error: 'Failed to fetch content from database.' },
+          { status: 500 },
+        );
+      }
+
       const localContent = await readLocalContent();
-      return NextResponse.json(localContent);
+      return NextResponse.json(localContent, { status: 200 });
     }
 
     if (!data) {
@@ -44,12 +69,24 @@ export async function GET() {
 
       const { data: newData, error: insertError } = await supabaseServer
         .from('studio_content')
-        .insert([{ content: defaultContent }])
+        .upsert([{ id: 1, content: defaultContent }], { onConflict: 'id' })
         .select()
         .single();
 
       if (insertError) {
-        return NextResponse.json(defaultContent);
+        console.error('[api/content][GET] Supabase upsert failed', {
+          code: insertError.code,
+          message: insertError.message,
+        });
+
+        if (process.env.NODE_ENV === 'production') {
+          return NextResponse.json(
+            { error: 'Failed to initialize content in database.' },
+            { status: 500 },
+          );
+        }
+
+        return NextResponse.json(defaultContent, { status: 200 });
       }
 
       return NextResponse.json(newData.content);
@@ -57,12 +94,20 @@ export async function GET() {
 
     return NextResponse.json(data.content);
   } catch (error) {
+    console.error('[api/content][GET] Unhandled exception', error);
+
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json({ error: 'Unhandled server error.' }, { status: 500 });
+    }
+
     const localContent = await readLocalContent();
-    return NextResponse.json(localContent);
+    return NextResponse.json(localContent, { status: 200 });
   }
 }
 
 export async function POST(request: NextRequest) {
+  console.info('[api/content][POST] request received');
+
   let content: typeof defaultContent | null = null;
 
   try {
@@ -74,21 +119,30 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await supabaseServer
       .from('studio_content')
-      .update({ content: parsedContent })
-      .eq('id', 1)
+      .upsert([{ id: 1, content: parsedContent }], { onConflict: 'id' })
       .select()
       .single();
 
     if (error) {
-      return NextResponse.json(parsedContent);
+      console.error('[api/content][POST] Supabase upsert failed', {
+        code: error.code,
+        message: error.message,
+      });
+
+      return NextResponse.json(
+        { error: 'Failed to persist content to database.' },
+        { status: 500 },
+      );
     }
 
     return NextResponse.json(data.content);
   } catch (error) {
-    if (content) {
-      return NextResponse.json(content);
+    console.error('[api/content][POST] Unhandled exception', error);
+
+    if (content && process.env.NODE_ENV !== 'production') {
+      return NextResponse.json(content, { status: 200 });
     }
 
-    return NextResponse.json(defaultContent);
+    return NextResponse.json({ error: 'Unhandled server error.' }, { status: 500 });
   }
 }
