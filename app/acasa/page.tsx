@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
@@ -15,8 +15,29 @@ type HomeCard = {
   href?: string;
 };
 
+type FeaturedAlbum = {
+  id: string;
+  title: string;
+  description: string;
+  photos: string[];
+};
+
 export default function AcasaPage() {
   const { content } = useStudioContent();
+  const [tiltByAlbum, setTiltByAlbum] = useState<Record<string, { rotateX: number; rotateY: number }>>({});
+  const [fullscreenAlbum, setFullscreenAlbum] = useState<{ albumId: string; photoIndex: number } | null>(null);
+
+  const featuredAlbums = useMemo<FeaturedAlbum[]>(() => {
+    return content.albums
+      .filter((album) => (album.showOnHome ?? true) && album.photos.some((photo) => photo.trim().length > 0))
+      .slice(0, 3)
+      .map((album) => ({
+        id: album.id,
+        title: album.title || "Album",
+        description: album.description || "Album selectat pentru pagina Home",
+        photos: album.photos.filter((photo) => photo.trim().length > 0),
+      }));
+  }, [content.albums]);
 
   const cards = useMemo<HomeCard[]>(() => {
     const galleryCards = content.gallery
@@ -29,19 +50,101 @@ export default function AcasaPage() {
         kind: "photo" as const,
       }));
 
-    const albumCards = content.albums
-      .filter((album) => (album.showOnHome ?? true) && album.photos.some((photo) => photo.trim().length > 0))
-      .map((album) => ({
-        id: `album-${album.id}`,
-        imageUrl: album.photos.find((photo) => photo.trim().length > 0) || "",
-        title: album.title || "Album",
-        caption: album.description || "Album selectat pentru pagina Home",
-        kind: "album" as const,
-        href: "/albume",
-      }));
-
-    return [...galleryCards, ...albumCards];
+    return galleryCards;
   }, [content]);
+
+  const activeFullscreenAlbum = fullscreenAlbum
+    ? featuredAlbums.find((album) => album.id === fullscreenAlbum.albumId)
+    : null;
+  const activeFullscreenPhoto = activeFullscreenAlbum?.photos[fullscreenAlbum?.photoIndex ?? -1];
+
+  const openAlbumFullscreen = (albumId: string) => {
+    setFullscreenAlbum({ albumId, photoIndex: 0 });
+  };
+
+  const closeAlbumFullscreen = () => {
+    setFullscreenAlbum(null);
+  };
+
+  const goToPrevPhoto = () => {
+    setFullscreenAlbum((prev) => {
+      if (!prev) {
+        return null;
+      }
+
+      const album = featuredAlbums.find((item) => item.id === prev.albumId);
+      if (!album || album.photos.length === 0) {
+        return null;
+      }
+
+      return {
+        ...prev,
+        photoIndex: (prev.photoIndex - 1 + album.photos.length) % album.photos.length,
+      };
+    });
+  };
+
+  const goToNextPhoto = () => {
+    setFullscreenAlbum((prev) => {
+      if (!prev) {
+        return null;
+      }
+
+      const album = featuredAlbums.find((item) => item.id === prev.albumId);
+      if (!album || album.photos.length === 0) {
+        return null;
+      }
+
+      return {
+        ...prev,
+        photoIndex: (prev.photoIndex + 1) % album.photos.length,
+      };
+    });
+  };
+
+  useEffect(() => {
+    if (!fullscreenAlbum) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeAlbumFullscreen();
+      }
+
+      if (event.key === "ArrowLeft") {
+        goToPrevPhoto();
+      }
+
+      if (event.key === "ArrowRight") {
+        goToNextPhoto();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [fullscreenAlbum, featuredAlbums]);
+
+  const updateTilt = (albumId: string, event: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width;
+    const y = (event.clientY - rect.top) / rect.height;
+    const rotateY = (x - 0.5) * 8;
+    const rotateX = (0.5 - y) * 8;
+
+    setTiltByAlbum((prev) => ({
+      ...prev,
+      [albumId]: { rotateX, rotateY },
+    }));
+  };
+
+  const resetTilt = (albumId: string) => {
+    setTiltByAlbum((prev) => ({
+      ...prev,
+      [albumId]: { rotateX: 0, rotateY: 0 },
+    }));
+  };
 
   return (
     <SiteShell
@@ -61,9 +164,76 @@ export default function AcasaPage() {
         </p>
       </section>
 
+      {featuredAlbums.length > 0 ? (
+        <section className="mt-10 space-y-4">
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Albume alese de admin</h2>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6 xl:grid-cols-5">
+            {featuredAlbums.map((album) => {
+              const tilt = tiltByAlbum[album.id] ?? { rotateX: 0, rotateY: 0 };
+              const stackPhotos = [
+                album.photos[0],
+                album.photos[1] || album.photos[0],
+                album.photos[2] || album.photos[1] || album.photos[0],
+              ];
+
+              return (
+                <button
+                  key={album.id}
+                  type="button"
+                  onClick={() => openAlbumFullscreen(album.id)}
+                  onMouseMove={(event) => updateTilt(album.id, event)}
+                  onMouseLeave={() => resetTilt(album.id)}
+                  className="group block text-left [perspective:1200px]"
+                >
+                  <div
+                    className="relative transition-transform duration-200 ease-out"
+                    style={{ transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)` }}
+                  >
+                    <div className="relative h-[280px]">
+                      <div className="absolute inset-0 translate-x-4 translate-y-4 overflow-hidden rounded-[1.6rem] border border-rose-200/70 bg-white/95">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={stackPhotos[2]} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-35 blur-[0.5px] saturate-75" />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-rose-200/20 via-white/25 to-transparent" />
+                      </div>
+                      <div className="absolute inset-0 translate-x-2 translate-y-2 overflow-hidden rounded-[1.6rem] border border-rose-200/80 bg-white/95">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={stackPhotos[1]} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-55 saturate-90" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+                      </div>
+
+                      <div className="relative h-full overflow-hidden rounded-[1.6rem] border border-rose-200 bg-white">
+                        <div className="absolute bottom-0 left-0 top-0 z-10 w-4 bg-gradient-to-r from-rose-300/70 to-transparent" />
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={album.photos[0]}
+                          alt={album.title}
+                          className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                        />
+                        <span className="absolute right-3 top-3 z-10 rounded-full bg-white/90 px-2 py-1 text-xs font-semibold text-rose-700">
+                          Album
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1 px-1 pt-4">
+                      <h3 className="text-lg font-semibold text-slate-900">{album.title}</h3>
+                      <p className={`text-sm ${siteConfig.theme.mutedText}`}>{album.description}</p>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
+      <div className="mt-12 text-center">
+        <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Explorează</h2>
+      </div>
+
       <section className="mt-8">
         {cards.length > 0 ? (
-          <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
+          <div className="columns-2 gap-3 sm:columns-3 lg:columns-4 xl:columns-5">
             {cards.map((card) => {
               const CardBody = (
                 <article className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
@@ -100,6 +270,61 @@ export default function AcasaPage() {
           </p>
         )}
       </section>
+
+      {activeFullscreenAlbum && activeFullscreenPhoto ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Vizualizare album fullscreen"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-3 py-6 sm:px-8"
+          onClick={closeAlbumFullscreen}
+        >
+          <button
+            type="button"
+            aria-label="Imagine anterioara"
+            onClick={(event) => {
+              event.stopPropagation();
+              goToPrevPhoto();
+            }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/30 px-4 py-3 text-xl font-semibold text-white backdrop-blur transition hover:bg-black/50 sm:left-6"
+          >
+            ‹
+          </button>
+
+          <div className="relative max-h-full max-w-[96vw]" onClick={(event) => event.stopPropagation()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={activeFullscreenPhoto}
+              alt={activeFullscreenAlbum.title}
+              className="max-h-[90vh] w-auto max-w-[96vw] rounded-xl object-contain"
+            />
+            <p className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white">
+              {(fullscreenAlbum?.photoIndex ?? 0) + 1} / {activeFullscreenAlbum.photos.length}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            aria-label="Imagine urmatoare"
+            onClick={(event) => {
+              event.stopPropagation();
+              goToNextPhoto();
+            }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/30 px-4 py-3 text-xl font-semibold text-white backdrop-blur transition hover:bg-black/50 sm:right-6"
+          >
+            ›
+          </button>
+
+          <button
+            type="button"
+            aria-label="Inchide"
+            onClick={closeAlbumFullscreen}
+            className="absolute right-4 top-4 rounded-full border border-white/40 bg-black/30 px-3 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-black/50"
+          >
+            Inchide
+          </button>
+        </div>
+      ) : null}
     </SiteShell>
   );
 }

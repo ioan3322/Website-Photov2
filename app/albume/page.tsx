@@ -22,6 +22,7 @@ export default function AlbumePage() {
   const { content } = useStudioContent();
   const [activeByAlbum, setActiveByAlbum] = useState<Record<string, number>>({});
   const [visibleCount, setVisibleCount] = useState(3);
+  const [fullscreenState, setFullscreenState] = useState<{ albumId: string; photoIndex: number } | null>(null);
 
   const albumRows = useMemo<AlbumRow[]>(() => {
     return content.albums
@@ -61,12 +62,12 @@ export default function AlbumePage() {
         return;
       }
 
-      if (width >= 1200) {
-        setVisibleCount(4);
+      if (width >= 1280) {
+        setVisibleCount(5);
         return;
       }
 
-      setVisibleCount(3);
+      setVisibleCount(4);
     };
 
     setCountFromViewport();
@@ -125,6 +126,76 @@ export default function AlbumePage() {
     }));
   };
 
+  const openFullscreen = (albumId: string, photoIndex: number) => {
+    setFullscreenState({ albumId, photoIndex });
+  };
+
+  const closeFullscreen = () => {
+    setFullscreenState(null);
+  };
+
+  const goToFullscreenPrev = () => {
+    setFullscreenState((prev) => {
+      if (!prev) {
+        return null;
+      }
+
+      const album = albumRows.find((row) => row.id === prev.albumId);
+
+      if (!album || album.photos.length === 0) {
+        return null;
+      }
+
+      return {
+        ...prev,
+        photoIndex: (prev.photoIndex - 1 + album.photos.length) % album.photos.length,
+      };
+    });
+  };
+
+  const goToFullscreenNext = () => {
+    setFullscreenState((prev) => {
+      if (!prev) {
+        return null;
+      }
+
+      const album = albumRows.find((row) => row.id === prev.albumId);
+
+      if (!album || album.photos.length === 0) {
+        return null;
+      }
+
+      return {
+        ...prev,
+        photoIndex: (prev.photoIndex + 1) % album.photos.length,
+      };
+    });
+  };
+
+  useEffect(() => {
+    if (!fullscreenState) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeFullscreen();
+      }
+
+      if (event.key === "ArrowLeft") {
+        goToFullscreenPrev();
+      }
+
+      if (event.key === "ArrowRight") {
+        goToFullscreenNext();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [fullscreenState, albumRows]);
+
   const getVisibleSlides = (album: AlbumRow) => {
     const start = activeByAlbum[album.id] ?? 0;
     const slots = Math.min(visibleCount, album.photos.length);
@@ -135,11 +206,16 @@ export default function AlbumePage() {
     });
   };
 
+  const fullscreenAlbum = fullscreenState
+    ? albumRows.find((row) => row.id === fullscreenState.albumId)
+    : null;
+  const fullscreenPhoto = fullscreenAlbum?.photos[fullscreenState?.photoIndex ?? -1];
+
   return (
     <SiteShell
       title="Albume"
       description="Fotografiile ruleaza automat de la dreapta la stanga."
-      containerClassName="mx-auto w-full max-w-none px-0 py-0"
+      containerClassName="mx-auto w-full max-w-8xl px-10 py-10"
     >
       {albumRows.length > 0 ? (
         <section className="space-y-6 bg-white px-3 py-4 md:space-y-8 md:p-6">
@@ -160,17 +236,22 @@ export default function AlbumePage() {
                   style={{ gridTemplateColumns: `repeat(${Math.min(visibleCount, album.photos.length)}, minmax(0, 1fr))` }}
                 >
                   {visibleSlides.map((slide, index) => (
-                    <div key={`${slide.id}-${index}`} className="relative overflow-hidden">
+                    <button
+                      key={`${slide.id}-${index}`}
+                      type="button"
+                      onClick={() => openFullscreen(album.id, slide.photoIndex - 1)}
+                      className="group relative overflow-hidden text-left"
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={slide.imageUrl}
                         alt={`${album.title} ${slide.photoIndex}`}
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                       />
                       <p className="absolute bottom-2 left-2 rounded bg-black/45 px-2 py-1 text-xs font-medium text-white">
                         {slide.photoIndex} / {album.photos.length}
                       </p>
-                    </div>
+                    </button>
                   ))}
                 </div>
 
@@ -187,7 +268,7 @@ export default function AlbumePage() {
                   onClick={() => goToNext(album.id, album.photos.length)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition hover:bg-white"
                 >
-                  Inainte
+                  inainte
                 </button>
               </article>
             );
@@ -198,6 +279,61 @@ export default function AlbumePage() {
           Nu exista inca fotografii in albume.
         </p>
       )}
+
+      {fullscreenAlbum && fullscreenPhoto ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Vizualizare fotografie fullscreen"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-3 py-6 sm:px-8"
+          onClick={closeFullscreen}
+        >
+          <button
+            type="button"
+            aria-label="Imagine anterioara"
+            onClick={(event) => {
+              event.stopPropagation();
+              goToFullscreenPrev();
+            }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/30 px-4 py-3 text-xl font-semibold text-white backdrop-blur transition hover:bg-black/50 sm:left-6"
+          >
+            ‹
+          </button>
+
+          <div className="relative max-h-full max-w-[96vw]" onClick={(event) => event.stopPropagation()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={fullscreenPhoto.imageUrl}
+              alt={`${fullscreenAlbum.title} ${fullscreenPhoto.photoIndex}`}
+              className="max-h-[90vh] w-auto max-w-[96vw] rounded-xl object-contain shadow-2xl"
+            />
+            <p className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white">
+              {fullscreenPhoto.photoIndex} / {fullscreenAlbum.photos.length}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            aria-label="Imagine urmatoare"
+            onClick={(event) => {
+              event.stopPropagation();
+              goToFullscreenNext();
+            }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/30 px-4 py-3 text-xl font-semibold text-white backdrop-blur transition hover:bg-black/50 sm:right-6"
+          >
+            ›
+          </button>
+
+          <button
+            type="button"
+            aria-label="Inchide"
+            onClick={closeFullscreen}
+            className="absolute right-4 top-4 rounded-full border border-white/40 bg-black/30 px-3 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-black/50"
+          >
+            Inchide
+          </button>
+        </div>
+      ) : null}
     </SiteShell>
   );
 }

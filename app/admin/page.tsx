@@ -35,6 +35,7 @@ export default function AdminPage() {
   const [uploadingTarget, setUploadingTarget] = useState<string | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<string | null>(null);
+  const [isGalleryExpanded, setIsGalleryExpanded] = useState(true);
 
   const isUploading = uploadingTarget !== null;
 
@@ -131,6 +132,48 @@ export default function AdminPage() {
     } catch (error) {
       setUploadError(getErrorMessage(error));
       console.error("Gallery image upload failed:", error);
+    } finally {
+      setUploadingTarget(null);
+    }
+  };
+
+  const handleBulkGalleryUpload = async (files?: FileList | File[]) => {
+    const selectedFiles = Array.from(files || []).filter((file) => file.type.startsWith("image/"));
+    if (selectedFiles.length === 0) return;
+
+    setUploadingTarget("gallery-bulk");
+    setUploadError(null);
+    setUploadSuccess(null);
+
+    try {
+      const uploadedItems: GalleryItem[] = [];
+
+      for (const [index, file] of selectedFiles.entries()) {
+        const baseName = file.name.replace(/\.[^/.]+$/, "").trim() || `fotografie-${index + 1}`;
+        const url = await uploadImageToServer(file, "gallery", `${baseName}-${Date.now()}-${index + 1}`);
+
+        uploadedItems.push({
+          id: `gallery-${Date.now()}-${index}`,
+          title: baseName,
+          caption: "Descriere fotografie",
+          imageUrl: url,
+          showOnHome: true,
+        });
+      }
+
+      setContent((prev) => ({
+        ...prev,
+        gallery: [...prev.gallery, ...uploadedItems],
+      }));
+
+      setUploadSuccess(
+        uploadedItems.length === 1
+          ? "Fotografia a fost adaugata in galerie."
+          : `${uploadedItems.length} fotografii au fost adaugate in galerie.`,
+      );
+    } catch (error) {
+      setUploadError(getErrorMessage(error));
+      console.error("Bulk gallery upload failed:", error);
     } finally {
       setUploadingTarget(null);
     }
@@ -323,7 +366,7 @@ export default function AdminPage() {
       <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-rose-100/60 blur-3xl" />
       <div className="pointer-events-none absolute -right-20 top-1/3 h-80 w-80 rounded-full bg-amber-100/50 blur-3xl" />
 
-      <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-12">
+      <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
         <header className="grid gap-8 rounded-3xl border border-rose-100 bg-white/95 p-8 shadow-sm md:grid-cols-[1.3fr_1fr] md:p-10">
           <div className="space-y-5">
             <p className={siteConfig.theme.badge}>Panou admin</p>
@@ -400,86 +443,114 @@ export default function AdminPage() {
         <section id="galerie-admin" className="space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Galerie</h2>
-            <p className={siteConfig.theme.mutedText}>Editeaza titlu, descriere, URL sau incarca imagine noua.</p>
+            <div className="flex flex-wrap items-center gap-3">
+              <p className={siteConfig.theme.mutedText}>Editeaza titlu, descriere, URL sau incarca imagine noua.</p>
+              <button
+                type="button"
+                onClick={() => setIsGalleryExpanded((prev) => !prev)}
+                className="rounded-full border border-rose-200 px-4 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+              >
+                {isGalleryExpanded ? "Strange fotografiile" : "Extinde fotografiile"}
+              </button>
+            </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {content.gallery.map((item, index) => (
-              <article key={item.id || `${item.title}-${index}`} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
-                <div className="aspect-[4/5] border-b border-rose-100 bg-slate-50">
-                  {item.imageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={item.imageUrl} alt={item.title || `Imagine galerie ${index + 1}`} className="h-full w-full object-cover" />
-                  ) : (
-                    <div className={`h-full w-full ${siteConfig.theme.softSurface}`} />
-                  )}
-                </div>
+          {isGalleryExpanded ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+              {content.gallery.map((item, index) => (
+                <article key={item.id || `${item.title}-${index}`} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+                  <div className="aspect-[4/5] border-b border-rose-100 bg-slate-50">
+                    {item.imageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={item.imageUrl} alt={item.title || `Imagine galerie ${index + 1}`} className="h-full w-full object-cover" />
+                    ) : (
+                      <div className={`h-full w-full ${siteConfig.theme.softSurface}`} />
+                    )}
+                  </div>
 
-                <div className="space-y-3 p-4">
-                  <label className="flex items-center gap-2 rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm text-slate-700">
+                  <div className="space-y-3 p-4">
+                    <label className="flex items-center gap-2 rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm text-slate-700">
+                      <input
+                        type="checkbox"
+                        checked={item.showOnHome ?? true}
+                        onChange={(event) => handleGalleryHomeToggle(index, event.target.checked)}
+                        className="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-300"
+                      />
+                      Afiseaza pe Home
+                    </label>
+                    <label className="space-y-1 text-xs font-medium uppercase tracking-wide text-slate-500">
+                      Nume fotografie
+                      <input
+                        value={item.title}
+                        onChange={(event) => handleGalleryChange(index, "title", event.target.value)}
+                        className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
+                        placeholder="Ex: Portret la lumina naturala"
+                      />
+                    </label>
                     <input
-                      type="checkbox"
-                      checked={item.showOnHome ?? true}
-                      onChange={(event) => handleGalleryHomeToggle(index, event.target.checked)}
-                      className="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-300"
-                    />
-                    Afiseaza pe Home
-                  </label>
-                  <label className="space-y-1 text-xs font-medium uppercase tracking-wide text-slate-500">
-                    Nume fotografie
-                    <input
-                      value={item.title}
-                      onChange={(event) => handleGalleryChange(index, "title", event.target.value)}
+                      value={item.caption}
+                      onChange={(event) => handleGalleryChange(index, "caption", event.target.value)}
                       className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
-                      placeholder="Ex: Portret la lumina naturala"
+                      placeholder="Descriere"
                     />
-                  </label>
-                  <input
-                    value={item.caption}
-                    onChange={(event) => handleGalleryChange(index, "caption", event.target.value)}
-                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
-                    placeholder="Descriere"
-                  />
-                  <input
-                    value={item.imageUrl}
-                    onChange={(event) => handleGalleryChange(index, "imageUrl", event.target.value)}
-                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
-                    placeholder="URL imagine"
-                  />
-                  <label className="block w-full cursor-pointer rounded-lg border border-dashed border-rose-200 bg-rose-50/40 px-3 py-2 text-sm text-rose-700 transition hover:bg-rose-50">
-                    Alege poza din calculator
                     <input
-                      type="file"
-                      accept="image/*,.jpg,.jpeg,.png,.webp"
-                      className="hidden"
-                      disabled={isUploading}
-                      onChange={(event) => handleGalleryImageUpload(index, event.target.files?.[0])}
+                      value={item.imageUrl}
+                      onChange={(event) => handleGalleryChange(index, "imageUrl", event.target.value)}
+                      className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
+                      placeholder="URL imagine"
                     />
-                  </label>
-                  {uploadingTarget === `gallery-${index}` ? (
-                    <p className="text-xs text-blue-700">Se incarca aceasta imagine...</p>
-                  ) : null}
-                  <button
-                    onClick={() => handleDeleteGalleryItem(index)}
-                    className="w-full rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
-                  >
-                    Sterge fotografia
-                  </button>
-                </div>
-              </article>
-            ))}
+                    <label className="block w-full cursor-pointer rounded-lg border border-dashed border-rose-200 bg-rose-50/40 px-3 py-2 text-sm text-rose-700 transition hover:bg-rose-50">
+                      Alege poza din calculator
+                      <input
+                        type="file"
+                        accept="image/*,.jpg,.jpeg,.png,.webp"
+                        className="hidden"
+                        disabled={isUploading}
+                        onChange={(event) => handleGalleryImageUpload(index, event.target.files?.[0])}
+                      />
+                    </label>
+                    {uploadingTarget === `gallery-${index}` ? (
+                      <p className="text-xs text-blue-700">Se incarca aceasta imagine...</p>
+                    ) : null}
+                    <button
+                      onClick={() => handleDeleteGalleryItem(index)}
+                      className="w-full rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                    >
+                      Sterge fotografia
+                    </button>
+                  </div>
+                </article>
+              ))}
 
-            <button
-              type="button"
-              onClick={handleAddGalleryItem}
-              className="flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-rose-200 bg-white text-rose-500 transition hover:border-rose-300 hover:bg-rose-50"
-              aria-label="Adauga fotografie"
-              title="Adauga fotografie"
-            >
-              <span className="text-5xl font-light leading-none">+</span>
-              <span className="text-sm font-semibold text-rose-700">Adauga fotografie</span>
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={handleAddGalleryItem}
+                className="flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-rose-200 bg-white text-rose-500 transition hover:border-rose-300 hover:bg-rose-50"
+                aria-label="Adauga fotografie"
+                title="Adauga fotografie"
+              >
+                <span className="text-5xl font-light leading-none">+</span>
+                <span className="text-sm font-semibold text-rose-700">Adauga fotografie</span>
+              </button>
+
+              <label className="flex min-h-[220px] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-sky-200 bg-white text-sky-500 transition hover:border-sky-300 hover:bg-sky-50">
+                <span className="text-5xl font-light leading-none">+</span>
+                <span className="text-sm font-semibold text-sky-700">Adauga mai multe fotografii</span>
+                <input
+                  type="file"
+                  accept="image/*,.jpg,.jpeg,.png,.webp"
+                  multiple
+                  className="hidden"
+                  disabled={isUploading}
+                  onChange={(event) => handleBulkGalleryUpload(event.target.files || undefined)}
+                />
+              </label>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-rose-200 bg-white/70 p-5 text-sm text-slate-600">
+              Galerie ascunsa. Apasa pe butonul „Extinde fotografiile” ca sa revii la lista completa.
+            </div>
+          )}
         </section>
 
         <section id="albume-admin" className="space-y-5">
@@ -521,7 +592,7 @@ export default function AdminPage() {
                   <div className="border-t border-rose-100 pt-4">
                     <h4 className="mb-3 text-sm font-semibold text-slate-700">Fotografii album ({album.photos.length})</h4>
 
-                    <div className="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                    <div className="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                       {album.photos.map((photo, photoIndex) => (
                         <div key={`${album.id}-photo-${photoIndex}`} className="group relative aspect-square overflow-hidden rounded-lg bg-slate-100">
                           {photo ? (
@@ -598,7 +669,7 @@ export default function AdminPage() {
                 </div>
                 <div className="space-y-3 p-4">
                   <input
-                    value={photo}
+                    value={photo ?? ""}
                     onChange={(event) => handlePhotographerPhotoChange(index, event.target.value)}
                     className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
                     placeholder="URL poza fotograf"
