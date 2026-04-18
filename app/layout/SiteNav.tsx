@@ -70,9 +70,9 @@ export default function SiteNav() {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 hidden border-b border-rose-100 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 md:block">
+      <nav className="sticky top-0 z-40 hidden border-b border-rose-100/80 bg-white/90 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/80 md:block">
         <div className={siteConfig.theme.navWrap}>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-2 lg:gap-3">
             {siteConfig.navigation.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -89,8 +89,8 @@ export default function SiteNav() {
         </div>
       </nav>
 
-      <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-rose-100 bg-white/95 px-2 py-2 backdrop-blur supports-[backdrop-filter]:bg-white/85 md:hidden">
-        <div className="mx-auto grid max-w-xl grid-cols-7 gap-1">
+      <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-rose-100/90 bg-white/95 px-2 py-2 shadow-[0_-8px_24px_rgba(15,23,42,0.06)] backdrop-blur supports-[backdrop-filter]:bg-white/85 md:hidden">
+        <div className="mx-auto grid max-w-xl grid-cols-7 gap-1.5">
           {siteConfig.navigation.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -99,10 +99,10 @@ export default function SiteNav() {
                 href={link.href}
                 aria-label={link.label}
                 title={link.label}
-                className={`flex h-11 w-full items-center justify-center rounded-xl border text-slate-700 transition ${
+                className={`flex h-11 w-full items-center justify-center rounded-xl border text-slate-700 transition-all duration-300 ${
                   isActive
-                    ? "border-rose-200 bg-gradient-to-r from-rose-50 to-amber-50 text-rose-700"
-                    : "border-transparent hover:border-rose-200 hover:bg-rose-50"
+                    ? "border-rose-300 bg-gradient-to-r from-rose-50 to-amber-50 text-rose-700 shadow-sm"
+                    : "border-transparent hover:border-rose-200 hover:bg-rose-50 active:scale-95"
                 }`}
               >
                 <NavIcon href={link.href} />

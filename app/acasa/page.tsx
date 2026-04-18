@@ -9,8 +9,6 @@ import { useStudioContent } from "@/hooks/useStudioContent";
 type HomeCard = {
   id: string;
   imageUrl: string;
-  title: string;
-  caption: string;
   kind: "photo" | "album";
   href?: string;
 };
@@ -23,7 +21,7 @@ type FeaturedAlbum = {
 };
 
 export default function AcasaPage() {
-  const { content } = useStudioContent();
+  const { content, loading } = useStudioContent();
   const [tiltByAlbum, setTiltByAlbum] = useState<Record<string, { rotateX: number; rotateY: number }>>({});
   const [fullscreenAlbum, setFullscreenAlbum] = useState<{ albumId: string; photoIndex: number } | null>(null);
 
@@ -45,8 +43,6 @@ export default function AcasaPage() {
       .map((item) => ({
         id: `gallery-${item.id}`,
         imageUrl: item.imageUrl,
-        title: item.title || "Fotografie",
-        caption: item.caption || "Fotografie selectata din galerie",
         kind: "photo" as const,
       }));
 
@@ -150,105 +146,102 @@ export default function AcasaPage() {
     <SiteShell
       title="Acasa"
       description="Studio foto pentru bebelusi, cu sedinte in siguranta si cadre naturale."
-      containerClassName="mx-auto w-full max-w-6xl px-6 py-12"
+      containerClassName="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:py-16"
     >
-      <section className="space-y-5">
+      <section className="space-y-6 text-center sm:text-left">
         <p className={siteConfig.theme.badge}>
           Studio foto pentru bebelusi
         </p>
-        <h1 className="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
+        <h1 className="text-4xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
           Momente mici, amintiri pentru o viata
         </h1>
-        <p className={`text-lg ${siteConfig.theme.mutedText}`}>
+        <p className={`max-w-3xl text-lg ${siteConfig.theme.mutedText}`}>
           Sedinte foto cu setup profesional, lumina blanda si mult confort pentru bebelus.
         </p>
       </section>
 
-      {featuredAlbums.length > 0 ? (
-        <section className="mt-10 space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Albume alese de admin</h2>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6 xl:grid-cols-5">
-            {featuredAlbums.map((album) => {
-              const tilt = tiltByAlbum[album.id] ?? { rotateX: 0, rotateY: 0 };
-              const stackPhotos = [
-                album.photos[0],
-                album.photos[1] || album.photos[0],
-                album.photos[2] || album.photos[1] || album.photos[0],
-              ];
-
-              return (
-                <button
-                  key={album.id}
-                  type="button"
-                  onClick={() => openAlbumFullscreen(album.id)}
-                  onMouseMove={(event) => updateTilt(album.id, event)}
-                  onMouseLeave={() => resetTilt(album.id)}
-                  className="group block text-left [perspective:1200px]"
-                >
-                  <div
-                    className="relative transition-transform duration-200 ease-out"
-                    style={{ transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)` }}
-                  >
-                    <div className="relative h-[280px]">
-                      <div className="absolute inset-0 translate-x-4 translate-y-4 overflow-hidden rounded-[1.6rem] border border-rose-200/70 bg-white/95">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={stackPhotos[2]} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-35 blur-[0.5px] saturate-75" />
-                        <div className="absolute inset-0 bg-gradient-to-tr from-rose-200/20 via-white/25 to-transparent" />
+      {featuredAlbums.length > 0 || loading ? (
+        <section className="mt-14 space-y-6">
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Albume alese de admin</h2>
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-6 xl:grid-cols-5">
+            {loading && featuredAlbums.length === 0
+              ? Array.from({ length: 3 }).map((_, index) => (
+                  <div key={`album-skeleton-${index}`} className="block text-left [perspective:1200px]">
+                    <div className="relative transition-transform duration-200 ease-out">
+                      <div className="relative h-[280px]">
+                        <div className="absolute inset-0 translate-x-4 translate-y-4 overflow-hidden rounded-[1.6rem] border border-rose-200/70 bg-rose-100/50" />
+                        <div className="absolute inset-0 translate-x-2 translate-y-2 overflow-hidden rounded-[1.6rem] border border-rose-200/80 bg-rose-100/70" />
+                        <div className="relative h-full overflow-hidden rounded-[1.6rem] border border-rose-200 bg-rose-100">
+                          <div className="absolute bottom-0 left-0 top-0 z-10 w-4 bg-gradient-to-r from-rose-300/40 to-transparent" />
+                        </div>
                       </div>
-                      <div className="absolute inset-0 translate-x-2 translate-y-2 overflow-hidden rounded-[1.6rem] border border-rose-200/80 bg-white/95">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={stackPhotos[1]} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-55 saturate-90" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
-                      </div>
-
-                      <div className="relative h-full overflow-hidden rounded-[1.6rem] border border-rose-200 bg-white">
-                        <div className="absolute bottom-0 left-0 top-0 z-10 w-4 bg-gradient-to-r from-rose-300/70 to-transparent" />
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={album.photos[0]}
-                          alt={album.title}
-                          className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
-                        />
-                        <span className="absolute right-3 top-3 z-10 rounded-full bg-white/90 px-2 py-1 text-xs font-semibold text-rose-700">
-                          Album
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1 px-1 pt-4">
-                      <h3 className="text-lg font-semibold text-slate-900">{album.title}</h3>
-                      <p className={`text-sm ${siteConfig.theme.mutedText}`}>{album.description}</p>
                     </div>
                   </div>
-                </button>
-              );
-            })}
+                ))
+              : featuredAlbums.map((album) => {
+                  const tilt = tiltByAlbum[album.id] ?? { rotateX: 0, rotateY: 0 };
+                  const stackPhotos = [
+                    album.photos[0],
+                    album.photos[1] || album.photos[0],
+                    album.photos[2] || album.photos[1] || album.photos[0],
+                  ];
+
+                  return (
+                    <button
+                      key={album.id}
+                      type="button"
+                      onClick={() => openAlbumFullscreen(album.id)}
+                      onMouseMove={(event) => updateTilt(album.id, event)}
+                      onMouseLeave={() => resetTilt(album.id)}
+                      className="group block text-left transition-all duration-300 hover:-translate-y-1 [perspective:1200px]"
+                    >
+                      <div
+                        className="relative transition-transform duration-200 ease-out"
+                        style={{ transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)` }}
+                      >
+                        <div className="relative h-[280px]">
+                          <div className="absolute inset-0 translate-x-4 translate-y-4 overflow-hidden rounded-[1.6rem] border border-rose-200/70 bg-white/95">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={stackPhotos[2]} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-35 blur-[0.5px] saturate-75" />
+                            <div className="absolute inset-0 bg-gradient-to-tr from-rose-200/20 via-white/25 to-transparent" />
+                          </div>
+                          <div className="absolute inset-0 translate-x-2 translate-y-2 overflow-hidden rounded-[1.6rem] border border-rose-200/80 bg-white/95">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={stackPhotos[1]} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-55 saturate-90" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+                          </div>
+
+                          <div className="relative h-full overflow-hidden rounded-[1.6rem] border border-rose-200 bg-white shadow-md shadow-rose-100/50">
+                            <div className="absolute bottom-0 left-0 top-0 z-10 w-4 bg-gradient-to-r from-rose-300/70 to-transparent" />
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={album.photos[0]}
+                              alt={album.title}
+                              className="h-full w-full object-cover transition-all duration-300 group-hover:scale-[1.04] group-hover:brightness-[1.03]"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
           </div>
         </section>
       ) : null}
 
-      <div className="mt-12 text-center">
+      <div className="mt-14 text-center">
         <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Explorează</h2>
       </div>
 
-      <section className="mt-8">
+      <section className="mt-10">
         {cards.length > 0 ? (
-          <div className="columns-2 gap-3 sm:columns-3 lg:columns-4 xl:columns-5">
+          <div className="columns-2 gap-4 sm:columns-3 lg:columns-4 xl:columns-5">
             {cards.map((card) => {
               const CardBody = (
-                <article className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+                <article className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-rose-100/90 bg-white shadow-md shadow-rose-100/40 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
                   <div className="relative overflow-hidden bg-slate-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={card.imageUrl} alt={card.title} className="h-auto w-full object-cover" loading="lazy" />
-                    {card.kind === "album" ? (
-                      <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2 py-1 text-xs font-semibold text-rose-700">
-                        Album
-                      </span>
-                    ) : null}
-                  </div>
-                  <div className="space-y-1 p-4">
-                    <h2 className="text-lg font-semibold text-slate-900">{card.title}</h2>
-                    <p className={`text-sm ${siteConfig.theme.mutedText}`}>{card.caption}</p>
+                    <img src={card.imageUrl} alt="" aria-hidden="true" className="h-auto w-full object-cover transition-all duration-300 hover:scale-[1.03]" loading="lazy" />
                   </div>
                 </article>
               );
@@ -263,6 +256,17 @@ export default function AcasaPage() {
 
               return <div key={card.id}>{CardBody}</div>;
             })}
+          </div>
+        ) : loading ? (
+          <div className="columns-2 gap-4 sm:columns-3 lg:columns-4 xl:columns-5">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <article
+                key={`home-photo-skeleton-${index}`}
+                className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-rose-100 bg-rose-100/70 shadow-sm animate-pulse"
+              >
+                <div className="h-[220px] w-full bg-gradient-to-br from-rose-100 via-rose-50 to-amber-50" />
+              </article>
+            ))}
           </div>
         ) : (
           <p className={`rounded-xl ${siteConfig.theme.softSurface} p-4 text-sm ${siteConfig.theme.mutedText}`}>

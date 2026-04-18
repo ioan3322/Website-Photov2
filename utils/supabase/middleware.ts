@@ -35,6 +35,7 @@ export const createClient = (request: NextRequest) => {
     }
 
     let supabaseResponse = fallbackResponse;
+    const authorizationHeader = request.headers.get("authorization")?.trim();
 
     const supabase = createServerClient(supabaseUrl, supabaseKey, {
       cookies: {
@@ -85,6 +86,15 @@ export const createClient = (request: NextRequest) => {
           }
         },
       },
+      ...(authorizationHeader
+        ? {
+            global: {
+              headers: {
+                Authorization: authorizationHeader,
+              },
+            },
+          }
+        : {}),
     });
 
     return { supabase, supabaseResponse };

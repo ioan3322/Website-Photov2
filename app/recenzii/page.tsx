@@ -19,14 +19,15 @@ const reviews = [
 export default function RecenziiPage() {
   return (
     <SiteShell title="Recenzii" description="Feedback real de la familii care au lucrat cu noi.">
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+      {/* Elevate trust by spacing testimonials as premium cards. */}
+      <div className="mt-10 grid gap-5 md:grid-cols-3 md:gap-6">
         {reviews.map((review) => (
           <article
             key={review.name}
-            className={siteConfig.theme.card}
+            className={`${siteConfig.theme.card} flex h-full flex-col justify-between`}
           >
-            <p className={`text-sm ${siteConfig.theme.mutedText}`}>&quot;{review.text}&quot;</p>
-            <p className="mt-4 text-sm font-semibold text-rose-700">{review.name}</p>
+            <p className={`text-base ${siteConfig.theme.mutedText}`}>&quot;{review.text}&quot;</p>
+            <p className="mt-6 text-sm font-semibold text-rose-700">{review.name}</p>
           </article>
         ))}
       </div>

@@ -8,7 +8,17 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-body), "Segoe UI", sans-serif;
+  letter-spacing: -0.01em;
 }
 
 @keyframes fadeSlideIn {
@@ -83,4 +93,27 @@ body {
 
 .animate-slideUp {
   animation: slideUp 0.4s ease-out 0.2s both;
+}
+
+.animate-softPulse {
+  animation: fadeIn 0.9s ease-out;
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

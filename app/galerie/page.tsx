@@ -6,7 +6,7 @@ import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
 
 export default function GaleriePage() {
-  const { content } = useStudioContent();
+  const { content, loading } = useStudioContent();
   const visibleItems = content.gallery.filter((item) => item.imageUrl.trim().length > 0 || item.title || item.caption);
   const imageItems = useMemo(
     () => visibleItems.filter((item) => item.imageUrl.trim().length > 0),
@@ -68,10 +68,10 @@ export default function GaleriePage() {
     <SiteShell
       title="Galerie"
       description="Fotografii mari de prezentare."
-      containerClassName="mx-auto w-full max-w-8xl px-10 py-10"
+      containerClassName="mx-auto w-full max-w-8xl px-4 py-10 sm:px-6 sm:py-12 lg:py-14"
     >
       {visibleItems.length > 0 ? (
-        <div className="mt-2 columns-2 gap-3 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5">
+        <div className="mt-4 columns-2 gap-4 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5">
           {visibleItems.map((item, index) => (
             <article key={item.id || `${item.title}-${index}`} className="mb-6 break-inside-avoid space-y-2">
               <div className={`${siteConfig.theme.card} shadow-none overflow-hidden p-0`}>
@@ -90,7 +90,7 @@ export default function GaleriePage() {
                     <img
                       src={item.imageUrl}
                       alt={item.title || "Fotografie"}
-                      className="h-auto w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                      className="h-auto w-full object-cover transition-all duration-300 group-hover:scale-[1.03] group-hover:brightness-[1.03]"
                       loading="lazy"
                     />
                   </button>
@@ -98,8 +98,20 @@ export default function GaleriePage() {
                   <div className={`h-[240px] w-full ${siteConfig.theme.softSurface}`} />
                 )}
               </div>
-              <h2 className="text-lg font-semibold text-slate-900">{item.title || `Fotografie ${index + 1}`}</h2>
+              <h2 className="text-lg font-semibold leading-tight text-slate-900">{item.title || `Fotografie ${index + 1}`}</h2>
               <p className={`text-sm ${siteConfig.theme.mutedText}`}>{item.caption || "Cadru de prezentare"}</p>
+            </article>
+          ))}
+        </div>
+      ) : loading ? (
+        <div className="mt-4 columns-2 gap-4 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5">
+          {Array.from({ length: 12 }).map((_, index) => (
+            <article key={`galerie-skeleton-${index}`} className="mb-6 break-inside-avoid space-y-2">
+              <div className={`${siteConfig.theme.card} shadow-none overflow-hidden p-0`}>
+                <div className={`h-[240px] w-full ${siteConfig.theme.softSurface} animate-pulse`} />
+              </div>
+              <div className={`h-5 w-2/3 rounded ${siteConfig.theme.softSurface}`} />
+              <div className={`h-4 w-5/6 rounded ${siteConfig.theme.softSurface}`} />
             </article>
           ))}
         </div>

@@ -19,7 +19,7 @@ type AlbumRow = {
 };
 
 export default function AlbumePage() {
-  const { content } = useStudioContent();
+  const { content, loading } = useStudioContent();
   const [activeByAlbum, setActiveByAlbum] = useState<Record<string, number>>({});
   const [visibleCount, setVisibleCount] = useState(3);
   const [fullscreenState, setFullscreenState] = useState<{ albumId: string; photoIndex: number } | null>(null);
@@ -215,19 +215,19 @@ export default function AlbumePage() {
     <SiteShell
       title="Albume"
       description="Fotografiile ruleaza automat de la dreapta la stanga."
-      containerClassName="mx-auto w-full max-w-8xl px-10 py-10"
+      containerClassName="mx-auto w-full max-w-8xl px-4 py-10 sm:px-6 sm:py-12 lg:py-14"
     >
       {albumRows.length > 0 ? (
-        <section className="space-y-6 bg-white px-3 py-4 md:space-y-8 md:p-6">
+        <section className="space-y-8 bg-white/70 px-2 py-2 md:space-y-10 md:p-4">
           {albumRows.map((album) => {
             const visibleSlides = getVisibleSlides(album);
 
             return (
-              <article key={album.id} className="relative overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+              <article key={album.id} className="relative overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-md shadow-rose-100/40 transition-all duration-300 hover:shadow-lg">
                 <header className="border-b border-rose-100 px-4 py-4 text-slate-900 md:px-5">
-                  <h2 className="text-lg font-semibold tracking-tight md:text-2xl">{album.title}</h2>
+                  <h2 className="text-xl font-semibold tracking-tight md:text-3xl">{album.title}</h2>
                   {album.description ? (
-                    <p className="mt-1 text-sm text-slate-600">{album.description}</p>
+                    <p className="mt-2 text-sm text-slate-600 md:text-base">{album.description}</p>
                   ) : null}
                 </header>
 
@@ -246,7 +246,7 @@ export default function AlbumePage() {
                       <img
                         src={slide.imageUrl}
                         alt={`${album.title} ${slide.photoIndex}`}
-                        className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                        className="h-full w-full object-cover transition-all duration-300 group-hover:scale-[1.03] group-hover:brightness-[1.03]"
                       />
                       <p className="absolute bottom-2 left-2 rounded bg-black/45 px-2 py-1 text-xs font-medium text-white">
                         {slide.photoIndex} / {album.photos.length}
@@ -258,7 +258,7 @@ export default function AlbumePage() {
                 <button
                   type="button"
                   onClick={() => goToPrev(album.id, album.photos.length)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition hover:bg-white"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition-all duration-300 hover:-translate-y-1/2 hover:bg-white hover:shadow"
                 >
                   Inapoi
                 </button>
@@ -266,13 +266,30 @@ export default function AlbumePage() {
                 <button
                   type="button"
                   onClick={() => goToNext(album.id, album.photos.length)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition hover:bg-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition-all duration-300 hover:-translate-y-1/2 hover:bg-white hover:shadow"
                 >
                   inainte
                 </button>
               </article>
             );
           })}
+        </section>
+      ) : loading ? (
+        <section className="space-y-8 bg-white/70 px-2 py-2 md:space-y-10 md:p-4">
+          {Array.from({ length: 2 }).map((_, index) => (
+            <article key={`album-skeleton-${index}`} className="relative overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+              <header className="border-b border-rose-100 px-4 py-4 text-slate-900 md:px-5">
+                <div className={`h-6 w-1/3 rounded ${siteConfig.theme.softSurface}`} />
+                <div className={`mt-2 h-4 w-1/2 rounded ${siteConfig.theme.softSurface}`} />
+              </header>
+
+              <div className="grid h-[54vh] min-h-[340px] grid-cols-2 gap-1 p-1 sm:h-[48vh] md:h-[42vh] md:grid-cols-3">
+                {Array.from({ length: 3 }).map((__, slotIndex) => (
+                  <div key={`album-skeleton-${index}-slot-${slotIndex}`} className={`h-full w-full ${siteConfig.theme.softSurface} animate-pulse`} />
+                ))}
+              </div>
+            </article>
+          ))}
         </section>
       ) : (
         <p className={`m-6 rounded-xl ${siteConfig.theme.softSurface} p-4 text-sm ${siteConfig.theme.mutedText}`}>

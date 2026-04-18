@@ -32,28 +32,22 @@ export async function proxy(request: NextRequest) {
 
     const { supabase, supabaseResponse } = createClient(request);
 
-    try {
-      const authClient = supabase as {
-        auth?: {
-          getUser?: () => Promise<{
-            error: { message: string; name?: string; status?: number } | null;
-          }>;
-        };
-      };
+    const hasAuthorizationHeader = Boolean(request.headers.get("authorization")?.trim());
+    const hasSessionCookie = request
+      .cookies
+      .getAll()
+      .some((cookie) => cookie.name.startsWith("sb-"));
 
-      if (authClient.auth?.getUser) {
-        const { error } = await authClient.auth.getUser();
+    if (hasAuthorizationHeader || hasSessionCookie) {
+      const { error } = await supabase.auth.getUser();
 
-        if (error) {
-          console.error("[proxy] supabase.auth.getUser returned error", {
-            message: error.message,
-            name: error.name,
-            status: (error as { status?: number }).status,
-          });
-        }
+      if (error) {
+        console.error("[proxy] supabase.auth.getUser returned error", {
+          message: error.message,
+          name: error.name,
+          status: (error as { status?: number }).status,
+        });
       }
-    } catch (error) {
-      console.error("[proxy] supabase.auth.getUser threw", error);
     }
 
     return supabaseResponse ?? NextResponse.next();

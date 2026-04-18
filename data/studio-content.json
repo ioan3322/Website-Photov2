@@ -1,561 +1,349 @@
 {
   "albums": [
     {
-      "id": "album-1776078603149",
-      "title": "Album nou",
+      "id": "album-1776534514964",
+      "title": "Album nou1",
+      "description": "Descriere album",
       "photos": [
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776078612237-863bda15-b515-4f71-912a-dad60b72b325.jpg",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776078613140-d3fb0d22-7bb4-4249-812b-8f8557f0b1d7.jpg",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-3-1776078613980-a1438d92-0703-4115-9107-fb5714868859.jpg",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-4-1776078614704-28607a96-4dee-4562-a8a7-25e8a2262a19.jpg",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-5-1776078615473-ef46310e-9614-4e6d-9ca9-017a419e8263.jpg",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-6-1776078616526-7f4e08b5-f902-4c69-84b2-977f259f5cee.jpg",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-7-1776078617944-1fa38d89-8266-4acb-9a4d-f82669c33c82.png",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-9-1776440631162-c30dee5a-d0c1-4521-b44f-2f0b2ce8ce1d.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-10-1776440631340-284f7596-8bdf-4817-a855-abbce28ec0a8.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-11-1776440631530-034bd1e5-537b-4ab3-a1e4-33c952bace4c.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-12-1776440631737-b48acdd5-789f-4a0a-8e86-4b8264c5cf44.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-13-1776440631905-90cad828-b9c1-49c9-8db1-6b878a2a7c85.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-14-1776440632099-eb1db5e1-535b-4cfe-b4d8-8d6286f2cd49.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-15-1776440632278-14d204ff-579c-4269-a328-9350057f44f6.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-16-1776440632466-5b327e61-483d-404a-94c9-2c3aaf1ea871.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-17-1776440632630-609b9677-1cd0-4e8f-95da-f55a43a3aaa6.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-18-1776440632820-57fb87c1-8e05-421a-ae8a-07cf7321b93b.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-19-1776440632983-5cd5f721-cc96-4c5f-b1c9-9170ad57a675.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-20-1776440633151-0924caef-2c2d-49e5-80fc-fb61c736ba71.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-21-1776440633345-8bbec3b8-ec07-4079-ac13-0edf856e9fc7.jfif",
-        "/uploads/albums/album-nou-foto-22-1776440712757-8b9b391b-4a4b-4789-9cd0-2102666a5ad0.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-22-1776440776942-14ae47bd-9dc4-4fb7-93d3-a8a61803931f.jfif"
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776534520730-411ed299-3eee-4513-b04c-691be57e03f5.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776534520921-6411099b-8c67-4a8a-93d3-0fe6aa85cb35.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-3-1776534521101-7f5601b0-ca2f-4243-b4f1-f261550cbe13.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-4-1776534521302-2fd54156-f0ec-4199-b61e-85f5829a6756.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-5-1776534521485-4fd49336-ccde-4fa0-a26a-ec06203ca624.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-6-1776534521669-a0838d67-179a-4db2-b73b-ffa93978ab22.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-7-1776534521908-4919f682-6e7e-45bb-b36d-f77c44108a03.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-8-1776534522106-6f5f434a-1114-40cf-be39-a318a0c9c171.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-9-1776534522288-9a88c220-23e1-480b-9496-bf0d6bef43eb.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-10-1776534522462-d0ef2ce7-6421-4bd6-8b95-a11c7f4aa82e.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-11-1776534522646-0bfdedb1-67ab-4b24-b697-780d225b3706.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-12-1776534522889-b1a356cd-606b-4611-abfe-9683b4cccfeb.jfif"
       ],
-      "showOnHome": true,
-      "description": "Descriere album"
+      "showOnHome": true
     },
     {
-      "id": "album-1776439729638",
-      "title": "album 2",
+      "id": "album-1776534516262",
+      "title": "Album nou2",
+      "description": "Descriere album",
       "photos": [
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-1-1776440036272-6cd15f1c-126a-422b-b663-bd2729ebd5e6.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-2-1776440036757-f42b5afb-090e-42d7-8f42-e3716f072d3e.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-3-1776440036936-052f9734-fdf3-4caa-9b9f-59bebb616c8b.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-4-1776440037113-61f8657b-2584-4710-bc83-bf269bd3fa19.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-5-1776440037297-d8ec205c-6108-4c23-8963-0f183e250d04.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-6-1776440037473-fb29fdf9-7b3a-4dc9-b9a1-5b0c4c6ef417.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-7-1776440037687-06c30733-6d85-4dea-a5f6-5040b5a6f042.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-8-1776440037873-feedaf3e-5c6b-44d0-80cd-6476f60e1cc7.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-9-1776440038071-acf6e1f4-7596-414d-a252-80df8724d300.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-10-1776440038255-0642cecf-1387-4638-b461-c53e49c5f259.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-11-1776440038435-ed0c65a2-c399-4327-bd33-2aea1ea1dffd.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-12-1776440038625-6a07476a-ba29-4c8c-8220-65bea91c3be8.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-13-1776440038831-8581a290-e421-4403-9fe1-08aa10b5ff33.jfif",
-        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-2-foto-14-1776440039005-ad9193aa-e745-4ee2-968e-eaf10ae59677.jfif"
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776534525895-bb31d286-895d-4f8e-bd3b-5fbfc741099f.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776534526079-df4f1fac-7731-4d98-9510-09e69f86f0d0.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-3-1776534526525-6a2bac4c-6cdf-47e2-94de-a949ef813233.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-4-1776534526713-f2ea1181-4736-41f4-9bcb-958d2088ee99.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-5-1776534526890-f784fbcc-16c4-4c64-9524-ad485426ef4d.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-6-1776534527051-59a48eda-469c-45bb-8c88-b772a56d76f6.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-7-1776534527222-147efca5-266f-4b5d-a9fd-e698d54abda3.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-8-1776534527391-13bae7dc-5647-4c99-8c80-ec133a08a8fb.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-9-1776534527553-bc67f3d3-076e-4375-aa7f-04c3c96254e5.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-10-1776534527708-e1935ac3-a6b1-4db5-90fb-8664acfb739c.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-11-1776534527871-25b425b7-594c-4732-97fa-f2b856479a90.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-12-1776534528056-8f93c157-5148-48b1-aba0-c98d660da179.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-13-1776534528242-c2dc8eff-9f54-44ab-9065-2bffae4dcb25.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-14-1776534528439-cf2b515f-b2cf-4137-8d67-2f380b18c519.jfif"
       ],
-      "showOnHome": true,
-      "description": "nu tsiu"
+      "showOnHome": true
+    },
+    {
+      "id": "album-1776534517233",
+      "title": "Album nou3",
+      "description": "Descriere album",
+      "photos": [
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776534532065-e8253ad3-a21c-4665-a39f-20c37999aff5.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776534532250-45c58c6e-164b-49a4-acd0-57a7e75484a7.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-3-1776534532423-a013112e-1dc7-4de1-b476-995363e596d8.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-4-1776534532590-f28528b5-d8ce-46b7-90c9-c6c09d1c5dff.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-5-1776534532756-c0b21ffe-2e0c-4a92-82dc-2dffd0455add.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-6-1776534532916-68489fb5-5073-4f30-a467-81d2a9091bda.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-7-1776534533110-6c1ae29d-e716-4d25-bdc0-289c04fbd4e9.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-8-1776534533279-d51906e7-dba0-484a-bdcc-7cfbe970fe58.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-9-1776534533443-37ec88fe-cf2a-41f5-af6e-6a23bbc74a88.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-10-1776534533609-b0c42326-330e-452f-a185-aca097e5963a.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-11-1776534533805-1c71cb62-869a-4e27-a033-379164fafaaf.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-12-1776534533988-18e79b6a-114b-46bc-9147-a416727b7016.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-13-1776534534185-ceef19a9-fc95-4073-946e-039fd74890db.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-14-1776534534347-528601a6-b1e9-4d44-a290-32b01648f4e3.jfif"
+      ],
+      "showOnHome": true
+    },
+    {
+      "id": "album-1776534533160",
+      "title": "Album nou4",
+      "description": "Descriere album",
+      "photos": [
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776534538250-9c5b0363-0e54-4c48-aa74-9e1c19b0b4b6.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776534538434-0a64dcb0-fd7b-4f6f-aa25-032f361f5c31.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-3-1776534538611-8d3ee75e-d32c-4fb6-9118-c058237f1850.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-4-1776534538782-417c396f-0f28-4968-bbc7-d7b001865b43.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-5-1776534538946-0158cccf-3e9e-47ad-a6b1-976c262ca8bb.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-6-1776534539126-d30cb5b6-c97a-430d-be33-4288b0657f08.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-7-1776534539296-fa3931ab-3f70-422b-b9cb-1b53bcaeaf6a.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-8-1776534539465-c633b53b-6ffa-4a85-b019-2f62f506abb4.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-9-1776534539646-ecf591c7-d882-4354-81d3-d618d9f39d32.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-10-1776534539822-e391ce60-f64f-4e6b-b77e-a6c81afba2ed.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-11-1776534540008-9dccae2a-5f34-4a2a-b16a-c267a24ac2e5.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-12-1776534540164-b4cd9f94-c06b-43c0-afe7-7c8bf7effa2f.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-13-1776534540368-898c5781-77a2-4ad5-9e03-cbf3f364b3ae.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-14-1776534540549-ee654a53-fe68-4e0f-ad4a-4d2b3e1255d0.jfif"
+      ],
+      "showOnHome": true
+    },
+    {
+      "id": "album-1776534554116",
+      "title": "Album nou5",
+      "description": "Descriere album",
+      "photos": [
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-1-1776534558642-eaf1fad8-b0d1-4e64-a9a9-d377ab905c52.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-2-1776534558827-33b70b13-87ad-46d2-a103-6a1046015644.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-3-1776534559001-dedac538-aeff-4be4-b32a-ea7d99ea5ff4.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-4-1776534559163-60f929f5-ea27-4a52-8b4a-ac48a7cb7924.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-5-1776534559328-ccd3095f-a939-4108-ae83-44c5bec3b513.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-6-1776534559495-b587a750-f564-4e83-a13a-3375ebd752f3.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-7-1776534559650-daa83b11-70cd-4d12-b4ed-340d10fc1c41.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-8-1776534559818-6eff3211-78ba-4e0f-a3c2-3ae877dff421.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-9-1776534559991-f7c1aab2-609c-4b94-be3c-82f51aa814ee.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-10-1776534560179-50eb16ec-2169-4a93-9cf5-444bdb6a8e41.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-11-1776534560364-44269d3d-ecc8-4a89-ac0d-1bed90199b71.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-12-1776534560540-19f08702-dbb4-4c3e-b65e-cccb2803e74e.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-13-1776534560707-ea359810-5fec-4656-8d7c-a4af19caa1f2.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-14-1776534560888-09cb1d1e-a259-457a-8ad7-e04769a8ee7f.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-15-1776534586208-35230a4f-128b-4cf9-bd7d-c9e1b2c86480.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-16-1776534586664-3202374d-e536-4122-b305-b76171a8549c.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-17-1776534586845-6d49a203-0697-4ed6-9b39-30c577bc8180.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-18-1776534587024-10630c4e-99c7-4c8d-bb81-8ccdc02e18c9.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-19-1776534587199-924cc43f-119a-41c6-b544-b0648d6e30fe.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-20-1776534587373-1ec67821-41ad-4756-b633-a0ba555ff7c7.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-21-1776534591030-0b675e03-cb1d-479b-9f3a-6ed9062a1fe4.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-22-1776534591221-d25597bd-81b8-40c7-ab28-3a436b2f7fba.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-23-1776534591402-f05ef5b3-8de0-413d-a84b-d0c47425e3bc.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-24-1776534591566-16ffd0a1-fb0f-45c4-825e-aa407cc3bada.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-25-1776534591742-133450f0-4b13-485a-ae84-7ac60451b68c.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-26-1776534591923-1993627c-55be-40c7-881c-957348743d73.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-27-1776534592142-2055b1ec-82aa-48b1-b71e-5597c9dd66ce.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-28-1776534592331-cd6ffaa6-620f-4551-a8c4-0eb5b026231b.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-29-1776534596112-3a2e5620-c038-487a-9a4c-d700ffbe9c9b.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-30-1776534596322-96fae217-a2c9-40d8-8da5-b8aab450585f.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-31-1776534596498-b434d74f-67e6-4d80-b4b8-ed1a19e01c42.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-32-1776534596667-f915ef76-b50a-4488-8c7c-d73ecdc173b4.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-33-1776534596831-5b3ec06c-f85e-4e88-a79e-7c410b4579e2.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-34-1776534597022-782e5c5f-a785-49b5-bc30-acc805d3ce47.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-35-1776534597202-3242c525-3e0f-4f73-b817-ddb47752837c.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-36-1776534597357-5ad062f9-05de-4f53-8101-02c4ec6758de.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-37-1776534597546-d4325a6b-c920-43ec-9589-0dba7ec67969.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-38-1776534597704-2836bfe8-7ad6-4410-9841-28d862bd3ccd.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-39-1776534597862-60cfef5c-e506-4db8-af34-5d534e0d3e1e.jfif",
+        "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-40-1776534598035-4dd1c871-7d47-4aaf-8bea-15ce81058f53.jfif"
+      ],
+      "showOnHome": true
     }
   ],
   "gallery": [
     {
-      "id": "gallery-1776078492665",
-      "title": "Fotografie 1",
+      "id": "gallery-1776534432286-0",
+      "title": "download (1)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-1-1776078499479-ab8926fb-cd23-4aae-8c96-5a497046c86f.jpg",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776534431669-1-1776534431731-1b35e4b5-6c72-4a0c-aac4-5521c1e3e157.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776078502915",
-      "title": "Fotografie 2",
+      "id": "gallery-1776534432505-1",
+      "title": "download (2)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-2-1776078507821-b7356e92-febe-4310-aaec-20b903baea4c.jpg",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776534432286-2-1776534432299-cd69eb95-88bd-4ee9-8262-0ae0b64c4b73.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776078508205",
-      "title": "Fotografie 3",
+      "id": "gallery-1776534432688-2",
+      "title": "download",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-3-1776078519903-2fe9603c-a3c3-4bfd-84ba-857d1ef41638.jpg",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776534432505-3-1776534432513-f952cdcf-c3ff-4be9-ad53-491dc03de3b0.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776078525783",
-      "title": "Fotografie 4",
+      "id": "gallery-1776534432855-3",
+      "title": "images (1)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-4-1776078531237-e13652f7-f7f2-49a3-a5c1-6590b3e16522.jpg",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776534432688-4-1776534432696-55ff7463-6d06-45f6-994c-b3b81481c6de.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776078535557",
-      "title": "Fotografie 5",
+      "id": "gallery-1776534433275-4",
+      "title": "images (2)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-5-1776078550444-61590247-d725-484a-8472-b53310059ad5.jpg",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776534432856-5-1776534432864-1f67b277-9d64-4afe-955c-2ad68c0dc261.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776078558509",
-      "title": "Fotografie 6",
+      "id": "gallery-1776534433450-5",
+      "title": "images (3)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-6-1776078568113-5bb03f2f-5621-47de-859e-a9aa5dd81972.jpg",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776534433275-6-1776534433282-08414e03-f23f-4d97-964b-5c19562a27fc.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776078572175",
-      "title": "Fotografie 7",
+      "id": "gallery-1776534433617-6",
+      "title": "images (4)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-7-1776078579405-6c995e4d-6676-459c-aa26-14dbaf63928b.jpg",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776534433450-7-1776534433457-4dff06f0-2730-497e-b27c-1fd7d580540e.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440153448",
-      "title": "Fotografie 8",
+      "id": "gallery-1776534433788-7",
+      "title": "images (5)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-8-1776440175049-8a201b78-febe-4246-9db6-7bfb7801e999.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776534433617-8-1776534433625-567bec43-74d0-4a59-a6ec-3d9b9d625ac5.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440175325",
-      "title": "Fotografie 9",
+      "id": "gallery-1776534433963-8",
+      "title": "images (6)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-9-1776440179200-b486e4fa-6e68-481e-bb7b-2460aface71b.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776534433788-9-1776534433796-7ed5ecae-fac7-4121-aac4-bda075381825.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440180065",
-      "title": "Fotografie 10",
+      "id": "gallery-1776534434132-9",
+      "title": "images (7)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-10-1776440184134-ad740a15-9d6e-4775-b4d1-6b7fe8addf15.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776534433963-10-1776534433971-5e5fcbd4-8f6b-48e7-802a-6c348c87280b.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440184553",
-      "title": "Fotografie 11",
+      "id": "gallery-1776534434306-10",
+      "title": "images (8)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-11-1776440187038-a3228852-6b48-40f1-b5cc-df4303052242.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776534434132-11-1776534434139-cbb2728b-163f-419a-8e97-b1b5c8a1eaa3.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440187463",
-      "title": "Fotografie 12",
+      "id": "gallery-1776534434494-11",
+      "title": "images (9)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-12-1776440193433-2b908c3d-8d44-4bd2-bccc-661689fa68e0.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776534434306-12-1776534434314-58a4e499-4009-41c5-a3b3-49e2ef1f1e8d.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440188217",
-      "title": "Fotografie 13",
+      "id": "gallery-1776534434678-12",
+      "title": "images (10)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-13-1776440197543-d3652faf-f41a-4621-b5b6-210a8ee7f9cb.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776534434494-13-1776534434503-2a6d387d-3d06-425f-9c79-19e51adac257.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440200783",
-      "title": "Fotografie 14",
+      "id": "gallery-1776534434853-13",
+      "title": "images",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-14-1776440206554-14253ea7-13da-43d7-842b-a3402cc7de33.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776534434678-14-1776534434687-2f5bde3f-5bc8-4bc4-9fb0-e5d978b03e02.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440214617",
+      "id": "gallery-1776534500360",
       "title": "Fotografie 15",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/fotografie-15-1776440220404-7ea4eefc-b6e7-4818-8e4f-33d7efea5255.jfif",
+      "imageUrl": "",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440386123-0",
+      "id": "gallery-1776534504231-0",
       "title": "download (1)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776440385780-1-1776440385791-9d2f3585-0511-4a9c-af6b-b34fc9a81438.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776534504004-1-1776534504047-b64fa79d-20d5-46bf-8cc3-b60d666d7de9.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440386306-1",
+      "id": "gallery-1776534504397-1",
       "title": "download (2)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776440386123-2-1776440386131-d628c441-e29f-40ef-88a3-50b821ec9f78.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776534504231-2-1776534504243-d3544331-ff99-4f12-903b-0d35965c837b.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440386493-2",
+      "id": "gallery-1776534504559-2",
       "title": "download",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776440386306-3-1776440386314-dc1fc6f1-5855-402a-93e1-541e2bd1ee8a.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776534504397-3-1776534504414-aa2779b0-26f6-46ec-8574-5cb1dbc808e9.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440386683-3",
+      "id": "gallery-1776534504748-3",
       "title": "images (1)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776440386493-4-1776440386501-a3d9c3e0-1faf-41cb-b1d4-6910441e48dd.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776534504559-4-1776534504568-06856d8f-0fb7-4037-9676-4f6bd02ab9dc.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440386879-4",
+      "id": "gallery-1776534504931-4",
       "title": "images (2)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776440386683-5-1776440386696-dc3f7766-550b-445c-bff6-cb4669c7bd0b.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776534504748-5-1776534504759-84a339ca-1392-463d-b42e-30528e17ca59.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440387069-5",
+      "id": "gallery-1776534505096-5",
       "title": "images (3)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776440386879-6-1776440386888-43ed1999-19e9-416d-92bb-f856ea3bff45.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776534504931-6-1776534504941-e44344c2-dcaa-4581-ad10-5c55eb1c9a46.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440387264-6",
-      "title": "images (5)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776440387069-7-1776440387076-38101ffe-bc78-49fc-8060-82c4e03d5439.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440387455-7",
-      "title": "images (6)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776440387264-8-1776440387272-aeded32e-5c35-402d-9823-984f7f29cfdf.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440387638-8",
-      "title": "images (7)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776440387455-9-1776440387462-e17e621a-2578-4541-8de7-053078a92256.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440387910-9",
-      "title": "images (8)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776440387638-10-1776440387646-b9555246-fec2-4c02-a8fa-3654b1518ab9.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440388104-10",
-      "title": "images (9)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776440387910-11-1776440387920-69767ad1-2f32-4b30-bc31-fa992ae6a02a.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440388278-11",
-      "title": "images (10)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776440388104-12-1776440388112-b319af78-ede5-4080-b9fe-a56dd679d9b2.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440485273-0",
-      "title": "download (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776440484638-1-1776440484647-fdd1608b-e57e-4456-9542-a73bc44dc89a.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440485469-1",
-      "title": "download (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776440485273-2-1776440485281-3de27d6f-8047-4557-b7a0-7df39557ca1a.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440485646-2",
-      "title": "download",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776440485469-3-1776440485477-6df536f8-bbdb-4b5e-bc31-4f7aa79eb209.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440485921-3",
-      "title": "images (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776440485646-4-1776440485653-5f490df7-75f4-44f8-9969-d89feee20680.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440486091-4",
-      "title": "images (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776440485921-5-1776440485927-c25040a2-11a0-4222-9aab-8d37249fe13d.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440486265-5",
-      "title": "images (3)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776440486091-6-1776440486098-2906cd92-83cf-4675-8f10-40d3eee827d1.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440486667-6",
-      "title": "images (5)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776440486265-7-1776440486273-20044bb3-1172-42bd-8fcb-0f44d6c4ee63.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440486875-7",
-      "title": "images (6)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776440486667-8-1776440486675-4cd5d567-219e-40f7-acd4-752bf3857fef.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440487048-8",
-      "title": "images (7)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776440486875-9-1776440486883-dba0c98a-91a5-4e08-b15d-6d72ce2d62b6.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440487334-9",
-      "title": "images (8)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776440487048-10-1776440487055-9fc1ce1d-42f0-41ce-b0ba-7e3e8a083c79.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440487700-11",
-      "title": "images (10)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776440487516-12-1776440487525-d7f74580-a4d6-443e-a095-f2551619a576.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440492805-0",
-      "title": "download (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776440492593-1-1776440492601-6dfa6b67-6ca5-4f6e-bf19-8e8fb04be8cb.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440492988-1",
-      "title": "download (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776440492805-2-1776440492813-80a99209-a1a2-4a67-980b-67bc3975884c.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440493179-2",
-      "title": "download",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776440492988-3-1776440492994-3ed90805-21b4-4805-963e-f02ac63cd160.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440493353-3",
-      "title": "images (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776440493179-4-1776440493187-ba8796b5-599d-49b2-93be-d61b1be26d92.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440493556-4",
-      "title": "images (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776440493353-5-1776440493362-fb50d73b-058d-4cd8-8891-0bc61efcf479.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440493718-5",
-      "title": "images (3)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776440493556-6-1776440493562-c769447f-95ef-4f61-8ad9-ec3191c4375f.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440493879-6",
+      "id": "gallery-1776534505266-6",
       "title": "images (4)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776440493718-7-1776440493725-a9b96089-50a0-417b-b90a-1eaa4f4bf0cf.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776534505096-7-1776534505104-edf15f6c-0878-4acf-bb31-aab3a9a15d33.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440494033-7",
+      "id": "gallery-1776534505436-7",
       "title": "images (5)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776440493879-8-1776440493886-9eb29e8f-3425-4286-a61f-fc2272d33201.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776534505266-8-1776534505276-a2065f5c-4373-457c-adc4-c0314538354f.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440494225-8",
+      "id": "gallery-1776534505661-8",
       "title": "images (6)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776440494033-9-1776440494040-246862d1-f95f-4f0b-8d38-5110b5203dde.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776534505436-9-1776534505445-8e6eadc4-dfa1-422d-ae22-5e2b185f9095.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440494407-9",
+      "id": "gallery-1776534505829-9",
       "title": "images (7)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776440494225-10-1776440494231-4b3da9c6-cab7-437e-8f14-2ef0da2bc1bb.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776534505661-10-1776534505670-f59c3855-b3f4-4ae4-97fe-79da1976b48e.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440494572-10",
+      "id": "gallery-1776534505997-10",
       "title": "images (8)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776440494407-11-1776440494414-ebeb8a93-c29b-4562-b2e7-fa28bda8a144.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776534505829-11-1776534505841-102edba5-775d-4e11-bc6a-9d4236a8df0e.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440494741-11",
+      "id": "gallery-1776534506161-11",
       "title": "images (9)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776440494572-12-1776440494579-abac28b9-ef52-47f9-bca5-5e2075161e98.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776534505997-12-1776534506005-985ee1b7-f776-47b1-991f-6ce6712ca063.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440494900-12",
+      "id": "gallery-1776534506341-12",
       "title": "images (10)",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776440494741-13-1776440494748-f3c58b78-bc45-442c-a006-6bdeeb3527af.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776534506161-13-1776534506171-2c4c6a90-fc55-47c3-9648-4ad87b7fd2d0.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440495066-13",
+      "id": "gallery-1776534506511-13",
       "title": "images",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776440494900-14-1776440494906-d13334dd-7f13-4584-a301-6aff400455db.jfif",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776534506341-14-1776534506351-d0f860fe-c47c-4b12-8779-3b231bd00627.jfif",
       "showOnHome": true
     },
     {
-      "id": "gallery-1776440563057-0",
-      "title": "images (2)",
+      "id": "gallery-1776534508380",
+      "title": "Fotografie 30",
       "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776440562748-1-1776440562756-d6858bc0-1bd6-4eee-bd0c-1b1e3b96c183.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440563240-1",
-      "title": "images (3)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776440563057-2-1776440563065-080cbbb0-4651-4a5b-ac4b-74ccbc93bcf2.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440563405-2",
-      "title": "images (4)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776440563240-3-1776440563249-2ec48b66-de63-4748-bd6d-e22d04ef3178.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440563575-3",
-      "title": "images (9)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776440563405-4-1776440563413-d8e07bbb-922f-4159-96cf-b9f0120295da.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440563751-4",
-      "title": "images (10)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776440563575-5-1776440563581-a4890a40-04f3-4200-8e0a-1869e2538e81.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440563957-5",
-      "title": "images",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776440563751-6-1776440563758-a10ca3d1-7fb3-4812-bdd2-a5a934981443.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440571563-0",
-      "title": "download (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776440571347-1-1776440571356-25c35a21-d3af-4978-9e32-99a6ade1c424.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440571728-1",
-      "title": "download (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776440571563-2-1776440571572-28a05e87-47ec-47b6-b527-625a7f57b521.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440571882-2",
-      "title": "download",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776440571728-3-1776440571734-4b75cd00-1074-45c9-b277-94e1e5cb7fce.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440572093-3",
-      "title": "images (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776440571882-4-1776440571891-aa48d368-5733-4e5e-85be-3bcd2dc5d76a.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440572254-4",
-      "title": "images (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776440572093-5-1776440572099-87cd518e-497b-472d-ae70-b711d17f0b85.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440572420-5",
-      "title": "images (3)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776440572254-6-1776440572261-920c037b-318c-4d14-b28d-94e46bf501da.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440572579-6",
-      "title": "images (4)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776440572420-7-1776440572427-e44f7732-7ed0-4403-ba30-f21d598b6c3b.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440572731-7",
-      "title": "images (5)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776440572579-8-1776440572585-55212138-42d1-453a-b243-f097e91c1177.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440572902-8",
-      "title": "images (6)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776440572731-9-1776440572738-e759638a-f177-4161-9ee8-ed751e79ccef.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440573066-9",
-      "title": "images (7)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776440572902-10-1776440572908-ae064a33-3514-49ff-99ff-d13da558193f.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440573224-10",
-      "title": "images (8)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776440573066-11-1776440573073-ee26fa33-79fc-460e-907c-778f31d8d63b.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440573390-11",
-      "title": "images (9)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776440573224-12-1776440573230-3c42a372-d5c3-4248-a6b7-f36f35693548.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440573557-12",
-      "title": "images (10)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776440573390-13-1776440573396-495f8527-7b92-4b61-b3d0-8f0147d37807.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776440573736-13",
-      "title": "images",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776440573557-14-1776440573566-24d3dd34-be6b-4cd9-842c-5560458fc23c.jfif",
+      "imageUrl": "",
       "showOnHome": true
     }
   ],
