@@ -3,7 +3,6 @@
     {
       "id": "album-1776534514964",
       "title": "Album nou1",
-      "description": "Descriere album",
       "photos": [
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776534520730-411ed299-3eee-4513-b04c-691be57e03f5.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776534520921-6411099b-8c67-4a8a-93d3-0fe6aa85cb35.jfif",
@@ -18,12 +17,12 @@
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-11-1776534522646-0bfdedb1-67ab-4b24-b697-780d225b3706.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-12-1776534522889-b1a356cd-606b-4611-abfe-9683b4cccfeb.jfif"
       ],
-      "showOnHome": true
+      "showOnHome": true,
+      "description": "Descriere album"
     },
     {
       "id": "album-1776534516262",
       "title": "Album nou2",
-      "description": "Descriere album",
       "photos": [
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776534525895-bb31d286-895d-4f8e-bd3b-5fbfc741099f.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776534526079-df4f1fac-7731-4d98-9510-09e69f86f0d0.jfif",
@@ -40,12 +39,12 @@
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-13-1776534528242-c2dc8eff-9f54-44ab-9065-2bffae4dcb25.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-14-1776534528439-cf2b515f-b2cf-4137-8d67-2f380b18c519.jfif"
       ],
-      "showOnHome": true
+      "showOnHome": true,
+      "description": "Descriere album"
     },
     {
       "id": "album-1776534517233",
       "title": "Album nou3",
-      "description": "Descriere album",
       "photos": [
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776534532065-e8253ad3-a21c-4665-a39f-20c37999aff5.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776534532250-45c58c6e-164b-49a4-acd0-57a7e75484a7.jfif",
@@ -62,12 +61,12 @@
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-13-1776534534185-ceef19a9-fc95-4073-946e-039fd74890db.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-14-1776534534347-528601a6-b1e9-4d44-a290-32b01648f4e3.jfif"
       ],
-      "showOnHome": true
+      "showOnHome": true,
+      "description": "Descriere album"
     },
     {
       "id": "album-1776534533160",
       "title": "Album nou4",
-      "description": "Descriere album",
       "photos": [
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-1-1776534538250-9c5b0363-0e54-4c48-aa74-9e1c19b0b4b6.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-2-1776534538434-0a64dcb0-fd7b-4f6f-aa25-032f361f5c31.jfif",
@@ -84,12 +83,12 @@
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-13-1776534540368-898c5781-77a2-4ad5-9e03-cbf3f364b3ae.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou-foto-14-1776534540549-ee654a53-fe68-4e0f-ad4a-4d2b3e1255d0.jfif"
       ],
-      "showOnHome": true
+      "showOnHome": true,
+      "description": "Descriere album"
     },
     {
       "id": "album-1776534554116",
       "title": "Album nou5",
-      "description": "Descriere album",
       "photos": [
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-1-1776534558642-eaf1fad8-b0d1-4e64-a9a9-d377ab905c52.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-2-1776534558827-33b70b13-87ad-46d2-a103-6a1046015644.jfif",
@@ -132,7 +131,8 @@
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-39-1776534597862-60cfef5c-e506-4db8-af34-5d534e0d3e1e.jfif",
         "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/albums/album-nou5-foto-40-1776534598035-4dd1c871-7d47-4aaf-8bea-15ce81058f53.jfif"
       ],
-      "showOnHome": true
+      "showOnHome": true,
+      "description": "Descriere album"
     }
   ],
   "gallery": [

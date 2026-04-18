@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServerClient } from '@/lib/supabase-server';
+import { isAdminAuthenticatedRequest } from '@/lib/admin-auth';
 import { mkdir, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 
@@ -46,6 +47,10 @@ function isProd() {
 
 export async function POST(request: NextRequest) {
   console.info('[api/upload][POST] request received');
+
+  if (!isAdminAuthenticatedRequest(request)) {
+    return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
+  }
 
   try {
     const supabase = getSupabaseServerClient();

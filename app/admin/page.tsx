@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
 
@@ -30,6 +31,7 @@ type AlbumItem = {
 
 
 export default function AdminPage() {
+  const router = useRouter();
   const { content, setContent, saveContent } = useStudioContent();
   const [isSaving, setIsSaving] = useState(false);
   const [uploadingTarget, setUploadingTarget] = useState<string | null>(null);
@@ -337,6 +339,15 @@ export default function AdminPage() {
     }));
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } finally {
+      router.replace("/admin-auth");
+      router.refresh();
+    }
+  };
+
   useEffect(() => {
     if (!uploadSuccess) return;
 
@@ -401,6 +412,13 @@ export default function AdminPage() {
               >
                 Vezi pagina publica
               </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                Logout
+              </button>
             </div>
           </div>
 

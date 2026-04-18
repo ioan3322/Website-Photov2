@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServerClient } from '@/lib/supabase-server';
+import { isAdminAuthenticatedRequest } from '@/lib/admin-auth';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 
@@ -107,6 +108,10 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   console.info('[api/content][POST] request received');
+
+  if (!isAdminAuthenticatedRequest(request)) {
+    return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
+  }
 
   let content: typeof defaultContent | null = null;
 

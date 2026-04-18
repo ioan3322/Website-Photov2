@@ -31,6 +31,13 @@ export async function proxy(request: NextRequest) {
     }
 
     const { supabase, supabaseResponse } = createClient(request);
+    const authClient = supabase as {
+      auth?: {
+        getUser?: () => Promise<{
+          error: { message: string; name?: string; status?: number } | null;
+        }>;
+      };
+    };
 
     const hasAuthorizationHeader = Boolean(request.headers.get("authorization")?.trim());
     const hasSessionCookie = request
@@ -39,7 +46,9 @@ export async function proxy(request: NextRequest) {
       .some((cookie) => cookie.name.startsWith("sb-"));
 
     if (hasAuthorizationHeader || hasSessionCookie) {
-      const { error } = await supabase.auth.getUser();
+      const { error } = authClient.auth?.getUser
+        ? await authClient.auth.getUser()
+        : { error: null };
 
       if (error) {
         console.error("[proxy] supabase.auth.getUser returned error", {
