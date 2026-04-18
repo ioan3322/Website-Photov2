@@ -1,4 +1,230 @@
 {
+  "gallery": [
+    {
+      "id": "gallery-1776538064067-0",
+      "title": "download (1)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776538063611-1-1776538063647-cd60ed28-22e6-4802-ab32-51214854c1c0.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538064231-1",
+      "title": "download (2)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776538064067-2-1776538064074-c929a251-76ad-479f-8698-a3a1099032db.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538064725-4",
+      "title": "download",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776538064564-5-1776538064572-74a0253e-45a2-4fad-be9c-8db6d1278aa7.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538064911-5",
+      "title": "images (1)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776538064725-6-1776538064734-ad8455a0-c849-470f-ac41-b247eb1821db.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538065135-6",
+      "title": "images (2)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776538064911-7-1776538064918-bb2c40c2-b640-429c-813a-a763d7b7995e.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538065553-8",
+      "title": "images (4)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776538065311-9-1776538065320-b81bb107-1b8b-4c03-8423-2d6ff74ded0e.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538065702-9",
+      "title": "images (5)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776538065553-10-1776538065561-a054a461-21b1-4ce7-9d65-65d250822ef7.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538065871-10",
+      "title": "images (6)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776538065702-11-1776538065711-f72d2968-6c09-467f-ae06-b44fe11e582f.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538066039-11",
+      "title": "images (7)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776538065871-12-1776538065879-9a2a1b70-2fc0-4ad3-93c3-9a15eb816939.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538066212-12",
+      "title": "images (8)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776538066040-13-1776538066047-466388ec-edc4-41bf-a309-b4be4de01c36.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538066387-13",
+      "title": "images (9)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776538066212-14-1776538066219-5ae9ce23-67d1-451b-b309-7c7cd4dc7ada.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538066593-14",
+      "title": "images (10)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776538066387-15-1776538066394-bdabd9c6-654b-4b77-afae-744ac709f052.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538066753-15",
+      "title": "images",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776538066593-16-1776538066601-d9c2e211-b20f-4edc-a223-5732e72fa18e.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538311883-0",
+      "title": "images (3)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776538311528-1-1776538311568-572a3046-27ff-4117-8cb7-050e7c83a1b5.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538312067-1",
+      "title": "images (4)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776538311883-2-1776538311890-e45d2bc2-5c7b-4e37-beab-34f03c2b53a7.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538312241-2",
+      "title": "images (5)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776538312067-3-1776538312076-f04f28c9-f665-4a72-bdc9-aef4660ce7a1.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538312419-3",
+      "title": "images (10)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776538312241-4-1776538312248-6a344f1b-ea9a-4216-a75b-0e7366fee206.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538312594-4",
+      "title": "images",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776538312419-5-1776538312426-9ffe8555-8947-44e6-bb87-ccea79ef256b.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538322053-0",
+      "title": "download (1)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776538321790-1-1776538321799-b065489a-71bb-49a6-9276-a11096d587e0.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538322266-1",
+      "title": "download (2)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776538322053-2-1776538322065-7687b489-9a11-42f4-aae6-412dccec2202.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538322464-2",
+      "title": "download",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776538322266-3-1776538322274-c4902efc-fe85-4218-bb73-53c82093a1f8.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538322627-3",
+      "title": "images (1)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776538322464-4-1776538322471-2d81080d-8c93-4122-b97b-2e1ecc9fdc30.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538322811-4",
+      "title": "images (2)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776538322627-5-1776538322635-5f99e4a9-706c-400a-8e87-39b6707f80dc.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538322980-5",
+      "title": "images (3)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776538322811-6-1776538322825-3681a85a-75af-4af7-81ae-d516e71feb10.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538323148-6",
+      "title": "images (4)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776538322980-7-1776538322988-bac81ca6-8548-4cc2-a894-0b1191d88dff.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538323328-7",
+      "title": "images (5)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776538323148-8-1776538323156-377fb4f2-cb6d-4ad4-a34a-fa959c3c7af9.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538323508-8",
+      "title": "images (6)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776538323328-9-1776538323335-31b24fdb-54e9-45b1-8630-8cf359f937d7.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538323691-9",
+      "title": "images (7)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776538323508-10-1776538323515-5322cb4c-1f2d-4e4d-9d8a-5e75fc73e9bd.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538323859-10",
+      "title": "images (8)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776538323691-11-1776538323698-70d99057-081a-4ddb-8df8-67c3a1b7b64f.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538324014-11",
+      "title": "images (9)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776538323859-12-1776538323866-a707747b-73da-47a4-a379-0fe0f8aa7965.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538324183-12",
+      "title": "images (10)",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776538324014-13-1776538324022-422ef5a7-a58d-4940-b53a-69a46e2e1e5e.jfif",
+      "showOnHome": true
+    },
+    {
+      "id": "gallery-1776538324374-13",
+      "title": "images",
+      "caption": "Descriere fotografie",
+      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776538324183-14-1776538324190-667571e8-31c9-487a-b26e-341d2f912a5a.jfif",
+      "showOnHome": true
+    }
+  ],
   "albums": [
     {
       "id": "album-1776534514964",
@@ -135,217 +361,170 @@
       "description": "Descriere album"
     }
   ],
-  "gallery": [
-    {
-      "id": "gallery-1776534432286-0",
-      "title": "download (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776534431669-1-1776534431731-1b35e4b5-6c72-4a0c-aac4-5521c1e3e157.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534432505-1",
-      "title": "download (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776534432286-2-1776534432299-cd69eb95-88bd-4ee9-8262-0ae0b64c4b73.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534432688-2",
-      "title": "download",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776534432505-3-1776534432513-f952cdcf-c3ff-4be9-ad53-491dc03de3b0.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534432855-3",
-      "title": "images (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776534432688-4-1776534432696-55ff7463-6d06-45f6-994c-b3b81481c6de.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534433275-4",
-      "title": "images (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776534432856-5-1776534432864-1f67b277-9d64-4afe-955c-2ad68c0dc261.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534433450-5",
-      "title": "images (3)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776534433275-6-1776534433282-08414e03-f23f-4d97-964b-5c19562a27fc.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534433617-6",
-      "title": "images (4)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776534433450-7-1776534433457-4dff06f0-2730-497e-b27c-1fd7d580540e.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534433788-7",
-      "title": "images (5)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776534433617-8-1776534433625-567bec43-74d0-4a59-a6ec-3d9b9d625ac5.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534433963-8",
-      "title": "images (6)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776534433788-9-1776534433796-7ed5ecae-fac7-4121-aac4-bda075381825.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534434132-9",
-      "title": "images (7)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776534433963-10-1776534433971-5e5fcbd4-8f6b-48e7-802a-6c348c87280b.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534434306-10",
-      "title": "images (8)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776534434132-11-1776534434139-cbb2728b-163f-419a-8e97-b1b5c8a1eaa3.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534434494-11",
-      "title": "images (9)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776534434306-12-1776534434314-58a4e499-4009-41c5-a3b3-49e2ef1f1e8d.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534434678-12",
-      "title": "images (10)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776534434494-13-1776534434503-2a6d387d-3d06-425f-9c79-19e51adac257.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534434853-13",
-      "title": "images",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776534434678-14-1776534434687-2f5bde3f-5bc8-4bc4-9fb0-e5d978b03e02.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534500360",
-      "title": "Fotografie 15",
-      "caption": "Descriere fotografie",
-      "imageUrl": "",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534504231-0",
-      "title": "download (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1-1776534504004-1-1776534504047-b64fa79d-20d5-46bf-8cc3-b60d666d7de9.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534504397-1",
-      "title": "download (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-2-1776534504231-2-1776534504243-d3544331-ff99-4f12-903b-0d35965c837b.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534504559-2",
-      "title": "download",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/download-1776534504397-3-1776534504414-aa2779b0-26f6-46ec-8574-5cb1dbc808e9.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534504748-3",
-      "title": "images (1)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1-1776534504559-4-1776534504568-06856d8f-0fb7-4037-9676-4f6bd02ab9dc.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534504931-4",
-      "title": "images (2)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-2-1776534504748-5-1776534504759-84a339ca-1392-463d-b42e-30528e17ca59.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534505096-5",
-      "title": "images (3)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-3-1776534504931-6-1776534504941-e44344c2-dcaa-4581-ad10-5c55eb1c9a46.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534505266-6",
-      "title": "images (4)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-4-1776534505096-7-1776534505104-edf15f6c-0878-4acf-bb31-aab3a9a15d33.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534505436-7",
-      "title": "images (5)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-5-1776534505266-8-1776534505276-a2065f5c-4373-457c-adc4-c0314538354f.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534505661-8",
-      "title": "images (6)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-6-1776534505436-9-1776534505445-8e6eadc4-dfa1-422d-ae22-5e2b185f9095.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534505829-9",
-      "title": "images (7)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-7-1776534505661-10-1776534505670-f59c3855-b3f4-4ae4-97fe-79da1976b48e.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534505997-10",
-      "title": "images (8)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-8-1776534505829-11-1776534505841-102edba5-775d-4e11-bc6a-9d4236a8df0e.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534506161-11",
-      "title": "images (9)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-9-1776534505997-12-1776534506005-985ee1b7-f776-47b1-991f-6ce6712ca063.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534506341-12",
-      "title": "images (10)",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-10-1776534506161-13-1776534506171-2c4c6a90-fc55-47c3-9648-4ad87b7fd2d0.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534506511-13",
-      "title": "images",
-      "caption": "Descriere fotografie",
-      "imageUrl": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/gallery/images-1776534506341-14-1776534506351-d0f860fe-c47c-4b12-8779-3b231bd00627.jfif",
-      "showOnHome": true
-    },
-    {
-      "id": "gallery-1776534508380",
-      "title": "Fotografie 30",
-      "caption": "Descriere fotografie",
-      "imageUrl": "",
-      "showOnHome": true
-    }
+  "photographerPhotos": [
+    "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/photographer/fotograf-1-1776537870102-aa961c35-de96-4066-87aa-656d08bf8468.jfif",
+    "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/photographer/fotograf-2-1776537876064-511d7269-15c1-4887-b840-101ab14022eb.jfif"
   ],
-  "photographerPhotos": []
+  "packages": [
+    {
+      "id": "package-1776537390042",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537519535",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537522083",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537522489",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537523183",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537523444",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537524145",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537524366",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537525085",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537525318",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537526291",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537526567",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537527311",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537527563",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537528398",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1776537528663",
+      "price": "Pret",
+      "title": "Pachet nou",
+      "features": [
+        "Beneficiu pachet"
+      ],
+      "description": "Descriere pachet",
+      "showOnPolicies": true
+    }
+  ]
 }

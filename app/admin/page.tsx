@@ -22,6 +22,15 @@ type AlbumItem = {
   showOnHome?: boolean;
 };
 
+type PackageItem = {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  features: string[];
+  showOnPolicies?: boolean;
+};
+
 
 
 
@@ -339,6 +348,63 @@ export default function AdminPage() {
     }));
   };
 
+  // Packages handlers
+  const handlePackageChange = (id: string, field: keyof Omit<PackageItem, "id" | "features" | "showOnPolicies">, value: string) => {
+    setContent((prev) => ({
+      ...prev,
+      packages: prev.packages.map((pkg) =>
+        pkg.id === id ? { ...pkg, [field]: value } : pkg,
+      ),
+    }));
+  };
+
+  const handlePackageFeaturesChange = (id: string, value: string) => {
+    const features = value
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+
+    setContent((prev) => ({
+      ...prev,
+      packages: prev.packages.map((pkg) =>
+        pkg.id === id ? { ...pkg, features } : pkg,
+      ),
+    }));
+  };
+
+  const handlePackageToggle = (id: string, checked: boolean) => {
+    setContent((prev) => ({
+      ...prev,
+      packages: prev.packages.map((pkg) =>
+        pkg.id === id ? { ...pkg, showOnPolicies: checked } : pkg,
+      ),
+    }));
+  };
+
+  const handleAddPackage = () => {
+    setContent((prev) => ({
+      ...prev,
+      packages: [
+        ...prev.packages,
+        {
+          id: `package-${Date.now()}`,
+          title: "Pachet nou",
+          description: "Descriere pachet",
+          price: "Pret",
+          features: ["Beneficiu pachet"],
+          showOnPolicies: true,
+        },
+      ],
+    }));
+  };
+
+  const handleDeletePackage = (id: string) => {
+    setContent((prev) => ({
+      ...prev,
+      packages: prev.packages.filter((pkg) => pkg.id !== id),
+    }));
+  };
+
   const handleLogout = async () => {
     try {
       await fetch("/api/admin/logout", { method: "POST" });
@@ -377,7 +443,7 @@ export default function AdminPage() {
       <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-rose-100/60 blur-3xl" />
       <div className="pointer-events-none absolute -right-20 top-1/3 h-80 w-80 rounded-full bg-amber-100/50 blur-3xl" />
 
-      <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
+      <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-10 text-center sm:px-6 lg:px-8 lg:py-12">
         <header className="grid gap-8 rounded-3xl border border-rose-100 bg-white/95 p-8 shadow-sm md:grid-cols-[1.3fr_1fr] md:p-10">
           <div className="space-y-5">
             <p className={siteConfig.theme.badge}>Panou admin</p>
@@ -406,6 +472,12 @@ export default function AdminPage() {
               >
                 Fotograf
               </a>
+              <a
+                href="#pachete-admin"
+                className="inline-flex items-center justify-center rounded-full border border-rose-200 px-6 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+              >
+                Pachete
+              </a>
               <Link
                 href="/acasa"
                 className="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
@@ -431,6 +503,9 @@ export default function AdminPage() {
             </div>
             <div className="rounded-xl border border-rose-100 bg-white p-4 text-sm text-slate-600">
               Poze fotograf: <span className="font-semibold text-slate-900">{content.photographerPhotos.length}</span>
+            </div>
+            <div className="rounded-xl border border-rose-100 bg-white p-4 text-sm text-slate-600">
+              Pachete editabile: <span className="font-semibold text-slate-900">{content.packages.length}</span>
             </div>
           </div>
         </header>
@@ -724,6 +799,77 @@ export default function AdminPage() {
             >
               <span className="text-5xl font-light leading-none">+</span>
               <span className="text-sm font-semibold text-rose-700">Adauga fotografie</span>
+            </button>
+          </div>
+        </section>
+
+        <section id="pachete-admin" className="space-y-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Pachete</h2>
+            <p className={siteConfig.theme.mutedText}>Actualizeaza pachetele afisate pe pagina Pachete.</p>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            {content.packages.map((pkg) => (
+              <article key={pkg.id} className="overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
+                <div className="space-y-3 p-5">
+                  <label className="flex items-center gap-2 rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={pkg.showOnPolicies ?? true}
+                      onChange={(event) => handlePackageToggle(pkg.id, event.target.checked)}
+                      className="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-300"
+                    />
+                    Afiseaza pe pagina Pachete
+                  </label>
+
+                  <input
+                    value={pkg.title}
+                    onChange={(event) => handlePackageChange(pkg.id, "title", event.target.value)}
+                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-rose-300"
+                    placeholder="Titlu pachet"
+                  />
+
+                  <input
+                    value={pkg.price}
+                    onChange={(event) => handlePackageChange(pkg.id, "price", event.target.value)}
+                    className="w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
+                    placeholder="Pret"
+                  />
+
+                  <textarea
+                    value={pkg.description}
+                    onChange={(event) => handlePackageChange(pkg.id, "description", event.target.value)}
+                    className="min-h-[90px] w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
+                    placeholder="Descriere pachet"
+                  />
+
+                  <textarea
+                    value={pkg.features.join("\n")}
+                    onChange={(event) => handlePackageFeaturesChange(pkg.id, event.target.value)}
+                    className="min-h-[120px] w-full rounded-lg border border-rose-100 bg-rose-50/40 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-rose-300"
+                    placeholder="Beneficii pachet (cate una pe rand)"
+                  />
+
+                  <button
+                    onClick={() => handleDeletePackage(pkg.id)}
+                    className="w-full rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                  >
+                    Sterge pachet
+                  </button>
+                </div>
+              </article>
+            ))}
+
+            <button
+              type="button"
+              onClick={handleAddPackage}
+              className="flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-rose-200 bg-white text-rose-500 transition hover:border-rose-300 hover:bg-rose-50"
+              aria-label="Adauga pachet"
+              title="Adauga pachet"
+            >
+              <span className="text-5xl font-light leading-none">+</span>
+              <span className="text-sm font-semibold text-rose-700">Adauga pachet</span>
             </button>
           </div>
         </section>

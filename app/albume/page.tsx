@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
@@ -224,7 +225,7 @@ export default function AlbumePage() {
 
             return (
               <article key={album.id} className="relative overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-md shadow-rose-100/40 transition-all duration-300 hover:shadow-lg">
-                <header className="border-b border-rose-100 px-4 py-4 text-slate-900 md:px-5">
+                <header className="border-b border-rose-100 px-4 py-4 text-center text-slate-900 md:px-5">
                   <h2 className="text-xl font-semibold tracking-tight md:text-3xl">{album.title}</h2>
                   {album.description ? (
                     <p className="mt-2 text-sm text-slate-600 md:text-base">{album.description}</p>
@@ -240,36 +241,39 @@ export default function AlbumePage() {
                       key={`${slide.id}-${index}`}
                       type="button"
                       onClick={() => openFullscreen(album.id, slide.photoIndex - 1)}
-                      className="group relative overflow-hidden text-left"
+                      className="group relative overflow-hidden text-center"
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         src={slide.imageUrl}
                         alt={`${album.title} ${slide.photoIndex}`}
-                        className="h-full w-full object-cover transition-all duration-300 group-hover:scale-[1.03] group-hover:brightness-[1.03]"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-all duration-300 group-hover:scale-[1.03] group-hover:brightness-[1.03]"
                       />
-                      <p className="absolute bottom-2 left-2 rounded bg-black/45 px-2 py-1 text-xs font-medium text-white">
+                      <p className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded bg-black/45 px-2 py-1 text-xs font-medium text-white">
                         {slide.photoIndex} / {album.photos.length}
                       </p>
                     </button>
                   ))}
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => goToPrev(album.id, album.photos.length)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition-all duration-300 hover:-translate-y-1/2 hover:bg-white hover:shadow"
-                >
-                  Inapoi
-                </button>
+                <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => goToPrev(album.id, album.photos.length)}
+                    className="rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition-all duration-300 hover:bg-white hover:shadow"
+                  >
+                    Inapoi
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={() => goToNext(album.id, album.photos.length)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition-all duration-300 hover:-translate-y-1/2 hover:bg-white hover:shadow"
-                >
-                  inainte
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => goToNext(album.id, album.photos.length)}
+                    className="rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition-all duration-300 hover:bg-white hover:shadow"
+                  >
+                    inainte
+                  </button>
+                </div>
               </article>
             );
           })}
@@ -318,11 +322,14 @@ export default function AlbumePage() {
           </button>
 
           <div className="relative max-h-full max-w-[96vw]" onClick={(event) => event.stopPropagation()}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={fullscreenPhoto.imageUrl}
               alt={`${fullscreenAlbum.title} ${fullscreenPhoto.photoIndex}`}
+              width={1600}
+              height={1200}
+              sizes="96vw"
               className="max-h-[90vh] w-auto max-w-[96vw] rounded-xl object-contain shadow-2xl"
+              priority
             />
             <p className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white">
               {fullscreenPhoto.photoIndex} / {fullscreenAlbum.photos.length}

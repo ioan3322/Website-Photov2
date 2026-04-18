@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
@@ -74,30 +75,29 @@ export default function GaleriePage() {
         <div className="mt-4 columns-2 gap-4 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5">
           {visibleItems.map((item, index) => (
             <article key={item.id || `${item.title}-${index}`} className="mb-6 break-inside-avoid space-y-2">
-              <div className={`${siteConfig.theme.card} shadow-none overflow-hidden p-0`}>
-                {item.imageUrl ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const photoIndex = imageItems.findIndex((photo) => photo.id === item.id && photo.imageUrl === item.imageUrl);
-                      if (photoIndex >= 0) {
-                        setFullscreenIndex(photoIndex);
-                      }
-                    }}
-                    className="group block w-full text-left"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title || "Fotografie"}
-                      className="h-auto w-full object-cover transition-all duration-300 group-hover:scale-[1.03] group-hover:brightness-[1.03]"
-                      loading="lazy"
-                    />
-                  </button>
-                ) : (
-                  <div className={`h-[240px] w-full ${siteConfig.theme.softSurface}`} />
-                )}
-              </div>
+              {item.imageUrl ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const photoIndex = imageItems.findIndex((photo) => photo.id === item.id && photo.imageUrl === item.imageUrl);
+                    if (photoIndex >= 0) {
+                      setFullscreenIndex(photoIndex);
+                    }
+                  }}
+                  className="group block w-full overflow-hidden rounded-2xl text-center"
+                >
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.title || "Fotografie"}
+                    width={1200}
+                    height={1500}
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1440px) 25vw, 20vw"
+                    className="h-auto w-full object-cover transition-all duration-300 group-hover:scale-[1.03] group-hover:brightness-[1.03]"
+                  />
+                </button>
+              ) : (
+                <div className={`h-[240px] w-full rounded-2xl ${siteConfig.theme.softSurface}`} />
+              )}
               <h2 className="text-lg font-semibold leading-tight text-slate-900">{item.title || `Fotografie ${index + 1}`}</h2>
               <p className={`text-sm ${siteConfig.theme.mutedText}`}>{item.caption || "Cadru de prezentare"}</p>
             </article>
@@ -107,9 +107,7 @@ export default function GaleriePage() {
         <div className="mt-4 columns-2 gap-4 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5">
           {Array.from({ length: 12 }).map((_, index) => (
             <article key={`galerie-skeleton-${index}`} className="mb-6 break-inside-avoid space-y-2">
-              <div className={`${siteConfig.theme.card} shadow-none overflow-hidden p-0`}>
-                <div className={`h-[240px] w-full ${siteConfig.theme.softSurface} animate-pulse`} />
-              </div>
+              <div className={`h-[240px] w-full rounded-2xl ${siteConfig.theme.softSurface} animate-pulse`} />
               <div className={`h-5 w-2/3 rounded ${siteConfig.theme.softSurface}`} />
               <div className={`h-4 w-5/6 rounded ${siteConfig.theme.softSurface}`} />
             </article>
@@ -142,11 +140,14 @@ export default function GaleriePage() {
           </button>
 
           <div className="relative max-h-full max-w-[96vw]" onClick={(event) => event.stopPropagation()}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={activeFullscreenPhoto.imageUrl}
               alt={activeFullscreenPhoto.title || "Fotografie"}
+              width={1600}
+              height={1200}
+              sizes="96vw"
               className="max-h-[90vh] w-auto max-w-[96vw] rounded-xl object-contain"
+              priority
             />
             <p className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white">
               {(fullscreenIndex ?? 0) + 1} / {imageItems.length}

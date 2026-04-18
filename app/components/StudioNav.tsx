@@ -5,7 +5,7 @@ const links = [
   { href: "/galerie", label: "Galerie" },
   { href: "/albume", label: "Albume" },
   { href: "/recenzii", label: "Recenzii" },
-  { href: "/politici", label: "Politici" },
+  { href: "/politici", label: "Pachete" },
   { href: "/fotograf", label: "Fotograf" },
   { href: "/contact", label: "Contact" },
 ];

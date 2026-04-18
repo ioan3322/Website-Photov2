@@ -25,8 +25,18 @@ export type AlbumItem = {
   showOnHome?: boolean;
 };
 
+export type PackageItem = {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  features: string[];
+  showOnPolicies?: boolean;
+};
+
 export type StudioContent = {
   gallery: GalleryItem[];
   albums: AlbumItem[];
   photographerPhotos: string[];
+  packages: PackageItem[];
 };

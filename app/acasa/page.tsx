@@ -1,7 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import Container from "@/app/components/ui/Container";
+import RevealOnScroll from "@/app/components/ui/RevealOnScroll";
+import Section from "@/app/components/ui/Section";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
@@ -148,25 +152,43 @@ export default function AcasaPage() {
       description="Studio foto pentru bebelusi, cu sedinte in siguranta si cadre naturale."
       containerClassName="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:py-16"
     >
-      <section className="space-y-6 text-center sm:text-left">
-        <p className={siteConfig.theme.badge}>
-          Studio foto pentru bebelusi
-        </p>
-        <h1 className="text-4xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-          Momente mici, amintiri pentru o viata
-        </h1>
-        <p className={`max-w-3xl text-lg ${siteConfig.theme.mutedText}`}>
-          Sedinte foto cu setup profesional, lumina blanda si mult confort pentru bebelus.
-        </p>
-      </section>
+      <Container>
+        <RevealOnScroll>
+          <Section className="space-y-6 text-center">
+            <p className={siteConfig.theme.badge}>
+              Studio foto pentru bebelusi
+            </p>
+            <h1 className="text-4xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              Momente mici, amintiri pentru o viata
+            </h1>
+            <p className={`max-w-3xl text-lg ${siteConfig.theme.mutedText}`}>
+              Sedinte foto cu setup profesional, lumina blanda si mult confort pentru bebelus.
+            </p>
 
-      {featuredAlbums.length > 0 || loading ? (
-        <section className="mt-14 space-y-6">
-          <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Albume alese de admin</h2>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-6 xl:grid-cols-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex w-full items-center justify-center rounded-2xl bg-rose-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-rose-200/70 transition-all duration-300 hover:-translate-y-0.5 hover:bg-rose-700 hover:shadow-lg sm:w-auto"
+              >
+                Contact
+              </Link>
+              <Link
+                href="/recenzii"
+                className="inline-flex w-full items-center justify-center rounded-2xl border border-rose-200 bg-white px-6 py-3 text-sm font-semibold text-rose-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-rose-50 sm:w-auto"
+              >
+                Recenzii
+              </Link>
+            </div>
+          </Section>
+        </RevealOnScroll>
+
+        {featuredAlbums.length > 0 || loading ? (
+          <RevealOnScroll className="mt-14">
+            <Section title="Albume alese de admin">
+              <div className="grid justify-center gap-6 [grid-template-columns:repeat(auto-fit,minmax(180px,220px))]">
             {loading && featuredAlbums.length === 0
               ? Array.from({ length: 3 }).map((_, index) => (
-                  <div key={`album-skeleton-${index}`} className="block text-left [perspective:1200px]">
+                  <div key={`album-skeleton-${index}`} className="block text-center [perspective:1200px]">
                     <div className="relative transition-transform duration-200 ease-out">
                       <div className="relative h-[280px]">
                         <div className="absolute inset-0 translate-x-4 translate-y-4 overflow-hidden rounded-[1.6rem] border border-rose-200/70 bg-rose-100/50" />
@@ -193,7 +215,7 @@ export default function AcasaPage() {
                       onClick={() => openAlbumFullscreen(album.id)}
                       onMouseMove={(event) => updateTilt(album.id, event)}
                       onMouseLeave={() => resetTilt(album.id)}
-                      className="group block text-left transition-all duration-300 hover:-translate-y-1 [perspective:1200px]"
+                      className="group block text-center transition-all duration-300 hover:-translate-y-1 [perspective:1200px]"
                     >
                       <div
                         className="relative transition-transform duration-200 ease-out"
@@ -201,23 +223,36 @@ export default function AcasaPage() {
                       >
                         <div className="relative h-[280px]">
                           <div className="absolute inset-0 translate-x-4 translate-y-4 overflow-hidden rounded-[1.6rem] border border-rose-200/70 bg-white/95">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={stackPhotos[2]} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-35 blur-[0.5px] saturate-75" />
+                            <Image
+                              src={stackPhotos[2]}
+                              alt=""
+                              aria-hidden="true"
+                              fill
+                              sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
+                              className="object-cover opacity-35 blur-[0.5px] saturate-75"
+                            />
                             <div className="absolute inset-0 bg-gradient-to-tr from-rose-200/20 via-white/25 to-transparent" />
                           </div>
                           <div className="absolute inset-0 translate-x-2 translate-y-2 overflow-hidden rounded-[1.6rem] border border-rose-200/80 bg-white/95">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={stackPhotos[1]} alt="" aria-hidden="true" className="h-full w-full object-cover opacity-55 saturate-90" />
+                            <Image
+                              src={stackPhotos[1]}
+                              alt=""
+                              aria-hidden="true"
+                              fill
+                              sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
+                              className="object-cover opacity-55 saturate-90"
+                            />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
                           </div>
 
                           <div className="relative h-full overflow-hidden rounded-[1.6rem] border border-rose-200 bg-white shadow-md shadow-rose-100/50">
                             <div className="absolute bottom-0 left-0 top-0 z-10 w-4 bg-gradient-to-r from-rose-300/70 to-transparent" />
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
+                            <Image
                               src={album.photos[0]}
                               alt={album.title}
-                              className="h-full w-full object-cover transition-all duration-300 group-hover:scale-[1.04] group-hover:brightness-[1.03]"
+                              fill
+                              sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
+                              className="object-cover transition-all duration-300 group-hover:scale-[1.04] group-hover:brightness-[1.03]"
                             />
                           </div>
                         </div>
@@ -225,23 +260,33 @@ export default function AcasaPage() {
                     </button>
                   );
                 })}
+              </div>
+            </Section>
+          </RevealOnScroll>
+        ) : null}
+
+        <RevealOnScroll className="mt-14">
+          <div className="text-center">
+            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Explorează</h2>
           </div>
-        </section>
-      ) : null}
+        </RevealOnScroll>
 
-      <div className="mt-14 text-center">
-        <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Explorează</h2>
-      </div>
-
-      <section className="mt-10">
+        <RevealOnScroll className="mt-10">
+          <Section>
         {cards.length > 0 ? (
           <div className="columns-2 gap-4 sm:columns-3 lg:columns-4 xl:columns-5">
             {cards.map((card) => {
               const CardBody = (
-                <article className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-rose-100/90 bg-white shadow-md shadow-rose-100/40 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-                  <div className="relative overflow-hidden bg-slate-100">
+                <article className="mb-6 break-inside-avoid">
+                  <div className="overflow-hidden rounded-2xl bg-slate-100 transition-all duration-300 hover:-translate-y-0.5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={card.imageUrl} alt="" aria-hidden="true" className="h-auto w-full object-cover transition-all duration-300 hover:scale-[1.03]" loading="lazy" />
+                    <img
+                      src={card.imageUrl}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-auto w-full object-cover transition-all duration-300 hover:scale-[1.03]"
+                      loading="lazy"
+                    />
                   </div>
                 </article>
               );
@@ -262,9 +307,12 @@ export default function AcasaPage() {
             {Array.from({ length: 10 }).map((_, index) => (
               <article
                 key={`home-photo-skeleton-${index}`}
-                className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-rose-100 bg-rose-100/70 shadow-sm animate-pulse"
+                className="mb-6 break-inside-avoid overflow-hidden rounded-2xl bg-rose-100/70 animate-pulse"
               >
-                <div className="h-[220px] w-full bg-gradient-to-br from-rose-100 via-rose-50 to-amber-50" />
+                <div
+                  className="w-full bg-gradient-to-br from-rose-100 via-rose-50 to-amber-50"
+                  style={{ height: `${220 + (index % 4) * 40}px` }}
+                />
               </article>
             ))}
           </div>
@@ -273,7 +321,20 @@ export default function AcasaPage() {
             Nu exista inca elemente bifate pentru Home. Selecteaza fotografii sau albume din panoul Admin.
           </p>
         )}
-      </section>
+          </Section>
+        </RevealOnScroll>
+
+        <RevealOnScroll className="mt-8">
+          <div className="flex justify-center">
+            <Link
+              href="/contact"
+              className="inline-flex w-full max-w-md items-center justify-center rounded-2xl bg-rose-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-rose-200/70 transition-all duration-300 hover:-translate-y-0.5 hover:bg-rose-700 hover:shadow-lg sm:w-auto"
+            >
+              Contact
+            </Link>
+          </div>
+        </RevealOnScroll>
+      </Container>
 
       {activeFullscreenAlbum && activeFullscreenPhoto ? (
         <div
@@ -296,11 +357,13 @@ export default function AcasaPage() {
           </button>
 
           <div className="relative max-h-full max-w-[96vw]" onClick={(event) => event.stopPropagation()}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={activeFullscreenPhoto}
               alt={activeFullscreenAlbum.title}
+              width={1600}
+              height={1200}
               className="max-h-[90vh] w-auto max-w-[96vw] rounded-xl object-contain"
+              priority
             />
             <p className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white">
               {(fullscreenAlbum?.photoIndex ?? 0) + 1} / {activeFullscreenAlbum.photos.length}

@@ -13,7 +13,23 @@ const defaultContent = {
   gallery: [],
   albums: [],
   photographerPhotos: [],
+  packages: [],
 };
+
+function normalizeContent(payload: unknown): typeof defaultContent {
+  if (!payload || typeof payload !== 'object') {
+    return defaultContent;
+  }
+
+  const raw = payload as Partial<typeof defaultContent>;
+
+  return {
+    gallery: Array.isArray(raw.gallery) ? raw.gallery : [],
+    albums: Array.isArray(raw.albums) ? raw.albums : [],
+    photographerPhotos: Array.isArray(raw.photographerPhotos) ? raw.photographerPhotos : [],
+    packages: Array.isArray(raw.packages) ? raw.packages : [],
+  };
+}
 
 async function readLocalContent() {
   if (process.env.NODE_ENV === 'production') {
@@ -90,10 +106,10 @@ export async function GET() {
         return NextResponse.json(defaultContent, { status: 200 });
       }
 
-      return NextResponse.json(newData.content);
+      return NextResponse.json(normalizeContent(newData.content));
     }
 
-    return NextResponse.json(data.content);
+    return NextResponse.json(normalizeContent(data.content));
   } catch (error) {
     console.error('[api/content][GET] Unhandled exception', error);
 
@@ -117,7 +133,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const supabaseServer = getSupabaseServerClient();
-    const parsedContent = (await request.json()) as typeof defaultContent;
+    const parsedContent = normalizeContent(await request.json());
     content = parsedContent;
 
     await writeLocalContent(parsedContent);

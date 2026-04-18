@@ -7,7 +7,23 @@ const defaultContent: StudioContent = {
   gallery: [],
   albums: [],
   photographerPhotos: [],
+  packages: [],
 };
+
+function normalizeContent(payload: unknown): StudioContent {
+  if (!payload || typeof payload !== 'object') {
+    return defaultContent;
+  }
+
+  const raw = payload as Partial<StudioContent>;
+
+  return {
+    gallery: Array.isArray(raw.gallery) ? raw.gallery : [],
+    albums: Array.isArray(raw.albums) ? raw.albums : [],
+    photographerPhotos: Array.isArray(raw.photographerPhotos) ? raw.photographerPhotos : [],
+    packages: Array.isArray(raw.packages) ? raw.packages : [],
+  };
+}
 
 export function useStudioContent() {
   const [content, setContent] = useState<StudioContent>(defaultContent);
@@ -26,7 +42,7 @@ export function useStudioContent() {
           if (response.ok) {
             const data = await response.json();
             setError(null);
-            setContent(data);
+            setContent(normalizeContent(data));
             return;
           }
         } catch {
@@ -38,7 +54,7 @@ export function useStudioContent() {
           const stored = localStorage.getItem(STORAGE_KEY);
           if (stored) {
             setError(null);
-            setContent(JSON.parse(stored));
+            setContent(normalizeContent(JSON.parse(stored)));
             return;
           }
         }
