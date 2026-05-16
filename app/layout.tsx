@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Nunito } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/app/layout/siteConfig";
 
-const nunito = Nunito({
+const manrope = Manrope({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -17,7 +17,7 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   title: siteConfig.appName,
-  description: "Site studio foto pentru bebelusi",
+  description: "Studio foto premium pentru bebelusi, familie si maternitate.",
 };
 
 export default function RootLayout({
@@ -26,9 +26,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ro">
       <body
-        className={`${nunito.variable} ${cormorant.variable} antialiased`}
+        className={`${manrope.variable} ${cormorant.variable} antialiased`}
       >
         {children}
       </body>

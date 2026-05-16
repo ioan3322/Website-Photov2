@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
@@ -28,7 +29,7 @@ export default function AlbumePage() {
   const albumRows = useMemo<AlbumRow[]>(() => {
     return content.albums
       .map((album) => {
-      const validPhotos = album.photos.filter((photo) => photo.trim().length > 0);
+        const validPhotos = album.photos.filter((photo) => photo.trim().length > 0);
 
         return {
           id: album.id,
@@ -44,6 +45,17 @@ export default function AlbumePage() {
       .filter((album) => album.photos.length > 0);
   }, [content.albums]);
 
+  const safeActiveByAlbum = useMemo(() => {
+    const next: Record<string, number> = {};
+
+    albumRows.forEach((album) => {
+      const current = activeByAlbum[album.id] ?? 0;
+      next[album.id] = Math.min(current, album.photos.length - 1);
+    });
+
+    return next;
+  }, [activeByAlbum, albumRows]);
+
   useEffect(() => {
     const setCountFromViewport = () => {
       const width = window.innerWidth;
@@ -55,11 +67,6 @@ export default function AlbumePage() {
 
       if (width < 1024) {
         setVisibleCount(2);
-        return;
-      }
-
-      if (width >= 1600) {
-        setVisibleCount(5);
         return;
       }
 
@@ -79,11 +86,9 @@ export default function AlbumePage() {
 
   useEffect(() => {
     if (albumRows.length === 0) {
-      setActiveByAlbum({});
       return;
     }
 
-    // Auto-scroll each album row from right to left.
     const timer = setInterval(() => {
       setActiveByAlbum((prev) => {
         const next: Record<string, number> = { ...prev };
@@ -100,42 +105,29 @@ export default function AlbumePage() {
     return () => clearInterval(timer);
   }, [albumRows]);
 
-  useEffect(() => {
-    setActiveByAlbum((prev) => {
-      const next: Record<string, number> = {};
-
-      albumRows.forEach((album) => {
-        const current = prev[album.id] ?? 0;
-        next[album.id] = Math.min(current, album.photos.length - 1);
-      });
-
-      return next;
-    });
-  }, [albumRows]);
-
-  const goToPrev = (albumId: string, count: number) => {
+  const goToPrev = useCallback((albumId: string, count: number) => {
     setActiveByAlbum((prev) => ({
       ...prev,
       [albumId]: ((prev[albumId] ?? 0) - 1 + count) % count,
     }));
-  };
+  }, []);
 
-  const goToNext = (albumId: string, count: number) => {
+  const goToNext = useCallback((albumId: string, count: number) => {
     setActiveByAlbum((prev) => ({
       ...prev,
       [albumId]: ((prev[albumId] ?? 0) + 1) % count,
     }));
-  };
+  }, []);
 
-  const openFullscreen = (albumId: string, photoIndex: number) => {
+  const openFullscreen = useCallback((albumId: string, photoIndex: number) => {
     setFullscreenState({ albumId, photoIndex });
-  };
+  }, []);
 
-  const closeFullscreen = () => {
+  const closeFullscreen = useCallback(() => {
     setFullscreenState(null);
-  };
+  }, []);
 
-  const goToFullscreenPrev = () => {
+  const goToFullscreenPrev = useCallback(() => {
     setFullscreenState((prev) => {
       if (!prev) {
         return null;
@@ -152,9 +144,9 @@ export default function AlbumePage() {
         photoIndex: (prev.photoIndex - 1 + album.photos.length) % album.photos.length,
       };
     });
-  };
+  }, [albumRows]);
 
-  const goToFullscreenNext = () => {
+  const goToFullscreenNext = useCallback(() => {
     setFullscreenState((prev) => {
       if (!prev) {
         return null;
@@ -171,7 +163,7 @@ export default function AlbumePage() {
         photoIndex: (prev.photoIndex + 1) % album.photos.length,
       };
     });
-  };
+  }, [albumRows]);
 
   useEffect(() => {
     if (!fullscreenState) {
@@ -195,10 +187,10 @@ export default function AlbumePage() {
     window.addEventListener("keydown", onKeyDown);
 
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [fullscreenState, albumRows]);
+  }, [fullscreenState, closeFullscreen, goToFullscreenNext, goToFullscreenPrev]);
 
   const getVisibleSlides = (album: AlbumRow) => {
-    const start = activeByAlbum[album.id] ?? 0;
+    const start = safeActiveByAlbum[album.id] ?? 0;
     const slots = Math.min(visibleCount, album.photos.length);
 
     return Array.from({ length: slots }, (_, slotIndex) => {
@@ -215,149 +207,186 @@ export default function AlbumePage() {
   return (
     <SiteShell
       title="Albume"
-      description="Fotografiile ruleaza automat de la dreapta la stanga."
-      containerClassName="mx-auto w-full max-w-8xl px-4 py-10 sm:px-6 sm:py-12 lg:py-14"
+      description="Secțiuni discrete, cu slideshow automat și fullscreen elegant."
+      containerClassName="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
     >
-      {albumRows.length > 0 ? (
-        <section className="space-y-8 bg-white/70 px-2 py-2 md:space-y-10 md:p-4">
-          {albumRows.map((album) => {
-            const visibleSlides = getVisibleSlides(album);
+      <section className="space-y-8">
+        <div className="max-w-3xl">
+          <p className={siteConfig.theme.badge}>Albume curatoriate</p>
+          <p className={`mt-5 text-base sm:text-lg ${siteConfig.theme.mutedText}`}>
+            Păstrăm aceeași logică de auto-scroll și fullscreen, dar o punem într-un context mai calm, mai curat și mai premium.
+          </p>
+        </div>
 
-            return (
-              <article key={album.id} className="relative overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-md shadow-rose-100/40 transition-all duration-300 hover:shadow-lg">
-                <header className="border-b border-rose-100 px-4 py-4 text-center text-slate-900 md:px-5">
-                  <h2 className="text-xl font-semibold tracking-tight md:text-3xl">{album.title}</h2>
-                  {album.description ? (
-                    <p className="mt-2 text-sm text-slate-600 md:text-base">{album.description}</p>
-                  ) : null}
+        {albumRows.length > 0 ? (
+          <div className="space-y-6 lg:space-y-8">
+            {albumRows.map((album) => {
+              const visibleSlides = getVisibleSlides(album);
+
+              return (
+                <motion.article
+                  key={album.id}
+                  className="overflow-hidden rounded-[2rem] border border-[rgba(203,184,169,0.22)] bg-white/72 shadow-[0_18px_48px_rgba(43,43,43,0.06)] backdrop-blur-sm"
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <header className="flex flex-col gap-5 border-b border-[rgba(203,184,169,0.16)] px-5 py-5 sm:px-6 lg:flex-row lg:items-end lg:justify-between">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.24em] text-[#8b7c6f]">Album</p>
+                      <h2 className="mt-2 text-2xl font-medium tracking-tight text-[#2B2B2B] sm:text-3xl">{album.title}</h2>
+                      {album.description ? <p className={`mt-3 text-sm ${siteConfig.theme.mutedText}`}>{album.description}</p> : null}
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => goToPrev(album.id, album.photos.length)}
+                        className="rounded-full border border-[rgba(203,184,169,0.32)] bg-white/80 px-4 py-2 text-sm font-medium text-[#2B2B2B] transition hover:bg-white"
+                      >
+                        Înapoi
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => goToNext(album.id, album.photos.length)}
+                        className="rounded-full border border-[rgba(203,184,169,0.32)] bg-white/80 px-4 py-2 text-sm font-medium text-[#2B2B2B] transition hover:bg-white"
+                      >
+                        Înainte
+                      </button>
+                    </div>
+                  </header>
+
+                  <div
+                    className="grid gap-3 p-3 sm:gap-4"
+                    style={{ gridTemplateColumns: `repeat(${Math.min(visibleCount, album.photos.length)}, minmax(0, 1fr))` }}
+                  >
+                    {visibleSlides.map((slide, index) => (
+                      <button
+                        key={`${slide.id}-${index}`}
+                        type="button"
+                        onClick={() => openFullscreen(album.id, slide.photoIndex - 1)}
+                        className="group relative overflow-hidden rounded-[1.5rem] text-left"
+                      >
+                        <div className="relative h-[40vh] min-h-[16rem] overflow-hidden sm:h-[34vh] lg:h-[42vh]">
+                          <Image
+                            src={slide.imageUrl}
+                            alt={`${album.title} ${slide.photoIndex}`}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover transition-all duration-500 group-hover:scale-[1.04] group-hover:brightness-[1.03]"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                          <p className="absolute bottom-3 left-3 rounded-full bg-black/45 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                            {slide.photoIndex} / {album.photos.length}
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+        ) : loading ? (
+          <div className="space-y-6 lg:space-y-8">
+            {Array.from({ length: 2 }).map((_, index) => (
+              <article
+                key={`album-skeleton-${index}`}
+                className="overflow-hidden rounded-[2rem] border border-[rgba(203,184,169,0.18)] bg-white/72 shadow-[0_18px_48px_rgba(43,43,43,0.05)]"
+              >
+                <header className="border-b border-[rgba(203,184,169,0.16)] px-5 py-5 sm:px-6">
+                  <div className={`h-6 w-1/3 rounded ${siteConfig.theme.softSurface} animate-pulse`} />
+                  <div className={`mt-3 h-4 w-1/2 rounded ${siteConfig.theme.softSurface} animate-pulse`} />
                 </header>
 
-                <div
-                  className="grid h-[54vh] min-h-[340px] gap-1 p-1 sm:h-[48vh] md:h-[42vh]"
-                  style={{ gridTemplateColumns: `repeat(${Math.min(visibleCount, album.photos.length)}, minmax(0, 1fr))` }}
-                >
-                  {visibleSlides.map((slide, index) => (
-                    <button
-                      key={`${slide.id}-${index}`}
-                      type="button"
-                      onClick={() => openFullscreen(album.id, slide.photoIndex - 1)}
-                      className="group relative overflow-hidden text-center"
-                    >
-                      <Image
-                        src={slide.imageUrl}
-                        alt={`${album.title} ${slide.photoIndex}`}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition-all duration-300 group-hover:scale-[1.03] group-hover:brightness-[1.03]"
-                      />
-                      <p className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded bg-black/45 px-2 py-1 text-xs font-medium text-white">
-                        {slide.photoIndex} / {album.photos.length}
-                      </p>
-                    </button>
+                <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {Array.from({ length: 3 }).map((__, slotIndex) => (
+                    <div
+                      key={`album-skeleton-${index}-slot-${slotIndex}`}
+                      className={`h-[30vh] min-h-[16rem] rounded-[1.5rem] ${siteConfig.theme.softSurface} animate-pulse`}
+                    />
                   ))}
                 </div>
-
-                <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => goToPrev(album.id, album.photos.length)}
-                    className="rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition-all duration-300 hover:bg-white hover:shadow"
-                  >
-                    Inapoi
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => goToNext(album.id, album.photos.length)}
-                    className="rounded-full border border-rose-200 bg-white/90 px-3 py-2 text-sm font-semibold text-rose-700 backdrop-blur transition-all duration-300 hover:bg-white hover:shadow"
-                  >
-                    inainte
-                  </button>
-                </div>
               </article>
-            );
-          })}
-        </section>
-      ) : loading ? (
-        <section className="space-y-8 bg-white/70 px-2 py-2 md:space-y-10 md:p-4">
-          {Array.from({ length: 2 }).map((_, index) => (
-            <article key={`album-skeleton-${index}`} className="relative overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm">
-              <header className="border-b border-rose-100 px-4 py-4 text-slate-900 md:px-5">
-                <div className={`h-6 w-1/3 rounded ${siteConfig.theme.softSurface}`} />
-                <div className={`mt-2 h-4 w-1/2 rounded ${siteConfig.theme.softSurface}`} />
-              </header>
-
-              <div className="grid h-[54vh] min-h-[340px] grid-cols-2 gap-1 p-1 sm:h-[48vh] md:h-[42vh] md:grid-cols-3">
-                {Array.from({ length: 3 }).map((__, slotIndex) => (
-                  <div key={`album-skeleton-${index}-slot-${slotIndex}`} className={`h-full w-full ${siteConfig.theme.softSurface} animate-pulse`} />
-                ))}
-              </div>
-            </article>
-          ))}
-        </section>
-      ) : (
-        <p className={`m-6 rounded-xl ${siteConfig.theme.softSurface} p-4 text-sm ${siteConfig.theme.mutedText}`}>
-          Nu exista inca fotografii in albume.
-        </p>
-      )}
-
-      {fullscreenAlbum && fullscreenPhoto ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Vizualizare fotografie fullscreen"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-3 py-6 sm:px-8"
-          onClick={closeFullscreen}
-        >
-          <button
-            type="button"
-            aria-label="Imagine anterioara"
-            onClick={(event) => {
-              event.stopPropagation();
-              goToFullscreenPrev();
-            }}
-            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/30 px-4 py-3 text-xl font-semibold text-white backdrop-blur transition hover:bg-black/50 sm:left-6"
-          >
-            ‹
-          </button>
-
-          <div className="relative max-h-full max-w-[96vw]" onClick={(event) => event.stopPropagation()}>
-            <Image
-              src={fullscreenPhoto.imageUrl}
-              alt={`${fullscreenAlbum.title} ${fullscreenPhoto.photoIndex}`}
-              width={1600}
-              height={1200}
-              sizes="96vw"
-              className="max-h-[90vh] w-auto max-w-[96vw] rounded-xl object-contain shadow-2xl"
-              priority
-            />
-            <p className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white">
-              {fullscreenPhoto.photoIndex} / {fullscreenAlbum.photos.length}
-            </p>
+            ))}
           </div>
+        ) : (
+          <p className={`rounded-[1.5rem] border border-[rgba(203,184,169,0.2)] bg-white/65 p-4 text-sm ${siteConfig.theme.mutedText}`}>
+            Nu există încă fotografii în albume.
+          </p>
+        )}
+      </section>
 
-          <button
-            type="button"
-            aria-label="Imagine urmatoare"
-            onClick={(event) => {
-              event.stopPropagation();
-              goToFullscreenNext();
-            }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/30 px-4 py-3 text-xl font-semibold text-white backdrop-blur transition hover:bg-black/50 sm:right-6"
-          >
-            ›
-          </button>
-
-          <button
-            type="button"
-            aria-label="Inchide"
+      <AnimatePresence>
+        {fullscreenAlbum && fullscreenPhoto ? (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Vizualizare fotografie fullscreen"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 px-3 py-6 sm:px-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={closeFullscreen}
-            className="absolute right-4 top-4 rounded-full border border-white/40 bg-black/30 px-3 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-black/50"
           >
-            Inchide
-          </button>
-        </div>
-      ) : null}
+            <button
+              type="button"
+              aria-label="Imagine anterioară"
+              onClick={(event) => {
+                event.stopPropagation();
+                goToFullscreenPrev();
+              }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/25 bg-white/10 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-white/20 sm:left-6"
+            >
+              ‹
+            </button>
+
+            <motion.div
+              className="relative max-h-full max-w-[96vw]"
+              initial={{ scale: 0.96, y: 12 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.96, y: 12 }}
+              transition={{ duration: 0.35 }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <Image
+                src={fullscreenPhoto.imageUrl}
+                alt={fullscreenAlbum.title}
+                width={1600}
+                height={1200}
+                className="max-h-[90vh] w-auto max-w-[96vw] rounded-[1.25rem] object-contain"
+                priority
+              />
+              <p className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                {(fullscreenState?.photoIndex ?? 0) + 1} / {fullscreenAlbum.photos.length}
+              </p>
+            </motion.div>
+
+            <button
+              type="button"
+              aria-label="Imagine următoare"
+              onClick={(event) => {
+                event.stopPropagation();
+                goToFullscreenNext();
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/25 bg-white/10 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-white/20 sm:right-6"
+            >
+              ›
+            </button>
+
+            <button
+              type="button"
+              aria-label="Închide"
+              onClick={closeFullscreen}
+              className="absolute right-4 top-4 rounded-full border border-white/25 bg-white/10 px-3 py-2 text-sm font-semibold text-white backdrop-blur-xl transition hover:bg-white/20"
+            >
+              Închide
+            </button>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </SiteShell>
   );
 }

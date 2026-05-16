@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1f2937;
+  --background: #faf8f5;
+  --foreground: #2b2b2b;
+  --surface: #ffffff;
+  --accent: #cbb8a9;
 }
 
 html {
@@ -14,8 +16,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.008em;
   overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at top, rgba(203, 184, 169, 0.15) 0, transparent 28%),
+    linear-gradient(180deg, #faf8f5 0%, #f8f5f1 100%);
 }
 
 img {
@@ -29,6 +34,39 @@ h3,
 h4 {
   font-family: var(--font-display), var(--font-body), "Segoe UI", sans-serif;
   letter-spacing: -0.01em;
+}
+
+::selection {
+  background: rgba(203, 184, 169, 0.35);
+  color: #2b2b2b;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(203, 184, 169, 0.65) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(203, 184, 169, 0.65);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 @keyframes fadeSlideIn {
@@ -111,8 +149,8 @@ h4 {
 
 .fade-in-section {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-in-section.is-visible {
@@ -121,6 +159,19 @@ h4 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
   .fade-in-section {
     opacity: 1;
     transform: none;
