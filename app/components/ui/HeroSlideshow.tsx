@@ -134,18 +134,13 @@ export default function HeroSlideshow({ slides, loading = false }: HeroSlideshow
             initial="hidden"
             animate="visible"
           >
-            <motion.p
-              variants={childVariants}
-              className="mb-5 w-fit rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/90 backdrop-blur-xl"
-            >
-              Studio foto premium
-            </motion.p>
+            
 
             <motion.h1
               variants={childVariants}
               className="max-w-2xl text-4xl font-medium leading-[0.96] tracking-tight text-white drop-shadow-[0_8px_24px_rgba(0,0,0,0.2)] sm:text-5xl lg:text-7xl"
             >
-              Amintiri care rămân pentru o viață
+Fotograf profesionist de familie din Constanta
             </motion.h1>
 
             <motion.p
@@ -176,11 +171,7 @@ export default function HeroSlideshow({ slides, loading = false }: HeroSlideshow
 
           <div className="mt-8 flex items-center justify-between gap-4">
             <div className="hidden max-w-xl gap-2 sm:flex">
-              {normalizedSlides.slice(0, 3).map((slide) => (
-                <div key={`${slide.id}-chip`} className="rounded-full border border-white/18 bg-white/10 px-3 py-1 text-xs text-white/80 backdrop-blur-xl">
-                  {slide.alt}
-                </div>
-              ))}
+              
             </div>
 
             <div className="ml-auto flex items-center gap-2">
@@ -188,15 +179,17 @@ export default function HeroSlideshow({ slides, loading = false }: HeroSlideshow
                 const isActive = index === safeActiveIndex;
 
                 return (
-                  <button
-                    key={slide.id}
-                    type="button"
-                    aria-label={`Schimbă slide-ul la ${index + 1}`}
-                    onClick={() => setActiveIndex(index)}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
-                      isActive ? "w-8 bg-white" : "w-2.5 bg-white/45 hover:bg-white/70"
-                    }`}
-                  />
+                   <button
+          key={slide.id}
+          type="button"
+          aria-label={`Schimbă slide-ul la ${index + 1}`}
+          onClick={() => setActiveIndex(index)}
+          className={`flex items-center justify-center h-2.5 rounded-full transition-all duration-300 ${
+            isActive
+              ? "w-8 bg-white"
+              : "w-2.5 bg-white/45 hover:bg-white/70"
+          }`}
+        />
                 );
               })}
             </div>

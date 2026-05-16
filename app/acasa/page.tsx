@@ -291,14 +291,12 @@ export default function AcasaPage() {
       <motion.section className="mt-24 sm:mt-28" {...(stackMotion ?? {})}>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className={siteConfig.theme.badge}>Albume selectate</p>
+            <p className={siteConfig.theme.badge}>Albume</p>
             <h2 className="mt-5 text-3xl font-medium tracking-tight text-[#2B2B2B] sm:text-4xl">
-              Prezentare rafinată a materialelor din backend.
+              We all love the babyes 
             </h2>
           </div>
-          <p className={`max-w-xl text-sm sm:text-base ${siteConfig.theme.mutedText}`}>
-            Folosim exact albumele marcate pentru homepage, fără imagini hardcodate și fără a modifica logica existentă.
-          </p>
+         
         </div>
 
         {featuredAlbums.length > 0 || loading ? (
@@ -365,7 +363,7 @@ export default function AcasaPage() {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/24 via-transparent to-transparent" />
                           <div className="absolute bottom-4 left-4 right-4">
-                            <p className="text-xs uppercase tracking-[0.24em] text-white/80">Album curat</p>
+                           
                             <h3 className="mt-2 text-2xl font-medium tracking-tight text-white">{album.title}</h3>
                             <p className="mt-2 text-sm text-white/80">{album.description}</p>
                           </div>
@@ -387,7 +385,7 @@ export default function AcasaPage() {
           <div>
             <p className={siteConfig.theme.badge}>Portofoliu</p>
             <h2 className="mt-5 text-3xl font-medium tracking-tight text-[#2B2B2B] sm:text-4xl">
-              Masonry editorial, construit din datele reale ale galeriei.
+              Fotograf nou-nascuţi, copii, familie, gravide in Timișoara
             </h2>
           </div>
           <p className={`max-w-xl text-sm sm:text-base ${siteConfig.theme.mutedText}`}>
