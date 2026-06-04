@@ -244,11 +244,11 @@ export default function AcasaPage() {
   const stackMotion = prefersReducedMotion
     ? undefined
     : {
-        initial: { opacity: 0, y: 18 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true, margin: "-10%" },
-        transition: { duration: 0.7 },
-      };
+      initial: { opacity: 0, y: 18 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true, margin: "-10%" },
+      transition: { duration: 0.7 },
+    };
 
   return (
     <SiteShell
@@ -261,6 +261,9 @@ export default function AcasaPage() {
         <HeroSlideshow slides={heroSlides} loading={loading} />
       </div>
 
+      <div className="mt-6 flex justify-center">
+      </div>
+
       <motion.section className="mt-20 sm:mt-24" {...(stackMotion ?? {})}>
         <div className="mx-auto max-w-4xl text-center">
           <p className={siteConfig.theme.badge}>Servicii</p>
@@ -269,7 +272,7 @@ export default function AcasaPage() {
           </h2>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-10 grid gap-5 items-center md:grid-cols-2 xl:grid-cols-4">
           {services.map((service, index) => (
             <motion.article
               key={service.title}
@@ -285,6 +288,12 @@ export default function AcasaPage() {
               <p className={`mt-4 text-sm ${siteConfig.theme.mutedText}`}>{service.description}</p>
             </motion.article>
           ))}
+          <Link
+            href="/pachete"
+            className="inline-flex text-center items-center gap-3 rounded-full  backdrop-blur-sm border border-rose/20 text-rose-600 px-6 py-3 text-sm font-semibold shadow-sm transition hover:bg-rose/20 hover:backdrop-brightness-105"
+          >
+            Vezi pachete
+          </Link>
         </div>
       </motion.section>
 
@@ -293,85 +302,85 @@ export default function AcasaPage() {
           <div>
             <p className={siteConfig.theme.badge}>Albume</p>
             <h2 className="mt-5 text-3xl font-medium tracking-tight text-[#2B2B2B] sm:text-4xl">
-              We all love the babyes 
+              We all love the babyes
             </h2>
           </div>
-         
+
         </div>
 
         {featuredAlbums.length > 0 || loading ? (
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {loading && featuredAlbums.length === 0
               ? Array.from({ length: 3 }).map((_, index) => (
-                  <div
-                    key={`album-skeleton-${index}`}
-                    className="overflow-hidden rounded-[2rem] border border-[rgba(203,184,169,0.18)] bg-white/65 p-4 shadow-[0_12px_36px_rgba(43,43,43,0.05)]"
-                  >
-                    <div className="relative h-[28rem] overflow-hidden rounded-[1.5rem] bg-[#efe8e1] animate-pulse" />
-                  </div>
-                ))
+                <div
+                  key={`album-skeleton-${index}`}
+                  className="overflow-hidden rounded-[2rem] border border-[rgba(203,184,169,0.18)] bg-white/65 p-4 shadow-[0_12px_36px_rgba(43,43,43,0.05)]"
+                >
+                  <div className="relative h-[28rem] overflow-hidden rounded-[1.5rem] bg-[#efe8e1] animate-pulse" />
+                </div>
+              ))
               : featuredAlbums.map((album) => {
-                  const tilt = tiltByAlbum[album.id] ?? { rotateX: 0, rotateY: 0 };
-                  const stackPhotos = [
-                    album.photos[0],
-                    album.photos[1] || album.photos[0],
-                    album.photos[2] || album.photos[1] || album.photos[0],
-                  ];
+                const tilt = tiltByAlbum[album.id] ?? { rotateX: 0, rotateY: 0 };
+                const stackPhotos = [
+                  album.photos[0],
+                  album.photos[1] || album.photos[0],
+                  album.photos[2] || album.photos[1] || album.photos[0],
+                ];
 
-                  return (
-                    <motion.button
-                      key={album.id}
-                      type="button"
-                      onClick={() => openAlbumFullscreen(album.id)}
-                      onMouseMove={(event) => updateTilt(album.id, event)}
-                      onMouseLeave={() => resetTilt(album.id)}
-                      className="group text-left"
-                      whileHover={prefersReducedMotion ? undefined : { y: -4 }}
-                      transition={{ duration: 0.35 }}
+                return (
+                  <motion.button
+                    key={album.id}
+                    type="button"
+                    onClick={() => openAlbumFullscreen(album.id)}
+                    onMouseMove={(event) => updateTilt(album.id, event)}
+                    onMouseLeave={() => resetTilt(album.id)}
+                    className="group text-left"
+                    whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+                    transition={{ duration: 0.35 }}
+                  >
+                    <div
+                      className="rounded-[2rem] border border-[rgba(203,184,169,0.2)] bg-white/65 p-4 shadow-[0_16px_40px_rgba(43,43,43,0.06)] backdrop-blur-sm transition-transform duration-300"
+                      style={{ transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)` }}
                     >
-                      <div
-                        className="rounded-[2rem] border border-[rgba(203,184,169,0.2)] bg-white/65 p-4 shadow-[0_16px_40px_rgba(43,43,43,0.06)] backdrop-blur-sm transition-transform duration-300"
-                        style={{ transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)` }}
-                      >
-                        <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-[#efe7df]">
-                          <div className="absolute inset-0 translate-x-4 translate-y-4 overflow-hidden rounded-[1.5rem] border border-white/60 bg-white/70">
-                            <Image
-                              src={stackPhotos[2]}
-                              alt=""
-                              aria-hidden="true"
-                              fill
-                              sizes="(max-width: 1024px) 92vw, 28vw"
-                              className="object-cover opacity-35 blur-[0.35px] saturate-75"
-                            />
-                          </div>
-                          <div className="absolute inset-0 translate-x-2 translate-y-2 overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/75">
-                            <Image
-                              src={stackPhotos[1]}
-                              alt=""
-                              aria-hidden="true"
-                              fill
-                              sizes="(max-width: 1024px) 92vw, 28vw"
-                              className="object-cover opacity-55 saturate-90"
-                            />
-                          </div>
+                      <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-[#efe7df]">
+                        <div className="absolute inset-0 translate-x-4 translate-y-4 overflow-hidden rounded-[1.5rem] border border-white/60 bg-white/70">
                           <Image
-                            src={album.photos[0]}
-                            alt={album.title}
+                            src={stackPhotos[2]}
+                            alt=""
+                            aria-hidden="true"
                             fill
                             sizes="(max-width: 1024px) 92vw, 28vw"
-                            className="object-cover transition-all duration-500 group-hover:scale-[1.04] group-hover:brightness-[1.03]"
+                            className="object-cover opacity-35 blur-[0.35px] saturate-75"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/24 via-transparent to-transparent" />
-                          <div className="absolute bottom-4 left-4 right-4">
-                           
-                            <h3 className="mt-2 text-2xl font-medium tracking-tight text-white">{album.title}</h3>
-                            <p className="mt-2 text-sm text-white/80">{album.description}</p>
-                          </div>
+                        </div>
+                        <div className="absolute inset-0 translate-x-2 translate-y-2 overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/75">
+                          <Image
+                            src={stackPhotos[1]}
+                            alt=""
+                            aria-hidden="true"
+                            fill
+                            sizes="(max-width: 1024px) 92vw, 28vw"
+                            className="object-cover opacity-55 saturate-90"
+                          />
+                        </div>
+                        <Image
+                          src={album.photos[0]}
+                          alt={album.title}
+                          fill
+                          sizes="(max-width: 1024px) 92vw, 28vw"
+                          className="object-cover transition-all duration-500 group-hover:scale-[1.04] group-hover:brightness-[1.03]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/24 via-transparent to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4">
+
+                          <h3 className="mt-2 text-2xl font-medium tracking-tight text-white">{album.title}</h3>
+                          <p className="mt-2 text-sm text-white/80">{album.description}</p>
                         </div>
                       </div>
-                    </motion.button>
-                  );
-                })}
+                    </div>
+                  </motion.button>
+                );
+              })}
           </div>
         ) : (
           <p className={`mt-8 rounded-[1.5rem] border border-[rgba(203,184,169,0.2)] bg-white/65 p-4 text-sm ${siteConfig.theme.mutedText}`}>
@@ -388,9 +397,7 @@ export default function AcasaPage() {
               Fotograf nou-nascuţi, copii, familie, gravide in Timișoara
             </h2>
           </div>
-          <p className={`max-w-xl text-sm sm:text-base ${siteConfig.theme.mutedText}`}>
-            Structura este aerisită, cu proporții variate și hover discret, ca să păstrăm energia premium fără efecte Pinterest.
-          </p>
+
         </div>
 
         {portfolioTiles.length > 0 ? (
@@ -413,11 +420,7 @@ export default function AcasaPage() {
                   className="object-cover transition-all duration-500 group-hover:scale-[1.05] group-hover:brightness-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 rounded-[1.25rem] border border-white/20 bg-white/60 p-4 text-left backdrop-blur-xl">
-                  <p className="text-xs uppercase tracking-[0.24em] text-[#6f645a]">Fotografie {index + 1}</p>
-                  <p className="mt-2 text-sm font-medium text-[#2B2B2B]">{tile.title}</p>
-                  <p className={`mt-1 text-xs ${siteConfig.theme.mutedText}`}>{tile.caption}</p>
-                </div>
+
               </motion.article>
             ))}
           </div>
@@ -426,23 +429,22 @@ export default function AcasaPage() {
             {Array.from({ length: 8 }).map((_, index) => (
               <div
                 key={`home-photo-skeleton-${index}`}
-                className={`rounded-[1.75rem] border border-[rgba(203,184,169,0.14)] bg-white/65 ${
-                  index === 0
-                    ? "md:col-span-7 md:row-span-2"
-                    : index === 1
-                      ? "md:col-span-5 md:row-span-1"
-                      : index === 2
-                        ? "md:col-span-4 md:row-span-1"
-                        : index === 3
-                          ? "md:col-span-3 md:row-span-2"
-                          : index === 4
-                            ? "md:col-span-5 md:row-span-2"
-                            : index === 5
+                className={`rounded-[1.75rem] border border-[rgba(203,184,169,0.14)] bg-white/65 ${index === 0
+                  ? "md:col-span-7 md:row-span-2"
+                  : index === 1
+                    ? "md:col-span-5 md:row-span-1"
+                    : index === 2
+                      ? "md:col-span-4 md:row-span-1"
+                      : index === 3
+                        ? "md:col-span-3 md:row-span-2"
+                        : index === 4
+                          ? "md:col-span-5 md:row-span-2"
+                          : index === 5
+                            ? "md:col-span-4 md:row-span-1"
+                            : index === 6
                               ? "md:col-span-4 md:row-span-1"
-                              : index === 6
-                                ? "md:col-span-4 md:row-span-1"
-                                : "md:col-span-8 md:row-span-1"
-                } animate-pulse`}
+                              : "md:col-span-8 md:row-span-1"
+                  } animate-pulse`}
               />
             ))}
           </div>

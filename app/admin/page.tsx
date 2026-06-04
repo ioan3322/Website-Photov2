@@ -334,6 +334,26 @@ export default function AdminPage() {
     }
   };
 
+  // Hero image handlers (global site hero selected by admin)
+  const handleHeroImageUpload = async (file?: File) => {
+    if (!file || !file.type.startsWith("image/")) return;
+    const target = `hero-image`;
+    setUploadingTarget(target);
+    setUploadError(null);
+    setUploadSuccess(null);
+
+    try {
+      const url = await uploadImageToServer(file, "hero", `hero-${Date.now()}`);
+      setContent((prev) => ({ ...prev, heroImage: url }));
+      setUploadSuccess("Imaginea hero a fost incarcata cu succes.");
+    } catch (error) {
+      setUploadError(getErrorMessage(error));
+      console.error("Hero image upload failed:", error);
+    } finally {
+      setUploadingTarget(null);
+    }
+  };
+
   const handleAddPhotographerPhoto = () => {
     setContent((prev) => ({
       ...prev,
@@ -506,6 +526,36 @@ export default function AdminPage() {
             </div>
             <div className="rounded-xl border border-rose-100 bg-white p-4 text-sm text-slate-600">
               Pachete editabile: <span className="font-semibold text-slate-900">{content.packages.length}</span>
+            </div>
+            <div className="rounded-xl border border-rose-100 bg-white p-4 text-sm text-slate-600">
+              <div className="mb-2 font-semibold text-slate-900">Imagine hero</div>
+              {content.heroImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={content.heroImage} alt="Hero preview" className="mb-2 h-28 w-full rounded object-cover" />
+              ) : (
+                <div className="mb-2 h-28 w-full rounded bg-slate-50" />
+              )}
+              <label className="block w-full cursor-pointer rounded-lg border border-dashed border-rose-200 bg-rose-50/40 px-3 py-2 text-sm text-rose-700 transition hover:bg-rose-50">
+                Alege poza pentru hero
+                <input
+                  type="file"
+                  accept="image/*,.jpg,.jpeg,.png,.webp"
+                  className="hidden"
+                  disabled={isUploading}
+                  onChange={(event) => handleHeroImageUpload(event.target.files?.[0])}
+                />
+              </label>
+              {content.heroImage ? (
+                <button
+                  onClick={() => setContent((prev) => ({ ...prev, heroImage: undefined }))}
+                  className="mt-2 w-full rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                >
+                  Sterge imaginea hero
+                </button>
+              ) : null}
+              {uploadingTarget === `hero-image` ? (
+                <p className="text-xs text-blue-700">Se incarca imaginea hero...</p>
+              ) : null}
             </div>
           </div>
         </header>

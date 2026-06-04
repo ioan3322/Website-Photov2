@@ -5,7 +5,7 @@ import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
 
-export default function PoliticiPage() {
+export default function PachetePage() {
   const { content, loading } = useStudioContent();
   const visiblePackages = content.packages.filter((pkg) => (pkg.showOnPolicies ?? true));
 
@@ -18,9 +18,7 @@ export default function PoliticiPage() {
       <section className="space-y-8">
         <div className="max-w-3xl">
           <p className={siteConfig.theme.badge}>Pachete curatoriate</p>
-          <p className={`mt-5 text-base sm:text-lg ${siteConfig.theme.mutedText}`}>
-            Folosim exact datele existente din backend și le prezentăm într-o grilă aerisită, cu ierarhie clară și detalii ușor de citit.
-          </p>
+
         </div>
 
         {visiblePackages.length > 0 ? (

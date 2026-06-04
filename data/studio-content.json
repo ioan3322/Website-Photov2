@@ -475,5 +475,112 @@
     "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/photographer/fotograf-1-1778905833242-ccf01393-9abb-4ec5-b1ec-08a6d8f6537a.jpg",
     "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/photographer/fotograf-2-1778905848631-3d9ac1ec-5493-4a3a-9213-7731745ca442.jpg"
   ],
-  "packages": []
+  "packages": [
+    {
+      "id": "package-1780600548711",
+      "price": "650 Euro",
+      "title": "Nunta-Basic",
+      "features": [
+        "1 Fotograf",
+        "Predare 800 Fotografii editate",
+        "Şedinţa foto în aceeaşi zi",
+        "Fotografii machiaj  |  Miri  |  Biserică | Restaurant",
+        "1 Stick USB"
+      ],
+      "description": "",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1780600549364",
+      "price": "900 Euro",
+      "title": "Nunta-Full",
+      "features": [
+        "1 Fotograf",
+        "Predare 800 Fotografii editate",
+        "Şedinţa foto în aceeaşi zi",
+        "Fotografii machiaj  |  Miri  |  Biserică | Restaurant",
+        "1 Stick USB",
+        "1 Album 30x30cm",
+        "1 Album 20x20cm"
+      ],
+      "description": "",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1780600957819",
+      "price": "1250 Euro",
+      "title": "Nunta-Premium",
+      "features": [
+        "1 Fotograf",
+        "Predare 800 Fotografii editate",
+        "Şedinţa foto în aceeaşi zi",
+        "Fotografii machiaj  |  Miri  |  Biserică | Restaurant",
+        "1 Stick USB",
+        "1  Album   30x30cm  |  40 de pagini  |",
+        "2 Albume 20x20cm |  40 de pagini  |",
+        "2 Albume 12x12cm   |  40 de pagini  |"
+      ],
+      "description": "",
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1780601231053",
+      "title": "Botez-Basic",
+      "description": "",
+      "price": "350 Euro",
+      "features": [
+        "1 Fotograf",
+        "Predare 500 Fotografii editate",
+        "Fotografii acasă |  Biserică  |  Restaurant",
+        "1 Stick USB"
+      ],
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1780601231856",
+      "title": "Botez-Full",
+      "description": "",
+      "price": "500 Euro",
+      "features": [
+        "1 Fotograf",
+        "Predare 500 Fotografii editate",
+        "Fotografii acasă |  Biserică  |  Restaurant",
+        "1 Stick USB",
+        "1 Album 20x20 cm | 40 de pagini |",
+        "1 Album 12x12 cm   | 40 de pagini |"
+      ],
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1780601474745",
+      "title": "Botez-Promium",
+      "description": "",
+      "price": "650 Euro",
+      "features": [
+        "1 Fotograf",
+        "Predare 500 Fotografii editate",
+        "Fotografii acasă |  Biserică  |  Restaurant",
+        "1 Stick USB",
+        "1 Album 30x30 cm | 40 de pagini |",
+        "1 Album 20x20 cm | 40 de pagini |",
+        "2 Album 12x12 cm   | 40 de pagini |"
+      ],
+      "showOnPolicies": true
+    },
+    {
+      "id": "package-1780601584503",
+      "title": "Sedinta Foto Maternitate-Basic",
+      "description": "",
+      "price": "490 RON",
+      "features": [
+        "30 fotografii",
+        "3 rochii din cadrul studioului  la alegere (Durata 50 de minute )",
+        "Se poate opta pentru opţiune in natura (Pe raza oraşului Timişoara fara cost suplimentar)",
+        "Fotografiile brute sunt puse la dispoziţie intr-o galerie de unde puteţi selecta care fotografii sa fie editate",
+        "Se pot achiziţiona fotografii suplimentare pentru editare (Preţ 15 Ron / buc)"
+      ],
+      "showOnPolicies": true
+    }
+  ],
+  "heroImage": "https://zbbtweliauaysnrftenf.supabase.co/storage/v1/object/public/studio-images/hero/hero-1780599075619-1780599075689-530db80b-6e72-43b1-b2e4-7431601aa802.jpg"
 }

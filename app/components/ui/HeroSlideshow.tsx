@@ -134,13 +134,13 @@ export default function HeroSlideshow({ slides, loading = false }: HeroSlideshow
             initial="hidden"
             animate="visible"
           >
-            
+
 
             <motion.h1
               variants={childVariants}
               className="max-w-2xl text-4xl font-medium leading-[0.96] tracking-tight text-white drop-shadow-[0_8px_24px_rgba(0,0,0,0.2)] sm:text-5xl lg:text-7xl"
             >
-Fotograf profesionist de familie din Constanta
+              Fotograf profesionist de familie din Timișoara
             </motion.h1>
 
             <motion.p
@@ -171,7 +171,7 @@ Fotograf profesionist de familie din Constanta
 
           <div className="mt-8 flex items-center justify-between gap-4">
             <div className="hidden max-w-xl gap-2 sm:flex">
-              
+
             </div>
 
             <div className="ml-auto flex items-center gap-2">
@@ -179,17 +179,16 @@ Fotograf profesionist de familie din Constanta
                 const isActive = index === safeActiveIndex;
 
                 return (
-                   <button
-          key={slide.id}
-          type="button"
-          aria-label={`Schimbă slide-ul la ${index + 1}`}
-          onClick={() => setActiveIndex(index)}
-          className={`flex items-center justify-center h-2.5 rounded-full transition-all duration-300 ${
-            isActive
-              ? "w-8 bg-white"
-              : "w-2.5 bg-white/45 hover:bg-white/70"
-          }`}
-        />
+                  <button
+                    key={slide.id}
+                    type="button"
+                    aria-label={`Schimbă slide-ul la ${index + 1}`}
+                    onClick={() => setActiveIndex(index)}
+                    className={`flex items-center justify-center h-2.5 rounded-full transition-all duration-300 ${isActive
+                        ? "w-8 bg-white"
+                        : "w-2.5 bg-white/45 hover:bg-white/70"
+                      }`}
+                  />
                 );
               })}
             </div>

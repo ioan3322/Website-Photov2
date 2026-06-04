@@ -2,63 +2,79 @@ import Link from "next/link";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
 
+// Map defaults: change these coordinates to the studio location
+const MAP_LAT = 45.777045;
+const MAP_LNG = 21.221449;
+const MAP_ZOOM = 15;
+
 export default function ContactPage() {
   return (
     <SiteShell
       title="Contact"
-      description="Rezervă o ședință foto sau cere detalii despre disponibilitate și pachete."
-      containerClassName="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
+
     >
-      <section className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+      <section className="grid gap-6">
         <div className="rounded-[2rem] border border-[rgba(203,184,169,0.22)] bg-white/75 p-6 shadow-[0_16px_44px_rgba(43,43,43,0.05)] backdrop-blur-sm sm:p-8">
-          <p className={siteConfig.theme.badge}>Rezervări</p>
-          <h2 className="mt-5 text-3xl font-medium tracking-tight text-[#2B2B2B] sm:text-4xl">
+
+          <h2 className="mt-5 text-center text-3xl font-medium tracking-tight text-[#2B2B2B] sm:text-4xl">
             Scrie-ne pentru o experiență foto calmă, elegantă și bine ghidată.
           </h2>
-          <p className={`mt-6 text-base sm:text-lg ${siteConfig.theme.mutedText}`}>
-            Pentru programări, întrebări despre pachete sau detalii despre ședințele pentru nou-născuți și familie, poți folosi canalele de mai jos.
-          </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row justify-center">
             <Link
               href="mailto:andreea.albo@gmail.com"
-              className="inline-flex items-center justify-center rounded-full bg-[#2B2B2B] px-6 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1f1f1f]"
+              className="inline-flex items-center  justify-center rounded-full bg-[#2B2B2B] px-6 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1f1f1f]"
             >
               Trimite email
             </Link>
             <Link
-              href="tel:0724430533"
+              href="tel:+40724430533"
               className="inline-flex items-center justify-center rounded-full border border-[rgba(203,184,169,0.42)] bg-white/70 px-6 py-3.5 text-sm font-medium text-[#2B2B2B] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
             >
               Sună acum
             </Link>
           </div>
         </div>
+        <div className="grid gap-4">
+          <div className="rounded-[2rem] border text-center border-[rgba(203,184,169,0.22)] bg-white/75 p-6 shadow-[0_16px_44px_rgba(43,43,43,0.05)] backdrop-blur-sm">
+            <p className="text-md uppercase font-italic tracking-[0.24em] ">Email</p>
+            <p className="mt-3 text-lg font-medium ">andreea.albo@gmail.com</p>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-          <div className="rounded-[2rem] border border-[rgba(203,184,169,0.22)] bg-white/75 p-6 shadow-[0_16px_44px_rgba(43,43,43,0.05)] backdrop-blur-sm">
-            <p className="text-xs uppercase tracking-[0.24em] text-[#8b7c6f]">Email</p>
-            <p className="mt-3 text-lg font-medium text-[#2B2B2B]">andreea.albo@gmail.com</p>
-            <p className={`mt-3 text-sm ${siteConfig.theme.mutedText}`}>
-              Recomandat pentru programări, disponibilitate și detalii despre pachete.
-            </p>
           </div>
 
-          <div className="rounded-[2rem] border border-[rgba(203,184,169,0.22)] bg-white/75 p-6 shadow-[0_16px_44px_rgba(43,43,43,0.05)] backdrop-blur-sm">
-            <p className="text-xs uppercase tracking-[0.24em] text-[#8b7c6f]">Telefon</p>
-            <p className="mt-3 text-lg font-medium text-[#2B2B2B]">0724430533</p>
-            <p className={`mt-3 text-sm ${siteConfig.theme.mutedText}`}>
-              Pentru răspuns rapid și confirmarea unei ferestre de programare.
-            </p>
+          <div className="rounded-[2rem] border text-center border-[rgba(203,184,169,0.22)] bg-white/75 p-6 shadow-[0_16px_44px_rgba(43,43,43,0.05)] backdrop-blur-sm">
+            <p className="text-md uppercase font-italic tracking-[0.24em]">Telefon</p>
+            <p className="mt-3 text-lg font-italic ">+40724430533</p>
+
           </div>
 
-          <div className="rounded-[2rem] border border-[rgba(203,184,169,0.22)] bg-white/75 p-6 shadow-[0_16px_44px_rgba(43,43,43,0.05)] backdrop-blur-sm sm:col-span-2 lg:col-span-1">
-            <p className="text-xs uppercase tracking-[0.24em] text-[#8b7c6f]">Program</p>
-            <p className="mt-3 text-lg font-medium text-[#2B2B2B]">Pe bază de programare</p>
-            <p className={`mt-3 text-sm ${siteConfig.theme.mutedText}`}>
-              Spune-ne ce tip de ședință îți dorești și îți răspundem cu pașii următori.
-            </p>
+          <div >
+
+            <div className="mt-3 overflow-hidden ">
+              <div className="relative h-56 w-full lg:h-[calc(100vh-6rem)]">
+                <iframe
+                  title="Studio location map"
+                  src={`https://maps.google.com/maps?q=${MAP_LAT},${MAP_LNG}&z=${MAP_ZOOM}&output=embed`}
+                  className="h-full w-full border-0"
+                  loading="lazy"
+                />
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+
+                <Link
+                  href={`https://maps.google.com/?q=${MAP_LAT},${MAP_LNG}`}
+                  className="text-sm text-[#2B2B2B] underline"
+                  target="_blank"
+                >
+                  Deschide în Google Maps
+                </Link>
+              </div>
+            </div>
           </div>
+
+
+
         </div>
       </section>
     </SiteShell>

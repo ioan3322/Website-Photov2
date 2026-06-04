@@ -35,7 +35,7 @@ function NavIcon({ href }: { href: string }) {
           <path strokeLinecap="round" strokeLinejoin="round" d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18l-5.8 3 1.1-6.5L2.6 9.8l6.5-.9z" />
         </svg>
       );
-    case "/politici":
+    case "/pachete":
       return (
         <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M7 4h10l2 3v13H5V7z" />
@@ -84,11 +84,10 @@ export default function SiteNav() {
   return (
     <>
       <nav
-        className={`sticky top-0 z-50 hidden border-b backdrop-blur-xl transition-all duration-500 supports-[backdrop-filter]:backdrop-blur-xl md:block ${
-          isScrolled
+        className={`sticky top-0 z-50 hidden border-b backdrop-blur-xl transition-all duration-500 supports-[backdrop-filter]:backdrop-blur-xl md:block ${isScrolled
             ? "border-[rgba(203,184,169,0.28)] bg-white/86 shadow-[0_18px_50px_rgba(43,43,43,0.08)]"
             : "border-transparent bg-transparent shadow-none"
-        }`}
+          }`}
       >
         <div className={`${siteConfig.theme.navWrap} py-4 lg:py-5`}>
           <div className="flex items-center justify-between gap-6">
@@ -132,11 +131,10 @@ export default function SiteNav() {
                 href={link.href}
                 aria-label={link.label}
                 title={link.label}
-                className={`flex h-11 w-full items-center justify-center rounded-xl border text-slate-700 transition-all duration-300 ${
-                  isActive
+                className={`flex h-11 w-full items-center justify-center rounded-xl border text-slate-700 transition-all duration-300 ${isActive
                     ? "border-[rgba(203,184,169,0.55)] bg-white text-[#2B2B2B] shadow-sm"
                     : "border-transparent hover:border-[rgba(203,184,169,0.32)] hover:bg-[#FAF8F5] active:scale-95"
-                }`}
+                  }`}
               >
                 <NavIcon href={link.href} />
               </Link>

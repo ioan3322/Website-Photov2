@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
 import { useStudioContent } from "@/hooks/useStudioContent";
@@ -165,6 +165,69 @@ export default function AlbumePage() {
     });
   }, [albumRows]);
 
+  // Touch / swipe handling for album rows
+  const touchStartRef = useRef<Record<string, number>>({});
+  const touchLastRef = useRef<Record<string, number>>({});
+
+  const handleTouchStart = useCallback((albumId: string, event: any) => {
+    touchStartRef.current[albumId] = event.touches[0].clientX;
+    touchLastRef.current[albumId] = event.touches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((albumId: string, event: any) => {
+    touchLastRef.current[albumId] = event.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((albumId: string, count: number) => {
+    const start = touchStartRef.current[albumId];
+    const last = touchLastRef.current[albumId];
+
+    if (typeof start !== "number" || typeof last !== "number") return;
+
+    const delta = start - last;
+    const threshold = 50; // pixels to consider a swipe
+
+    if (delta > threshold) {
+      goToNext(albumId, count);
+    } else if (delta < -threshold) {
+      goToPrev(albumId, count);
+    }
+
+    delete touchStartRef.current[albumId];
+    delete touchLastRef.current[albumId];
+  }, [goToNext, goToPrev]);
+
+  // Fullscreen swipe handling
+  const fsTouchStartRef = useRef<number | null>(null);
+  const fsTouchLastRef = useRef<number | null>(null);
+
+  const handleFullscreenTouchStart = useCallback((event: any) => {
+    fsTouchStartRef.current = event.touches[0].clientX;
+    fsTouchLastRef.current = event.touches[0].clientX;
+  }, []);
+
+  const handleFullscreenTouchMove = useCallback((event: any) => {
+    fsTouchLastRef.current = event.touches[0].clientX;
+  }, []);
+
+  const handleFullscreenTouchEnd = useCallback(() => {
+    const start = fsTouchStartRef.current;
+    const last = fsTouchLastRef.current;
+    if (typeof start !== "number" || typeof last !== "number") return;
+
+    const delta = start - last;
+    const threshold = 50;
+
+    if (delta > threshold) {
+      goToFullscreenNext();
+    } else if (delta < -threshold) {
+      goToFullscreenPrev();
+    }
+
+    fsTouchStartRef.current = null;
+    fsTouchLastRef.current = null;
+  }, [goToFullscreenNext, goToFullscreenPrev]);
+
   useEffect(() => {
     if (!fullscreenState) {
       return;
@@ -226,7 +289,7 @@ export default function AlbumePage() {
               return (
                 <motion.article
                   key={album.id}
-                  className="overflow-hidden rounded-[2rem] border border-[rgba(203,184,169,0.22)] bg-white/72 shadow-[0_18px_48px_rgba(43,43,43,0.06)] backdrop-blur-sm"
+                  className="relative overflow-hidden rounded-[2rem] border border-[rgba(203,184,169,0.22)] bg-white/72 shadow-[0_18px_48px_rgba(43,43,43,0.06)] backdrop-blur-sm"
                   initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
@@ -239,28 +302,42 @@ export default function AlbumePage() {
                       {album.description ? <p className={`mt-3 text-sm ${siteConfig.theme.mutedText}`}>{album.description}</p> : null}
                     </div>
 
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => goToPrev(album.id, album.photos.length)}
-                        className="rounded-full border border-[rgba(203,184,169,0.32)] bg-white/80 px-4 py-2 text-sm font-medium text-[#2B2B2B] transition hover:bg-white"
-                      >
-                        Înapoi
-                      </button>
+                    <div className="flex items-center gap-3">
 
-                      <button
-                        type="button"
-                        onClick={() => goToNext(album.id, album.photos.length)}
-                        className="rounded-full border border-[rgba(203,184,169,0.32)] bg-white/80 px-4 py-2 text-sm font-medium text-[#2B2B2B] transition hover:bg-white"
-                      >
-                        Înainte
-                      </button>
                     </div>
                   </header>
+
+                  {/* Desktop arrows: always visible on md+ */}
+                  <button
+                    type="button"
+                    aria-label="Imagine anterioară"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToPrev(album.id, album.photos.length);
+                    }}
+                    className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center rounded-full border border-[rgba(203,184,169,0.32)] bg-white/90 px-3 py-2 text-xl font-semibold text-[#2B2B2B] shadow-md hover:bg-white"
+                  >
+                    ‹
+                  </button>
+
+                  <button
+                    type="button"
+                    aria-label="Imagine următoare"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToNext(album.id, album.photos.length);
+                    }}
+                    className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center rounded-full border border-[rgba(203,184,169,0.32)] bg-white/90 px-3 py-2 text-xl font-semibold text-[#2B2B2B] shadow-md hover:bg-white"
+                  >
+                    ›
+                  </button>
 
                   <div
                     className="grid gap-3 p-3 sm:gap-4"
                     style={{ gridTemplateColumns: `repeat(${Math.min(visibleCount, album.photos.length)}, minmax(0, 1fr))` }}
+                    onTouchStart={(e) => handleTouchStart(album.id, e)}
+                    onTouchMove={(e) => handleTouchMove(album.id, e)}
+                    onTouchEnd={() => handleTouchEnd(album.id, album.photos.length)}
                   >
                     {visibleSlides.map((slide, index) => (
                       <button
@@ -338,7 +415,7 @@ export default function AlbumePage() {
                 event.stopPropagation();
                 goToFullscreenPrev();
               }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/25 bg-white/10 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-white/20 sm:left-6"
+              className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-[110] rounded-full border border-white/40 bg-black/40 sm:bg-white/25 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-black/50 sm:hover:bg-white/30 shadow-lg"
             >
               ‹
             </button>
@@ -350,6 +427,9 @@ export default function AlbumePage() {
               exit={{ scale: 0.96, y: 12 }}
               transition={{ duration: 0.35 }}
               onClick={(event) => event.stopPropagation()}
+              onTouchStart={handleFullscreenTouchStart}
+              onTouchMove={handleFullscreenTouchMove}
+              onTouchEnd={handleFullscreenTouchEnd}
             >
               <Image
                 src={fullscreenPhoto.imageUrl}
@@ -371,7 +451,7 @@ export default function AlbumePage() {
                 event.stopPropagation();
                 goToFullscreenNext();
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/25 bg-white/10 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-white/20 sm:right-6"
+              className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-[110] rounded-full border border-white/40 bg-black/40 sm:bg-white/25 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-black/50 sm:hover:bg-white/30 shadow-lg"
             >
               ›
             </button>

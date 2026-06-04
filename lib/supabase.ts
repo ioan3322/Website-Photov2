@@ -39,4 +39,5 @@ export type StudioContent = {
   albums: AlbumItem[];
   photographerPhotos: string[];
   packages: PackageItem[];
+  heroImage?: string;
 };

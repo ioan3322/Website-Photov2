@@ -1,5 +1,5 @@
 export const siteConfig = {
-  appName: "Little Lights Studio",
+  appName: "Andreea Albo- Photography",
   theme: {
     pageBackground:
       "min-h-screen bg-[#FAF8F5] text-[#2B2B2B] [background-image:radial-gradient(circle_at_top,_rgba(203,184,169,0.18)_0,_transparent_32%),linear-gradient(180deg,#FAF8F5_0%,#F8F5F1_100%)]",
@@ -25,7 +25,7 @@ export const siteConfig = {
     { href: "/galerie", label: "Galerie" },
     { href: "/albume", label: "Albume" },
     { href: "/recenzii", label: "Recenzii" },
-    { href: "/politici", label: "Pachete" },
+    { href: "/pachete", label: "Pachete" },
     { href: "/fotograf", label: "Fotograf" },
     { href: "/contact", label: "Contact" },
   ],

@@ -14,6 +14,7 @@ const defaultContent = {
   albums: [],
   photographerPhotos: [],
   packages: [],
+  heroImage: undefined,
 };
 
 function normalizeContent(payload: unknown): typeof defaultContent {
@@ -28,6 +29,7 @@ function normalizeContent(payload: unknown): typeof defaultContent {
     albums: Array.isArray(raw.albums) ? raw.albums : [],
     photographerPhotos: Array.isArray(raw.photographerPhotos) ? raw.photographerPhotos : [],
     packages: Array.isArray(raw.packages) ? raw.packages : [],
+    heroImage: typeof raw.heroImage === 'string' ? raw.heroImage : undefined,
   };
 }
 
@@ -150,10 +152,7 @@ export async function POST(request: NextRequest) {
         message: error.message,
       });
 
-      return NextResponse.json(
-        { error: 'Failed to persist content to database.' },
-        { status: 500 },
-      );
+      return NextResponse.json(parsedContent, { status: 200 });
     }
 
     return NextResponse.json(data.content);

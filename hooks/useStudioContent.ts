@@ -8,6 +8,7 @@ const defaultContent: StudioContent = {
   albums: [],
   photographerPhotos: [],
   packages: [],
+  heroImage: undefined,
 };
 
 function normalizeContent(payload: unknown): StudioContent {
@@ -22,6 +23,7 @@ function normalizeContent(payload: unknown): StudioContent {
     albums: Array.isArray(raw.albums) ? raw.albums : [],
     photographerPhotos: Array.isArray(raw.photographerPhotos) ? raw.photographerPhotos : [],
     packages: Array.isArray(raw.packages) ? raw.packages : [],
+    heroImage: typeof raw.heroImage === 'string' ? raw.heroImage : undefined,
   };
 }
 

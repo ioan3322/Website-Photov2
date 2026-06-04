@@ -140,11 +140,7 @@ export default function GaleriePage() {
                       className="object-cover transition-all duration-500 group-hover:scale-[1.05] group-hover:brightness-[1.03]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/24 via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4 rounded-[1.25rem] border border-white/20 bg-white/60 p-4 text-left backdrop-blur-xl">
-                      <p className="text-xs uppercase tracking-[0.24em] text-[#6f645a]">Fotografie {index + 1}</p>
-                      <p className="mt-2 text-sm font-medium text-[#2B2B2B]">{tile.title}</p>
-                      <p className={`mt-1 text-xs ${siteConfig.theme.mutedText}`}>{tile.caption}</p>
-                    </div>
+
                   </div>
                 </button>
               </motion.article>
@@ -155,23 +151,22 @@ export default function GaleriePage() {
             {Array.from({ length: 10 }).map((_, index) => (
               <article
                 key={`galerie-skeleton-${index}`}
-                className={`overflow-hidden rounded-[1.75rem] border border-[rgba(203,184,169,0.14)] bg-white/65 animate-pulse ${
-                  index % 8 === 0
-                    ? "md:col-span-6 md:row-span-2"
-                    : index % 8 === 1
-                      ? "md:col-span-3 md:row-span-1"
-                      : index % 8 === 2
-                        ? "md:col-span-3 md:row-span-2"
-                        : index % 8 === 3
-                          ? "md:col-span-4 md:row-span-1"
-                          : index % 8 === 4
-                            ? "md:col-span-4 md:row-span-2"
-                            : index % 8 === 5
-                              ? "md:col-span-4 md:row-span-1"
-                              : index % 8 === 6
-                                ? "md:col-span-6 md:row-span-1"
-                                : "md:col-span-6 md:row-span-2"
-                }`}
+                className={`overflow-hidden rounded-[1.75rem] border border-[rgba(203,184,169,0.14)] bg-white/65 animate-pulse ${index % 8 === 0
+                  ? "md:col-span-6 md:row-span-2"
+                  : index % 8 === 1
+                    ? "md:col-span-3 md:row-span-1"
+                    : index % 8 === 2
+                      ? "md:col-span-3 md:row-span-2"
+                      : index % 8 === 3
+                        ? "md:col-span-4 md:row-span-1"
+                        : index % 8 === 4
+                          ? "md:col-span-4 md:row-span-2"
+                          : index % 8 === 5
+                            ? "md:col-span-4 md:row-span-1"
+                            : index % 8 === 6
+                              ? "md:col-span-6 md:row-span-1"
+                              : "md:col-span-6 md:row-span-2"
+                  }`}
               />
             ))}
           </div>
@@ -201,7 +196,7 @@ export default function GaleriePage() {
                 event.stopPropagation();
                 goToPrev();
               }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/25 bg-white/10 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-white/20 sm:left-6"
+              className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-[110] rounded-full border border-white/40 bg-black/40 sm:bg-white/25 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-black/50 sm:hover:bg-white/30 shadow-lg"
             >
               ‹
             </button>
@@ -235,7 +230,7 @@ export default function GaleriePage() {
                 event.stopPropagation();
                 goToNext();
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/25 bg-white/10 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-white/20 sm:right-6"
+              className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-[110] rounded-full border border-white/40 bg-black/40 sm:bg-white/25 px-4 py-3 text-xl font-semibold text-white backdrop-blur-xl transition hover:bg-black/50 sm:hover:bg-white/30 shadow-lg"
             >
               ›
             </button>
