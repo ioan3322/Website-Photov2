@@ -10,6 +10,7 @@ async function readMessages() {
     const raw = await fs.readFile(MESSAGES_FILE, "utf8");
     return JSON.parse(raw || "[]");
   } catch (err) {
+    console.error("[api/messages] readMessages error:", err);
     return [];
   }
 }
@@ -66,6 +67,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("[api/messages POST]", error);
-    return NextResponse.json({ error: "Nu s-a putut trimite mesajul." }, { status: 500 });
+    const message = error instanceof Error && error.message ? error.message : String(error);
+    // Return error message to client for easier local debugging
+    return NextResponse.json({ error: `Nu s-a putut trimite mesajul. Detalii: ${message}` }, { status: 500 });
   }
 }

@@ -23,8 +23,16 @@ export default function ContactForm() {
       });
 
       if (!res.ok) {
-        const payload = await res.json().catch(() => null);
-        throw new Error(payload?.error || "Eroare la trimitere");
+        // try to parse error details
+        let payload: any = null;
+        try {
+          payload = await res.json();
+        } catch (e) {
+          // ignore
+        }
+        const serverMsg = payload?.error || (await res.text().catch(() => null)) || "Eroare la trimitere";
+        console.error("ContactForm submit error response:", serverMsg);
+        throw new Error(serverMsg);
       }
 
       setStatus("success");
