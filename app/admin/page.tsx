@@ -498,6 +498,12 @@ export default function AdminPage() {
               >
                 Pachete
               </a>
+              <a
+                href="/admin/messages"
+                className="inline-flex items-center justify-center rounded-full border border-rose-200 px-6 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+              >
+                Mesaje
+              </a>
               <Link
                 href="/acasa"
                 className="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"

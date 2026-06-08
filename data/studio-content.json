@@ -525,22 +525,21 @@
     },
     {
       "id": "package-1780601231053",
-      "title": "Botez-Basic",
-      "description": "",
       "price": "350 Euro",
+      "title": "Botez-Basic",
       "features": [
         "1 Fotograf",
         "Predare 500 Fotografii editate",
         "Fotografii acasă |  Biserică  |  Restaurant",
         "1 Stick USB"
       ],
+      "description": "",
       "showOnPolicies": true
     },
     {
       "id": "package-1780601231856",
-      "title": "Botez-Full",
-      "description": "",
       "price": "500 Euro",
+      "title": "Botez-Full",
       "features": [
         "1 Fotograf",
         "Predare 500 Fotografii editate",
@@ -549,13 +548,13 @@
         "1 Album 20x20 cm | 40 de pagini |",
         "1 Album 12x12 cm   | 40 de pagini |"
       ],
+      "description": "",
       "showOnPolicies": true
     },
     {
       "id": "package-1780601474745",
-      "title": "Botez-Promium",
-      "description": "",
       "price": "650 Euro",
+      "title": "Botez-Promium",
       "features": [
         "1 Fotograf",
         "Predare 500 Fotografii editate",
@@ -565,13 +564,13 @@
         "1 Album 20x20 cm | 40 de pagini |",
         "2 Album 12x12 cm   | 40 de pagini |"
       ],
+      "description": "",
       "showOnPolicies": true
     },
     {
       "id": "package-1780601584503",
-      "title": "Sedinta Foto Maternitate-Basic",
-      "description": "",
       "price": "490 RON",
+      "title": "Sedinta Foto Maternitate-Basic",
       "features": [
         "30 fotografii",
         "3 rochii din cadrul studioului  la alegere (Durata 50 de minute )",
@@ -579,6 +578,7 @@
         "Fotografiile brute sunt puse la dispoziţie intr-o galerie de unde puteţi selecta care fotografii sa fie editate",
         "Se pot achiziţiona fotografii suplimentare pentru editare (Preţ 15 Ron / buc)"
       ],
+      "description": "",
       "showOnPolicies": true
     }
   ],

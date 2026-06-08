@@ -1,6 +1,8 @@
 import Link from "next/link";
 import SiteShell from "@/app/layout/SiteShell";
 import { siteConfig } from "@/app/layout/siteConfig";
+import ContactForm from "./ContactForm";
+import ContactMessages from "./ContactMessages";
 
 // Map defaults: change these coordinates to the studio location
 const MAP_LAT = 45.777045;
@@ -46,7 +48,8 @@ export default function ContactPage() {
           <div className="rounded-[2rem] border text-center border-[rgba(203,184,169,0.22)] bg-white/75 p-6 shadow-[0_16px_44px_rgba(43,43,43,0.05)] backdrop-blur-sm">
             <p className="text-md uppercase font-italic tracking-[0.24em]">Telefon</p>
             <p className="mt-3 text-lg font-italic ">+40724430533</p>
-
+            {/* Admin-only: messages are fetched server-side only when admin is authenticated via cookie */}
+            <ContactMessages />
           </div>
 
           <div >
@@ -75,6 +78,12 @@ export default function ContactPage() {
 
 
 
+        </div>
+      </section>
+      <section className="mt-6">
+        <div className="rounded-[2rem] border border-[rgba(203,184,169,0.22)] bg-white/75 p-6 shadow-[0_16px_44px_rgba(43,43,43,0.05)] backdrop-blur-sm">
+          <h3 className="text-lg font-medium">Trimite-ne un mesaj</h3>
+          <ContactForm />
         </div>
       </section>
     </SiteShell>
