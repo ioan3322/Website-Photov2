@@ -49,7 +49,7 @@ export default function ContactPage() {
             <p className="text-md uppercase font-italic tracking-[0.24em]">Telefon</p>
             <p className="mt-3 text-lg font-italic ">+40724430533</p>
             {/* Admin-only: messages are fetched server-side only when admin is authenticated via cookie */}
-            <ContactMessages />
+
           </div>
 
           <div >
